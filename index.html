@@ -224,7 +224,6 @@
         .trend-down { color: var(--accent-danger); font-weight: bold; }
         .trend-steady { color: var(--accent-warning); font-weight: bold; }
         
-        /* print report table styles */
         @media print {
             body * { visibility: hidden; }
             .print-report-container, .print-report-container * { visibility: visible; }
@@ -242,7 +241,8 @@
         <div class="sidebar-header"><i class="fas fa-shopping-bag fa-3x" style="color: var(--accent-primary);"></i><h3>مصنع الحرمين للبلاستيك</h3><small id="sidebarSubtitle" style="color: #fff;">نظام متكامل</small></div>
         <nav class="nav flex-column">
             <a class="nav-link-custom" href="#" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a>
-            <a class="nav-link-custom" href="#" onclick="showSection('inventoryManagement')"><i class="fas fa-warehouse"></i> المخزون والمستودع</a>
+            <a class="nav-link-custom" href="#" onclick="showSection('inventoryManagement')"><i class="fas fa-warehouse"></i> المخزون والمستودع (كامل)</a>
+            <a class="nav-link-custom" href="#" onclick="showSection('inventorySidebarFull')"><i class="fas fa-chart-simple"></i> المخزون والمستودع (ملخص)</a>
             <a class="nav-link-custom" href="#" onclick="showSection('sales')"><i class="fas fa-chart-line"></i> المبيعات</a>
             <a class="nav-link-custom" href="#" onclick="showSection('purchases')"><i class="fas fa-shopping-cart"></i> المشتريات</a>
             <a class="nav-link-custom" href="#" onclick="showSection('profits')"><i class="fas fa-coins"></i> الأرباح</a>
@@ -297,6 +297,26 @@
                     <div class="stat-card"><i class="fas fa-boxes"></i><h3 id="totalProductsCount">0</h3><p>إجمالي الأصناف</p></div>
                     <div class="stat-card"><i class="fas fa-cubes"></i><h3 id="totalStockQuantity">0</h3><p>إجمالي الكميات</p></div>
                     <div class="stat-card"><i class="fas fa-dollar-sign"></i><h3 id="totalStockValue">0</h3><p>قيمة المخزون</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Sidebar Full Section (ملخص المخزون والمستودع) -->
+        <div id="inventorySidebarFull" class="section" style="display:none;">
+            <div class="section-header"><h2><i class="fas fa-chart-simple"></i> المخزون والمستودع (ملخص)</h2><button class="export-btn" onclick="exportSectionToTxt('inventorySidebarFull')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
+            <div class="inventory-full-section">
+                <div class="inventory-full-table-wrapper">
+                    <table class="inventory-full-table">
+                        <thead>
+                            <tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>النوع</th><th>المقاس</th><th>الوزن (كجم)</th><th>سعر البيع</th><th>الكمية الحالية</th><th>القيمة الإجمالية</th><th>حالة المخزون</th></tr>
+                        </thead>
+                        <tbody id="inventorySidebarFullTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="stock-stats-row">
+                    <div class="stat-card"><i class="fas fa-boxes"></i><h3 id="sidebarTotalProductsCount">0</h3><p>إجمالي الأصناف</p></div>
+                    <div class="stat-card"><i class="fas fa-cubes"></i><h3 id="sidebarTotalStockQuantity">0</h3><p>إجمالي الكميات</p></div>
+                    <div class="stat-card"><i class="fas fa-dollar-sign"></i><h3 id="sidebarTotalStockValue">0</h3><p>قيمة المخزون</p></div>
                 </div>
             </div>
         </div>
@@ -594,31 +614,135 @@
                 return true;
             });
         }
+        
+        // دالة عرض التقرير في نافذة منبثقة مع طباعة مرتبة
+        function showReportPopup(title, tableHeaders, tableData, summaryData = null) {
+            let summaryHtml = '';
+            if (summaryData) {
+                summaryHtml = '<div style="margin-bottom:20px;padding:10px;background:#fbbf2420;border-radius:8px;">';
+                for (let key in summaryData) {
+                    summaryHtml += `<p><strong>${key}:</strong> ${summaryData[key]}</p>`;
+                }
+                summaryHtml += '</div>';
+            }
+            
+            let rowsHtml = '';
+            tableData.forEach(row => {
+                rowsHtml += '<tr>';
+                row.forEach(cell => {
+                    rowsHtml += `<td style="border:1px solid #ddd;padding:8px;text-align:center;">${cell}</td>`;
+                });
+                rowsHtml += '</tr>';
+            });
+            
+            let headersHtml = '';
+            tableHeaders.forEach(header => {
+                headersHtml += `<th style="border:1px solid #ddd;padding:8px;text-align:center;background:#fbbf24;color:#0a0e17;">${header}</th>`;
+            });
+            
+            let printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html dir="rtl">
+                <head><title>${title} - مصنع الحرمين</title>
+                <style>
+                    body { font-family: 'Cairo', sans-serif; padding: 20px; direction: rtl; }
+                    h1 { color: #fbbf24; text-align: center; }
+                    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+                    th { background: #fbbf24; color: #0a0e17; }
+                    .footer { text-align: center; margin-top: 30px; font-size: 12px; color: #666; }
+                </style>
+                </head>
+                <body>
+                    <div class="print-report-container">
+                        <h1>مصنع الحرمين للبلاستيك</h1>
+                        <h3 style="text-align:center;">${title}</h3>
+                        <p style="text-align:center;">${new Date().toLocaleString('ar-EG')}</p>
+                        ${summaryHtml}
+                        <table>
+                            <thead><tr>${headersHtml}</tr></thead>
+                            <tbody>${rowsHtml}</tbody>
+                        </table>
+                        <div class="footer">تم إنشاء هذا التقرير بواسطة نظام مصنع الحرمين للبلاستيك - جميع الحقوق محفوظة</div>
+                    </div>
+                    <script>
+                        setTimeout(() => {
+                            window.print();
+                            window.onafterprint = function(){ window.close(); };
+                        }, 500);
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+        
+        function generateSalesReport() {
+            let total = sales.reduce((s,i)=>s+(i.quantity*i.price),0);
+            let headers = ['المنتج', 'الكمية', 'الوحدة', 'الإجمالي', 'العميل', 'التاريخ'];
+            let data = sales.map(s => [s.productName, s.rawQuantity || s.quantity, s.unit, formatPrice(s.total), s.customerName, s.date]);
+            let summary = { 'إجمالي المبيعات': formatPrice(total), 'عدد الفواتير': sales.length };
+            showReportPopup('تقرير المبيعات', headers, data, summary);
+        }
+        
+        function generatePurchasesReport() {
+            let total = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0);
+            let headers = ['المنتج', 'الكمية', 'الوحدة', 'الإجمالي', 'المورد', 'التاريخ'];
+            let data = purchases.map(p => [p.productName, p.rawQuantity || p.quantity, p.unit, formatPrice(p.total), p.supplierName, p.date]);
+            let summary = { 'إجمالي المشتريات': formatPrice(total), 'عدد الفواتير': purchases.length };
+            showReportPopup('تقرير المشتريات', headers, data, summary);
+        }
+        
+        function generateProfitReport() {
+            let salesTotal = sales.reduce((s,i)=>s+(i.quantity*i.price),0);
+            let purchasesTotal = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0);
+            let totalOp = operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing;
+            let net = salesTotal - purchasesTotal - totalOp;
+            let headers = ['البيان', 'القيمة'];
+            let data = [
+                ['إجمالي المبيعات', formatPrice(salesTotal)],
+                ['إجمالي المشتريات', formatPrice(purchasesTotal)],
+                ['مصاريف التشغيل', formatPrice(totalOp)],
+                ['صافي الربح', formatPrice(net)],
+                ['هامش الربح', totalSales>0?((net/salesTotal)*100).toFixed(2)+'%':'0%']
+            ];
+            let summary = { 'صافي الربح الإجمالي': formatPrice(net), 'تاريخ التقرير': new Date().toLocaleString('ar-EG') };
+            showReportPopup('تقرير الأرباح والخسائر', headers, data, summary);
+        }
+        
         function generateSalesReportWithDate() {
             let filtered = filterByDate(sales, 'date');
             let total = filtered.reduce((s,i)=>s+(i.quantity*i.price),0);
-            let content = getReportHeader() + `تقرير المبيعات (بالفترة المحددة)\nإجمالي المبيعات: ${formatPrice(total)}\n\n`;
-            filtered.forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`; });
-            downloadTxt(content, `تقرير_المبيعات_فترة.txt`);
-            Swal.fire('تم', 'تم تصدير تقرير المبيعات للفترة', 'success');
+            let headers = ['المنتج', 'الكمية', 'الوحدة', 'الإجمالي', 'العميل', 'التاريخ'];
+            let data = filtered.map(s => [s.productName, s.rawQuantity || s.quantity, s.unit, formatPrice(s.total), s.customerName, s.date]);
+            let summary = { 'إجمالي المبيعات': formatPrice(total), 'عدد الفواتير': filtered.length, 'الفترة': `${document.getElementById('reportDateFrom').value || 'بداية'} إلى ${document.getElementById('reportDateTo').value || 'نهاية'}` };
+            showReportPopup('تقرير المبيعات (بالفترة)', headers, data, summary);
         }
+        
         function generatePurchasesReportWithDate() {
             let filtered = filterByDate(purchases, 'date');
             let total = filtered.reduce((s,i)=>s+(i.quantity*i.cost),0);
-            let content = getReportHeader() + `تقرير المشتريات (بالفترة المحددة)\nإجمالي المشتريات: ${formatPrice(total)}\n\n`;
-            filtered.forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`; });
-            downloadTxt(content, `تقرير_المشتريات_فترة.txt`);
-            Swal.fire('تم', 'تم تصدير تقرير المشتريات للفترة', 'success');
+            let headers = ['المنتج', 'الكمية', 'الوحدة', 'الإجمالي', 'المورد', 'التاريخ'];
+            let data = filtered.map(p => [p.productName, p.rawQuantity || p.quantity, p.unit, formatPrice(p.total), p.supplierName, p.date]);
+            let summary = { 'إجمالي المشتريات': formatPrice(total), 'عدد الفواتير': filtered.length, 'الفترة': `${document.getElementById('reportDateFrom').value || 'بداية'} إلى ${document.getElementById('reportDateTo').value || 'نهاية'}` };
+            showReportPopup('تقرير المشتريات (بالفترة)', headers, data, summary);
         }
+        
         function generateProfitReportWithDate() {
             let filteredSales = filterByDate(sales, 'date');
             let filteredPurchases = filterByDate(purchases, 'date');
             let salesTotal = filteredSales.reduce((s,i)=>s+(i.quantity*i.price),0);
             let purchasesTotal = filteredPurchases.reduce((s,i)=>s+(i.quantity*i.cost),0);
             let net = salesTotal - purchasesTotal;
-            let content = getReportHeader() + `تقرير الأرباح (بالفترة المحددة)\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nصافي الربح: ${formatPrice(net)}\n`;
-            downloadTxt(content, `تقرير_الأرباح_فترة.txt`);
-            Swal.fire('تم', 'تم تصدير تقرير الأرباح للفترة', 'success');
+            let headers = ['البيان', 'القيمة'];
+            let data = [
+                ['إجمالي المبيعات', formatPrice(salesTotal)],
+                ['إجمالي المشتريات', formatPrice(purchasesTotal)],
+                ['صافي الربح', formatPrice(net)],
+                ['هامش الربح', salesTotal>0?((net/salesTotal)*100).toFixed(2)+'%':'0%']
+            ];
+            let summary = { 'صافي الربح': formatPrice(net), 'الفترة': `${document.getElementById('reportDateFrom').value || 'بداية'} إلى ${document.getElementById('reportDateTo').value || 'نهاية'}` };
+            showReportPopup('تقرير الأرباح (بالفترة)', headers, data, summary);
         }
         
         function exportInvoicesToTxt() {
@@ -721,15 +845,44 @@
                               <td>${formatPrice(p.quantity * p.price)}</td>
                               <td><span class="${stockClass}">${stockText}</span></td>
                               <td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>
-                           </td>`;
+                            </tr>`;
             });
-            tbody.innerHTML = html || '<tr><td colspan="13" class="text-center">لا توجد منتجات<\/tr>';
+            tbody.innerHTML = html || '<tr><td colspan="13" class="text-center">لا توجد منتجات</tr>';
             let totalQty = products.reduce((s,p)=>s+p.quantity,0);
             let totalVal = products.reduce((s,p)=>s+(p.quantity*p.price),0);
             document.getElementById('totalProductsCount').innerText = products.length;
             document.getElementById('totalStockQuantity').innerText = formatNumberToString(totalQty);
             document.getElementById('totalStockValue').innerText = formatPrice(totalVal);
+            updateInventorySidebarFullTable();
             checkLowStock();
+        }
+        
+        function updateInventorySidebarFullTable() {
+            let tbody = document.getElementById('inventorySidebarFullTableBody');
+            if(!tbody) return;
+            let html = '';
+            products.forEach((p, idx) => {
+                let stockClass = p.quantity > 200 ? 'badge-stock-high' : (p.quantity > 50 ? 'badge-stock-medium' : 'badge-stock-low');
+                let stockText = p.quantity > 200 ? 'مخزون ممتاز' : (p.quantity > 50 ? 'مخزون متوسط' : 'مخزون منخفض ⚠️');
+                html += `<tr>
+                              <td class="text-center">${idx+1}</td>
+                              <td>${p.name}</td>
+                              <td>${p.barcode || '-'}</td>
+                              <td>${p.type || '-'}</td>
+                              <td>${p.size || '-'}</td>
+                              <td>${p.weight ? formatNumberToString(p.weight) + ' كجم' : '-'}</td>
+                              <td>${formatPrice(p.price)}</td>
+                              <td>${formatNumberToString(p.quantity)}</td>
+                              <td>${formatPrice(p.quantity * p.price)}</td>
+                              <td><span class="${stockClass}">${stockText}</span></td>
+                            </tr>`;
+            });
+            tbody.innerHTML = html || '<tr><td colspan="10" class="text-center">لا توجد منتجات</tr>';
+            let totalQty = products.reduce((s,p)=>s+p.quantity,0);
+            let totalVal = products.reduce((s,p)=>s+(p.quantity*p.price),0);
+            document.getElementById('sidebarTotalProductsCount').innerText = products.length;
+            document.getElementById('sidebarTotalStockQuantity').innerText = formatNumberToString(totalQty);
+            document.getElementById('sidebarTotalStockValue').innerText = formatPrice(totalVal);
         }
         
         function printFullFinancialReport() {
@@ -839,7 +992,7 @@
         function loadAllData(){
             loadFromFirebase('customers',d=>{ customers=d; loadCustomers(); });
             loadFromFirebase('suppliers',d=>{ suppliers=d; loadSuppliers(); });
-            loadFromFirebase('products',d=>{ products=d; loadProducts(); updateInventorySidebar(); updateInventoryFullSection(); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
+            loadFromFirebase('products',d=>{ products=d; loadProducts(); updateInventorySidebar(); updateInventoryFullSection(); updateInventorySidebarFullTable(); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
             loadFromFirebase('sales',d=>{ sales=d; loadSalesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
             loadFromFirebase('purchases',d=>{ purchases=d; loadPurchasesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
             loadFromFirebase('invoices',d=>{ invoices=d; loadInvoices(); });
@@ -847,7 +1000,7 @@
         }
         function startRealtimeListeners(){
             if(!useFirebase) return;
-            listenToFirebase('products',d=>{ products=d; loadProducts(); updateInventorySidebar(); updateInventoryFullSection(); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
+            listenToFirebase('products',d=>{ products=d; loadProducts(); updateInventorySidebar(); updateInventoryFullSection(); updateInventorySidebarFullTable(); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
             listenToFirebase('sales',d=>{ sales=d; loadSalesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
             listenToFirebase('purchases',d=>{ purchases=d; loadPurchasesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
             listenToFirebase('operatingExpenses',d=>{ if(d) operatingExpenses=d; updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
@@ -918,10 +1071,7 @@
         function saveInvoiceModal() { let customerId = document.getElementById('invoiceCustomerSelect').value; if (!customerId) { Swal.fire('خطأ', 'اختر العميل', 'error'); return; } let customer = customers.find(c => c.id == parseInt(customerId)); let items = []; document.querySelectorAll('#invoiceItemsContainer .row').forEach(row => { let productId = row.querySelector('.product-select').value; let qty = parseNumberValue(row.querySelector('.quantity-input').value); let price = parseNumberValue(row.querySelector('.price-input').value); if (productId && qty > 0) { items.push({ productId: parseInt(productId), quantity: qty, price: price }); let product = products.find(p => p.id == productId); if (product) product.quantity -= qty; } }); let invoice = { id: Date.now(), invoiceNumber: invoices.length + 1, customerId: parseInt(customerId), customerName: customer.name, date: new Date().toISOString().split('T')[0], items: items, total: parseNumberValue(document.getElementById('invoiceTotal').innerText) }; invoices.push(invoice); saveToFirebase('invoices', invoices); saveToFirebase('products', products); bootstrap.Modal.getInstance(document.getElementById('invoiceModal')).hide(); Swal.fire('تم', 'تم حفظ الفاتورة', 'success'); loadAllData(); }
         function viewInvoice(id) { let inv = invoices.find(i => i.id == id); let itemsHtml = '<ul>'; inv.items.forEach(i => { let p = products.find(p => p.id == i.productId); itemsHtml += `<li>${p?.name} - ${i.quantity} × ${formatPrice(i.price)}</li>`; }); itemsHtml += '</ul>'; Swal.fire({ title: `فاتورة #${inv.invoiceNumber}`, html: `<div><p>العميل: ${inv.customerName}</p><p>المجموع: ${formatPrice(inv.total)}</p>${itemsHtml}</div>` }); }
         function getReportHeader() { const now = new Date(); return `مصنع الحرمين للبلاستيك\n${now.toLocaleString('ar-EG')}\n${'='.repeat(50)}\n`; }
-        function generateSalesReport() { let total = sales.reduce((s,i)=>s+(i.quantity*i.price),0); let content = getReportHeader() + `تقرير المبيعات\nالإجمالي: ${formatPrice(total)}\n`; sales.forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`; }); downloadTxt(content, `تقرير_المبيعات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function generatePurchasesReport() { let total = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0); let content = getReportHeader() + `تقرير المشتريات\nالإجمالي: ${formatPrice(total)}\n`; purchases.forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`; }); downloadTxt(content, `تقرير_المشتريات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function generateProfitReport() { let salesTotal = sales.reduce((s,i)=>s+(i.quantity*i.price),0); let purchasesTotal = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0); let totalOp = operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net = salesTotal - purchasesTotal - totalOp; let content = getReportHeader() + `تقرير الأرباح\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nالمصاريف: ${formatPrice(totalOp)}\nصافي الربح: ${formatPrice(net)}\n`; downloadTxt(content, `تقرير_الأرباح.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function exportSectionToTxt(sectionName) { let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`; if (sectionName === 'inventoryManagement') products.forEach(p => { content += `${p.name} | المقاس: ${p.size || '-'} | الوزن: ${p.weight || '-'} كجم | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`; }); else if (sectionName === 'invoices') invoices.forEach(inv => { content += `رقم الفاتورة: ${inv.invoiceNumber} | العميل: ${inv.customerName} | التاريخ: ${inv.date} | المجموع: ${formatPrice(inv.total)}\n`; }); downloadTxt(content, `${sectionName}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function exportSectionToTxt(sectionName) { let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`; if (sectionName === 'inventoryManagement') products.forEach(p => { content += `${p.name} | المقاس: ${p.size || '-'} | الوزن: ${p.weight || '-'} كجم | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`; }); else if (sectionName === 'inventorySidebarFull') products.forEach(p => { content += `${p.name} | الباركود: ${p.barcode || '-'} | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)} | الحالة: ${p.quantity > 200 ? 'مخزون ممتاز' : (p.quantity > 50 ? 'مخزون متوسط' : 'مخزون منخفض')}\n`; }); else if (sectionName === 'invoices') invoices.forEach(inv => { content += `رقم الفاتورة: ${inv.invoiceNumber} | العميل: ${inv.customerName} | التاريخ: ${inv.date} | المجموع: ${formatPrice(inv.total)}\n`; }); downloadTxt(content, `${sectionName}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
         function saveOperatingExpenses() { operatingExpenses = { electricity: parseNumberValue(document.getElementById('operatingElectricity').value), rent: parseNumberValue(document.getElementById('operatingRent').value), salaries: parseNumberValue(document.getElementById('operatingSalaries').value), transport: parseNumberValue(document.getElementById('operatingTransport').value), misc: parseNumberValue(document.getElementById('operatingMisc').value), printing: parseNumberValue(document.getElementById('operatingPrinting').value) }; saveToFirebase('operatingExpenses', operatingExpenses); Swal.fire('تم', 'تم حفظ المصروفات', 'success'); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); }
         function searchSales() { let customer = document.getElementById('searchSaleCustomer').value.toLowerCase(); let product = document.getElementById('searchSaleProduct').value.toLowerCase(); let date = document.getElementById('searchSaleDate').value; let filtered = sales.filter(s => (!customer || s.customerName.toLowerCase().includes(customer)) && (!product || s.productName.toLowerCase().includes(product)) && (!date || s.date === date)); let html = filtered.map(s => `<div>${s.productName} - ${s.customerName} - ${formatPrice(s.total)}</div>`).join(''); document.getElementById('salesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>'; }
         function searchPurchases() { let supplier = document.getElementById('searchPurchaseSupplier').value.toLowerCase(); let product = document.getElementById('searchPurchaseProduct').value.toLowerCase(); let date = document.getElementById('searchPurchaseDate').value; let filtered = purchases.filter(p => (!supplier || p.supplierName.toLowerCase().includes(supplier)) && (!product || p.productName.toLowerCase().includes(product)) && (!date || p.date === date)); let html = filtered.map(p => `<div>${p.productName} - ${p.supplierName} - ${formatPrice(p.total)}</div>`).join(''); document.getElementById('purchasesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>'; }
@@ -929,7 +1079,7 @@
         if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
         function closeSidebarOnClickOutside(event) { if (window.innerWidth <= 768 && document.getElementById('sidebar').classList.contains('active')) document.getElementById('sidebar').classList.remove('active'); }
-        function showSection(section) { document.querySelectorAll('.section').forEach(s => s.style.display = 'none'); document.getElementById(section).style.display = 'block'; if (section === 'dashboard') updateDashboard(); if (section === 'profits') updateProfitAnalysis(); if (section === 'partners') updatePartnersSection(); if (section === 'inventoryManagement') updateInventoryFullSection(); }
+        function showSection(section) { document.querySelectorAll('.section').forEach(s => s.style.display = 'none'); document.getElementById(section).style.display = 'block'; if (section === 'dashboard') updateDashboard(); if (section === 'profits') updateProfitAnalysis(); if (section === 'partners') updatePartnersSection(); if (section === 'inventoryManagement') updateInventoryFullSection(); if (section === 'inventorySidebarFull') updateInventorySidebarFullTable(); }
         function showLastUpdate() { Swal.fire('المزامنة', 'جميع التحديثات تتم تلقائياً', 'info'); }
         function resetAllData() { Swal.fire({ title: 'تحذير!', text: 'سيتم حذف جميع البيانات!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33' }).then(res => { if (res.isConfirmed) { if (useFirebase && db) db.ref().remove(); localStorage.clear(); location.reload(); } }); }
         function applyCustomization() { let fontSize = document.getElementById('customFontSizeRange').value; document.documentElement.style.setProperty('--base-font-size', fontSize + 'px'); let font = document.getElementById('customFontSelect').value; document.documentElement.style.setProperty('--font-family-main', font); let textColor = document.getElementById('customTextColor').value; document.documentElement.style.setProperty('--text-primary', textColor); let accentPrimary = document.getElementById('customAccentPrimary').value; document.documentElement.style.setProperty('--accent-primary', accentPrimary); let accentSecondary = document.getElementById('customAccentSecondary').value; document.documentElement.style.setProperty('--accent-secondary', accentSecondary); let bgPrimary = document.getElementById('customBgPrimary').value; document.documentElement.style.setProperty('--bg-primary', bgPrimary); let cardBg = document.getElementById('customCardBg').value; document.documentElement.style.setProperty('--bg-card', cardBg); let borderRadius = document.getElementById('customBorderRadius').value; document.documentElement.style.setProperty('--border-radius', borderRadius + 'px'); localStorage.setItem('harmain_custom_style', JSON.stringify({ fontSize, font, textColor, accentPrimary, accentSecondary, bgPrimary, cardBg, borderRadius })); Swal.fire('تم', 'تم تحديث المظهر', 'success'); updateCustomizationPickersFromCSS(); }
@@ -939,4 +1089,4 @@
         init();
     </script>
 </body>
-                </html>
+            </html>
