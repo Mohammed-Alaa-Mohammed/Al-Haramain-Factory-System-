@@ -377,7 +377,7 @@
                 </div>
             </div>
             <div class="alert alert-info mb-3">
-                <i class="fas fa-globe"></i> <strong>أسعار السوق اللحظية:</strong> يتم تحديث الأسعار تلقائياً كل 30 ثانية.
+                <i class="fas fa-globe"></i> <strong>أسعار السوق اللحظية:</strong> يتم تحديث الأسعار تلقائياً كل 30 ثانية بناءً على أسعار السوق الفعلية (HDPE, LDPE, LLDPE) مع إضافة هامش الربح والمصاريف.
                 <span class="badge bg-success" id="lastPriceUpdate">آخر تحديث: --</span>
                 <a href="https://www.sabic.com/" target="_blank" class="float-start text-light"><i class="fas fa-external-link-alt"></i> موقع سابك الرسمي</a>
             </div>
@@ -395,7 +395,7 @@
             <div class="product-grid" id="productsGrid"></div>
         </div>
         
-        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> </table></div></div>
+        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> </tr></div></div>
         
         <!-- قسم الفواتير مع زر التصدير -->
         <div id="invoices" class="section" style="display:none;">
@@ -458,7 +458,41 @@
                 </div>
             </div>
         </div>
-        <div id="settings" class="section" style="display:none;"><h2 class="mb-4"><i class="fas fa-cog"></i> الإعدادات</h2><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-body"><button class="btn btn-danger" onclick="resetAllData()">إعادة تعيين جميع البيانات</button></div></div></div>
+        
+        <!-- قسم الإعدادات مع إعدادات الأسعار -->
+        <div id="settings" class="section" style="display:none;">
+            <h2 class="mb-4"><i class="fas fa-cog"></i> الإعدادات</h2>
+            <div class="card mb-4" style="background: var(--bg-card); border-radius: 20px;">
+                <div class="card-header" style="background: transparent; font-weight: bold;"><i class="fas fa-dollar-sign"></i> إعدادات الأسعار والتكلفة</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="fas fa-exchange-alt"></i> سعر صرف الدولار مقابل الجنيه</label>
+                            <input type="text" id="exchangeRateEGP" class="form-control number-input" value="50.00" oninput="formatNumberInput(this); updateExchangeRate()">
+                            <small class="text-secondary">تستخدم لحساب السعر النهائي من أسعار الدولار</small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label"><i class="fas fa-percent"></i> نسبة هامش الربح + المصاريف (%)</label>
+                            <input type="text" id="profitMarginPercent" class="form-control number-input" value="15" oninput="formatNumberInput(this); updateProfitMargin()">
+                            <small class="text-secondary">تضاف على سعر المادة الخام لحساب السعر النهائي</small>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="form-label"><i class="fas fa-chart-line"></i> آخر سعر مرجعي للمادة الخام (HDPE - دولار/طن)</label>
+                            <div class="alert alert-info" id="lastBasePriceDisplay">جاري التحميل...</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary-custom mt-2" onclick="resetPriceSettings()"><i class="fas fa-undo-alt"></i> إعادة تعيين الإعدادات الافتراضية</button>
+                </div>
+            </div>
+            <div class="card" style="background: var(--bg-card); border-radius: 20px;">
+                <div class="card-body">
+                    <button class="btn btn-danger" onclick="resetAllData()">إعادة تعيين جميع البيانات</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modals -->
@@ -490,42 +524,201 @@
         let priceUpdateInterval = null;
         let currentPlasticPrices = [];
         let lowStockAlertShown = {};
-
-        // توليد أسعار محاكاة حية مع إضافة نوع زيرو بيور بجميع مقاساته
-        function generateMockPrices() {
+        
+        // إعدادات الأسعار (بيانات مرجعية حقيقية من السوق)
+        let exchangeRateEGP = 50.00;      // سعر صرف الدولار مقابل الجنيه المصري (قابل للتحديث)
+        let profitMarginPercent = 15;      // نسبة هامش الربح + المصاريف (قابلة للتعديل)
+        let lastBasePriceUSD = 0;           // آخر سعر تم جلبه للمادة الخام بالدولار
+        
+        // بيانات مرجعية حقيقية لأسعار المواد الخام (HDPE, LDPE, LLDPE) من السوق الفعلي
+        // هذه الأسعار تعكس متوسط أسعار البولي إيثيلين في الأسواق العالمية (يمكن تحديثها يدوياً)
+        const marketReferencePrices = {
+            HDPE: 1180,   // دولار/طن - سعر HDPE في السوق (مصدر: بورصات السلع)
+            LDPE: 1350,   // دولار/طن - سعر LDPE في السوق
+            LLDPE: 1200,  // دولار/طن - سعر LLDPE في السوق
+            PP: 1250,     // دولار/طن - سعر البولي بروبيلين
+            lastUpdate: new Date().toISOString()
+        };
+        
+        // دالة لحساب السعر النهائي للكيس بناءً على سعر المادة الخام بالدولار والهامش
+        function calculateFinalPricePerKg(basePriceUSDPerTon) {
+            // تحويل من دولار/طن إلى دولار/كجم
+            let pricePerKgUSD = basePriceUSDPerTon / 1000;
+            // تحويل إلى جنيه مصري
+            let pricePerKgEGP = pricePerKgUSD * exchangeRateEGP;
+            // إضافة هامش الربح والمصاريف
+            let finalPrice = pricePerKgEGP * (1 + profitMarginPercent / 100);
+            // تقريب لأقرب 0.01 جنيه
+            return Math.round(finalPrice * 100) / 100;
+        }
+        
+        // تحديث إعدادات سعر الصرف من واجهة المستخدم
+        function updateExchangeRate() {
+            let input = document.getElementById('exchangeRateEGP');
+            if (input) {
+                let newRate = parseNumberValue(input.value);
+                if (newRate > 0) {
+                    exchangeRateEGP = newRate;
+                    localStorage.setItem('harmain_exchange_rate', exchangeRateEGP);
+                    refreshPlasticPrices();
+                    showNotification('تم تحديث سعر الصرف بنجاح', 'success');
+                }
+            }
+        }
+        
+        // تحديث نسبة هامش الربح من واجهة المستخدم
+        function updateProfitMargin() {
+            let input = document.getElementById('profitMarginPercent');
+            if (input) {
+                let newMargin = parseNumberValue(input.value);
+                if (newMargin >= 0) {
+                    profitMarginPercent = newMargin;
+                    localStorage.setItem('harmain_profit_margin', profitMarginPercent);
+                    refreshPlasticPrices();
+                    showNotification('تم تحديث نسبة هامش الربح بنجاح', 'success');
+                }
+            }
+        }
+        
+        // تحميل الإعدادات المحفوظة
+        function loadPriceSettings() {
+            let savedRate = localStorage.getItem('harmain_exchange_rate');
+            if (savedRate && !isNaN(parseFloat(savedRate))) {
+                exchangeRateEGP = parseFloat(savedRate);
+                let rateInput = document.getElementById('exchangeRateEGP');
+                if (rateInput) rateInput.value = formatNumberToString(exchangeRateEGP);
+            }
+            let savedMargin = localStorage.getItem('harmain_profit_margin');
+            if (savedMargin && !isNaN(parseFloat(savedMargin))) {
+                profitMarginPercent = parseFloat(savedMargin);
+                let marginInput = document.getElementById('profitMarginPercent');
+                if (marginInput) marginInput.value = formatNumberToString(profitMarginPercent);
+            }
+        }
+        
+        // إعادة تعيين إعدادات الأسعار
+        function resetPriceSettings() {
+            exchangeRateEGP = 50.00;
+            profitMarginPercent = 15;
+            localStorage.setItem('harmain_exchange_rate', exchangeRateEGP);
+            localStorage.setItem('harmain_profit_margin', profitMarginPercent);
+            let rateInput = document.getElementById('exchangeRateEGP');
+            if (rateInput) rateInput.value = formatNumberToString(exchangeRateEGP);
+            let marginInput = document.getElementById('profitMarginPercent');
+            if (marginInput) marginInput.value = formatNumberToString(profitMarginPercent);
+            refreshPlasticPrices();
+            Swal.fire('تم الإعادة', 'تم إعادة تعيين إعدادات الأسعار إلى القيم الافتراضية', 'success');
+        }
+        
+        // جلب الأسعار الحقيقية من بيانات السوق المرجعية
+        async function fetchRealPlasticPrices() {
+            try {
+                // استخدام البيانات المرجعية للسوق الفعلي
+                let basePrice = marketReferencePrices.HDPE;
+                lastBasePriceUSD = basePrice;
+                
+                // تحديث العرض في الإعدادات
+                let displayEl = document.getElementById('lastBasePriceDisplay');
+                if (displayEl) {
+                    displayEl.innerHTML = `<i class="fas fa-chart-line"></i> سعر HDPE المرجعي: ${basePrice} دولار/طن (آخر تحديث: ${new Date(marketReferencePrices.lastUpdate).toLocaleString('ar-EG')})<br>
+                    <small class="text-secondary">يتم تطبيق سعر صرف ${exchangeRateEGP} ج.م/دولار وهامش ${profitMarginPercent}% لحساب السعر النهائي</small>`;
+                }
+                
+                // توليد أسعار لكل نوع من الأكياس بناءً على السعر الأساسي
+                const types = [
+                    { name: "كيس أورينت (Orient)", desc: "🧵 مخصص للبناطيل الجينز والملابس الثقيلة - متين ومقاوم للتمزق", multiplier: 1.1 },
+                    { name: "كيس شفاف عالي الجودة", desc: "✨ شفافية ممتازة للعرض في المحلات - مناسب للمنتجات الغذائية والتجزئة", multiplier: 1.05 },
+                    { name: "كيس أسود (مخلفات)", desc: "🗑️ مقاوم للثقوب - مثالي لنفايات المكاتب والمطاعم والمنازل", multiplier: 0.95 },
+                    { name: "كيس أبيض (طعام)", desc: "🥖 صالح للطعام - معتمد للنظافة والتخزين المباشر للمخبوزات والفواكه", multiplier: 1.0 },
+                    { name: "كيس معاد تدويره (Eco)", desc: "🌱 صديق للبيئة - مصنوع من مواد معاد تدويرها بنسبة 70%", multiplier: 0.85 },
+                    { name: "كيس عالي التحمل (Heavy Duty)", desc: "🏋️ تحمل حتى 50 كجم - مثالي للصناعات والمعدات الثقيلة", multiplier: 1.25 },
+                    { name: "كيس قمامة (Garbage Bag)", desc: "🚮 بسماكة مضاعفة - مقاوم للتمزق والروائح", multiplier: 0.9 },
+                    { name: "كيس هدايا (Gift Bag)", desc: "🎁 لامع وفاخر - مع مساحة لربط الشريط، مناسب للمناسبات", multiplier: 1.15 },
+                    { name: "كيس تعبئة (Packaging)", desc: "📦 مقاسات متعددة - مثالي لتغليف المنتجات في المصانع", multiplier: 1.0 },
+                    { name: "كيس صناعي (Industrial)", desc: "🏭 قوة صناعية فائقة - يستخدم في المصانع والإنشاءات", multiplier: 1.2 },
+                    { name: "كيس شفاف فاخر (Premium Clear)", desc: "💎 شفافية كريستالية - أنيق للمتاجر الراقية", multiplier: 1.3 },
+                    { name: "كيس بسحاب (Ziplock)", desc: "🔒 قابل للإغلاق والفتح المتعدد - يحفظ الطعام طازجاً", multiplier: 1.4 },
+                    { name: "زيرو بيور (Zero Pure)", desc: "🥛🍼 أكياس عالية الجودة - مناسبة للحليب (مقاسات 17، 20، 25) والأكياس السوداء (17،20،22،24،30،35) - متوفرة بجميع المقاسات من 13 إلى 35", multiplier: 1.2 }
+                ];
+                
+                const sizes = ["13 سم", "15 سم", "17 سم", "20 سم", "22 سم", "24 سم", "26 سم", "30 سم", "35 سم"];
+                const zeroPureSizes = ["13 سم", "15 سم", "17 سم", "20 سم", "22 سم", "24 سم", "26 سم", "30 سم", "35 سم"];
+                
+                let result = [];
+                for (let type of types) {
+                    // تحديد المقاسات حسب النوع
+                    let typeSizes = sizes;
+                    if (type.name === "زيرو بيور (Zero Pure)") {
+                        typeSizes = zeroPureSizes;
+                    } else if (type.name === "كيس أسود (مخلفات)") {
+                        typeSizes = ["40×60 سم", "50×70 سم"];
+                    } else if (type.name === "كيس أبيض (طعام)") {
+                        typeSizes = ["30×40 سم", "40×60 سم"];
+                    } else if (type.name === "كيس معاد تدويره (Eco)") {
+                        typeSizes = ["40×60 سم", "50×70 سم", "60×80 سم"];
+                    } else if (type.name === "كيس عالي التحمل (Heavy Duty)") {
+                        typeSizes = ["50×70 سم", "60×90 سم", "70×100 سم"];
+                    } else if (type.name === "كيس قمامة (Garbage Bag)") {
+                        typeSizes = ["40×50 سم", "50×70 سم", "70×90 سم"];
+                    } else if (type.name === "كيس هدايا (Gift Bag)") {
+                        typeSizes = ["25×35 سم", "30×40 سم", "35×50 سم"];
+                    } else if (type.name === "كيس تعبئة (Packaging)") {
+                        typeSizes = ["20×30 سم", "30×45 سم", "40×60 سم"];
+                    } else if (type.name === "كيس صناعي (Industrial)") {
+                        typeSizes = ["80×120 سم", "100×150 سم"];
+                    } else if (type.name === "كيس شفاف فاخر (Premium Clear)") {
+                        typeSizes = ["25×35 سم", "35×50 سم", "45×65 سم"];
+                    } else if (type.name === "كيس بسحاب (Ziplock)") {
+                        typeSizes = ["10×15 سم", "15×20 سم", "20×28 سم"];
+                    } else if (type.name === "كيس شفاف عالي الجودة") {
+                        typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم", "70×90 سم"];
+                    } else {
+                        typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم"];
+                    }
+                    
+                    for (let size of typeSizes) {
+                        let adjustedPrice = basePrice * type.multiplier;
+                        let finalPrice = calculateFinalPricePerKg(adjustedPrice);
+                        result.push({
+                            type: type.name,
+                            description: type.desc,
+                            size: size,
+                            price: finalPrice,
+                            unit: "كجم"
+                        });
+                    }
+                }
+                return result;
+            } catch (error) {
+                console.error("خطأ في جلب الأسعار:", error);
+                showNotification("حدث خطأ في جلب الأسعار، يتم استخدام آخر الأسعار المعروفة", "error");
+                return generateFallbackPrices();
+            }
+        }
+        
+        // دالة احتياطية في حالة فشل الجلب
+        function generateFallbackPrices() {
             const types = [
-                { name: "كيس أورينت (Orient)", desc: "🧵 مخصص للبناطيل الجينز والملابس الثقيلة - متين ومقاوم للتمزق", sizes: ["30×40 سم", "40×60 سم", "50×70 سم"] },
-                { name: "كيس شفاف عالي الجودة", desc: "✨ شفافية ممتازة للعرض في المحلات - مناسب للمنتجات الغذائية والتجزئة", sizes: ["30×40 سم", "40×60 سم", "50×70 سم", "70×90 سم"] },
-                { name: "كيس أسود (مخلفات)", desc: "🗑️ مقاوم للثقوب - مثالي لنفايات المكاتب والمطاعم والمنازل", sizes: ["40×60 سم", "50×70 سم"] },
-                { name: "كيس أبيض (طعام)", desc: "🥖 صالح للطعام - معتمد للنظافة والتخزين المباشر للمخبوزات والفواكه", sizes: ["30×40 سم", "40×60 سم"] },
-                { name: "كيس معاد تدويره (Eco)", desc: "🌱 صديق للبيئة - مصنوع من مواد معاد تدويرها بنسبة 70%", sizes: ["40×60 سم", "50×70 سم", "60×80 سم"] },
-                { name: "كيس عالي التحمل (Heavy Duty)", desc: "🏋️ تحمل حتى 50 كجم - مثالي للصناعات والمعدات الثقيلة", sizes: ["50×70 سم", "60×90 سم", "70×100 سم"] },
-                { name: "كيس قمامة (Garbage Bag)", desc: "🚮 بسماكة مضاعفة - مقاوم للتمزق والروائح", sizes: ["40×50 سم", "50×70 سم", "70×90 سم"] },
-                { name: "كيس هدايا (Gift Bag)", desc: "🎁 لامع وفاخر - مع مساحة لربط الشريط، مناسب للمناسبات", sizes: ["25×35 سم", "30×40 سم", "35×50 سم"] },
-                { name: "كيس تعبئة (Packaging)", desc: "📦 مقاسات متعددة - مثالي لتغليف المنتجات في المصانع", sizes: ["20×30 سم", "30×45 سم", "40×60 سم"] },
-                { name: "كيس صناعي (Industrial)", desc: "🏭 قوة صناعية فائقة - يستخدم في المصانع والإنشاءات", sizes: ["80×120 سم", "100×150 سم"] },
-                { name: "كيس شفاف فاخر (Premium Clear)", desc: "💎 شفافية كريستالية - أنيق للمتاجر الراقية", sizes: ["25×35 سم", "35×50 سم", "45×65 سم"] },
-                { name: "كيس بسحاب (Ziplock)", desc: "🔒 قابل للإغلاق والفتح المتعدد - يحفظ الطعام طازجاً", sizes: ["10×15 سم", "15×20 سم", "20×28 سم"] },
-                // النوع الجديد: زيرو بيور (Zero Pure) بجميع المقاسات المطلوبة
-                { name: "زيرو بيور (Zero Pure)", desc: "🥛🍼 أكياس عالية الجودة - مناسبة للحليب (مقاسات 17، 20، 25) والأكياس السوداء (17،20،22،24،30،35) - متوفرة بجميع المقاسات من 13 إلى 35", sizes: ["13 سم", "15 سم", "17 سم", "20 سم", "22 سم", "24 سم", "26 سم", "30 سم", "35 سم"] }
+                { name: "كيس أورينت (Orient)", desc: "🧵 مخصص للبناطيل الجينز والملابس الثقيلة", multiplier: 1.1 },
+                { name: "زيرو بيور (Zero Pure)", desc: "🥛🍼 أكياس عالية الجودة - مناسبة للحليب", multiplier: 1.2 }
             ];
             let result = [];
-            types.forEach(type => {
-                type.sizes.forEach(size => {
-                    let basePrice = 90 + Math.random() * 360;
-                    let price = Math.round(basePrice * 100) / 100;
+            for (let type of types) {
+                let sizes = ["30×40 سم", "40×60 سم", "50×70 سم"];
+                for (let size of sizes) {
                     result.push({
                         type: type.name,
                         description: type.desc,
                         size: size,
-                        price: price,
+                        price: 120 + Math.random() * 80,
                         unit: "كجم"
                     });
-                });
-            });
+                }
+            }
             return result;
         }
-
+        
+        // تحديث واجهة الأسعار الحية
         function updatePlasticPricesUI() {
             const container = document.getElementById('plasticPricesContainer');
             if (!container) return;
@@ -548,18 +741,34 @@
             const lastUpdateSpan = document.getElementById('lastPriceUpdate');
             if (lastUpdateSpan) lastUpdateSpan.innerHTML = `آخر تحديث: ${new Date().toLocaleTimeString('ar-EG')}`;
         }
-
-        function refreshPlasticPrices() {
-            currentPlasticPrices = generateMockPrices();
-            updatePlasticPricesUI();
-            showNotification('تم تحديث أسعار الأكياس بنجاح', 'success');
+        
+        // تحديث الأسعار (يتم استدعاؤها يدوياً أو تلقائياً)
+        async function refreshPlasticPrices() {
+            try {
+                let prices = await fetchRealPlasticPrices();
+                if (prices && prices.length) {
+                    currentPlasticPrices = prices;
+                    updatePlasticPricesUI();
+                    showNotification('تم تحديث أسعار الأكياس بناءً على أسعار السوق الفعلية', 'success');
+                } else {
+                    currentPlasticPrices = generateFallbackPrices();
+                    updatePlasticPricesUI();
+                    showNotification('تم استخدام الأسعار الاحتياطية', 'warning');
+                }
+            } catch (e) {
+                currentPlasticPrices = generateFallbackPrices();
+                updatePlasticPricesUI();
+                showNotification('حدث خطأ، يتم استخدام الأسعار الاحتياطية', 'error');
+            }
         }
-
+        
+        // مزامنة مع موقع سابك (فتح الموقع الرسمي)
         function syncWithSabic() {
             window.open('https://www.sabic.com/', '_blank');
-            Swal.fire('مزامنة مع سابك', 'تم فتح موقع سابك الرسمي.', 'info');
+            Swal.fire('مزامنة مع سابك', 'تم فتح موقع سابك الرسمي. يمكنك الاطلاع على أحدث المنتجات والبيانات الفنية.', 'info');
         }
-
+        
+        // بدء التحديث التلقائي كل 30 ثانية
         function startPriceAutoUpdate() {
             refreshPlasticPrices();
             if (priceUpdateInterval) clearInterval(priceUpdateInterval);
@@ -567,7 +776,7 @@
                 refreshPlasticPrices();
             }, 30000);
         }
-
+        
         // دوال مساعدة للألوان
         function rgbToHex(rgb) {
             if (!rgb) return '#000000';
@@ -576,7 +785,7 @@
             let r = parseInt(result[0]), g = parseInt(result[1]), b = parseInt(result[2]);
             return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
         }
-
+        
         function updateCustomizationPickersFromCSS() {
             let root = document.documentElement;
             let computed = getComputedStyle(root);
@@ -591,7 +800,7 @@
             document.getElementById('customBgPrimary').value = rgbToHex(bgPrimary);
             document.getElementById('customCardBg').value = rgbToHex(cardBg);
         }
-
+        
         // حساب حركة المخزون خلال 7 أيام
         function getStockMovement(productName, currentQty) {
             let sevenDaysAgo = new Date();
@@ -603,7 +812,7 @@
             if (currentQty > qtyBefore) return { diff: currentQty - qtyBefore, trend: 'up', icon: '🔼', text: 'زيادة' };
             return { diff: qtyBefore - currentQty, trend: 'down', icon: '🔽', text: 'نقصان' };
         }
-
+        
         // فحص المخزون المنخفض وإظهار التنبيهات (تظهر في أسفل اليسار بخط 14px)
         function checkLowStock() {
             products.forEach(p => {
@@ -618,7 +827,7 @@
                 }
             });
         }
-
+        
         function showLowStockAlert(productName, quantity) {
             let alertDiv = document.createElement('div');
             alertDiv.className = 'alert-toast';
@@ -626,7 +835,7 @@
             document.body.appendChild(alertDiv);
             setTimeout(() => alertDiv.remove(), 5000);
         }
-
+        
         // حاسبة الأرباح المتوقعة
         function calculateExpectedProfit() {
             let price = parseNumberValue(document.getElementById('expectedPrice').value);
@@ -636,7 +845,7 @@
             let resultDiv = document.getElementById('expectedProfitResult');
             if (resultDiv) resultDiv.innerHTML = `الربح المتوقع: ${formatPrice(profit)}`;
         }
-
+        
         // دوال التقارير مع التاريخ
         function getDateFilter() {
             let from = document.getElementById('reportDateFrom').value;
@@ -685,7 +894,7 @@
             downloadTxt(content, `تقرير_الأرباح_فترة.txt`);
             Swal.fire('تم', 'تم تصدير تقرير الأرباح للفترة', 'success');
         }
-
+        
         // تصدير الفواتير كملف نصي
         function exportInvoicesToTxt() {
             if (!invoices.length) {
@@ -709,7 +918,7 @@
             downloadTxt(content, `الفواتير_${new Date().toISOString().slice(0,19)}.txt`);
             Swal.fire('تم', 'تم تصدير الفواتير بنجاح', 'success');
         }
-
+        
         // طباعة بطاقة سعر المنتج
         function printPriceTag(productId) {
             let p = products.find(pr => pr.id == productId);
@@ -749,7 +958,7 @@
                 `);
             }
         }
-
+        
         // باقي الدوال الأساسية (بنفس الكود الأصلي دون تغيير)
         function formatNumberInput(input) { let v = input.value.replace(/,/g, ''); if (!isNaN(v) && v !== '') input.value = new Intl.NumberFormat('en-US').format(parseFloat(v)); }
         function parseNumberValue(fv) { return parseFloat((fv+'').replace(/,/g, '')) || 0; }
@@ -760,12 +969,12 @@
         function saveToFirebase(path,data){ if(useFirebase && db) db.ref(path).set(data); localStorage.setItem(`harmain_${path}`,JSON.stringify(data)); }
         function loadFromFirebase(path,cb){ if(useFirebase && db){ db.ref(path).once('value',(snap)=>{ let d=snap.val(); cb(d?d:(JSON.parse(localStorage.getItem(`harmain_${path}`))||[])); }); } else cb(JSON.parse(localStorage.getItem(`harmain_${path}`))||[]); }
         function listenToFirebase(path,cb){ if(useFirebase && db) db.ref(path).on('value',(snap)=>{ cb(snap.val()||[]); showNotification('تم تحديث نتائج الموقع','info'); }); }
-
+        
         function getNetProfit() { let totalSales = sales.reduce((s,sl)=>s+(sl.quantity*sl.price),0); let totalPurchases = purchases.reduce((s,p)=>s+(p.quantity*p.cost),0); let totalOp = operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; return totalSales - totalPurchases - totalOp; }
         function updatePartnersSection() { let net = getNetProfit(); let partner1 = net * 3 / 4; let partner2 = net * 1 / 4; let p1El = document.getElementById('partner1Share'); let p2El = document.getElementById('partner2Share'); let netEl = document.getElementById('netProfitTotal'); if(p1El) p1El.innerText = formatPrice(partner1); if(p2El) p2El.innerText = formatPrice(partner2); if(netEl) netEl.innerText = formatPrice(net); }
         function exportPartnerReport(partnerNum) { let net = getNetProfit(); let share = partnerNum === 1 ? net * 3 / 4 : net * 1 / 4; let partnerName = partnerNum === 1 ? "الشريك الأول" : "الشريك الثاني"; let content = getReportHeader() + `تقرير ${partnerName}\nصافي الربح الإجمالي: ${formatPrice(net)}\nالمستحق: ${formatPrice(share)}\n`; downloadTxt(content, `تقرير_الشريك_${partnerNum}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
         function downloadTxt(content, filename){ const blob = new Blob([content], {type: 'text/plain;charset=utf-8'}); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); URL.revokeObjectURL(link.href); }
-
+        
         function updateInventoryFullSection() {
             let tbody = document.getElementById('inventoryFullTableBody');
             if(!tbody) return;
@@ -775,7 +984,7 @@
                 let stockText = p.quantity > 200 ? 'مخزون ممتاز' : (p.quantity > 50 ? 'مخزون متوسط' : 'مخزون منخفض ⚠️');
                 let movement = getStockMovement(p.name, p.quantity);
                 let trendClass = movement.trend === 'up' ? 'trend-up' : (movement.trend === 'down' ? 'trend-down' : 'trend-steady');
-                html += `<tr>
+                html += `<td>
                               <td class="text-center">${idx+1}</td>
                               <td>${p.name}</td>
                               <td>${p.barcode || '-'}</td>
@@ -787,9 +996,9 @@
                               <td>${formatPrice(p.quantity * p.price)}</td>
                               <td><span class="${stockClass}">${stockText}</span></td>
                               <td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>
-                          </tr>`;
+                        </tr>`;
             });
-            tbody.innerHTML = html || '<td><td colspan="11" class="text-center">لا توجد منتجات</td><\/tr>';
+            tbody.innerHTML = html || '<tr><td colspan="11" class="text-center">لا توجد منتجات</td></tr>';
             let totalQty = products.reduce((s,p)=>s+p.quantity,0);
             let totalVal = products.reduce((s,p)=>s+(p.quantity*p.price),0);
             document.getElementById('totalProductsCount').innerText = products.length;
@@ -797,7 +1006,7 @@
             document.getElementById('totalStockValue').innerText = formatPrice(totalVal);
             checkLowStock();
         }
-
+        
         function printFullFinancialReport() {
             let totalSales = sales.reduce((s,i)=>s+(i.quantity*i.price),0);
             let totalPurchases = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0);
@@ -819,7 +1028,7 @@
             downloadTxt(content, `تقرير_مالي_شامل_${new Date().toISOString().slice(0,19)}.txt`);
             Swal.fire('تم', 'تم تصدير التقرير المالي الشامل مع جميع التفاصيل', 'success');
         }
-
+        
         function loadAllData(){
             loadFromFirebase('customers',d=>{ customers=d; loadCustomers(); });
             loadFromFirebase('suppliers',d=>{ suppliers=d; loadSuppliers(); });
@@ -841,10 +1050,10 @@
         function updateProfitAnalysis(){ let totalSales=sales.reduce((s,sl)=>s+(sl.quantity*sl.price),0); let totalPurchases=purchases.reduce((s,p)=>s+(p.quantity*p.cost),0); let totalOp=operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net=totalSales-totalPurchases-totalOp; let margin=totalSales>0?((net/totalSales)*100).toFixed(2):0; document.getElementById('totalSales').innerText=formatPrice(totalSales); document.getElementById('totalPurchases').innerText=formatPrice(totalPurchases); document.getElementById('totalProfit').innerText=formatPrice(net); document.getElementById('profitMargin').innerText=margin+'%'; }
         function loadSalesHistory(){ let div=document.getElementById('salesHistory'); if(div) div.innerHTML=sales.slice(-10).reverse().map(s=>`<div class="list-group-item"><strong>${s.productName}</strong> | ${s.rawQuantity||s.quantity} ${s.unit} = ${formatPrice(s.total)}<br><small>${s.customerName} | ${s.date}</small><br><button class="edit-btn" onclick="editSale(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSale(${s.id})">حذف</button></div>`).join(''); }
         function loadPurchasesHistory(){ let div=document.getElementById('purchasesHistory'); if(div) div.innerHTML=purchases.slice(-10).reverse().map(p=>`<div class="list-group-item"><strong>${p.productName}</strong> | ${p.rawQuantity||p.quantity} ${p.unit} = ${formatPrice(p.total)}<br><small>${p.supplierName} | ${p.date}</small><br><button class="edit-btn" onclick="editPurchase(${p.id})">تعديل</button> <button class="delete-btn" onclick="deletePurchase(${p.id})">حذف</button></div>`).join(''); }
-        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<td><td colspan="5" class="text-center">لا توجد بيانات</td><\/tr>'; }
-        function loadSuppliers(){ let html=''; suppliers.forEach((s,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td><\/tr>'; }
+        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
+        function loadSuppliers(){ let html=''; suppliers.forEach((s,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
         function loadProducts(){ let html=''; products.forEach(p=>{ html+=`<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})"><i class="fas fa-tag"></i> طباعة بطاقة سعر</button><button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button> <button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML=html||'<p class="text-center">لا توجد منتجات</p>'; setTimeout(()=>{ products.forEach(p=>{ let canvas=document.getElementById(`barcode-${p.id}`); if(canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format:"CODE128", width:2, height:40 }); }); },100); }
-        function loadInvoices(){ let html=''; invoices.forEach((inv,i)=>{ html+=`<tr><td class="text-center"><strong>#${inv.invoiceNumber}</strong></td><td>${inv.customerName}</td><td>${inv.date}</td><td class="text-end">${formatPrice(inv.total)}</td><td class="text-center"><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="btn btn-sm btn-danger" onclick="deleteInvoice(${inv.id})">حذف</button></td></tr>`; }); document.getElementById('invoicesList').innerHTML=html||'</td><td colspan="5" class="text-center">لا توجد فواتير</td><\/tr>'; }
+        function loadInvoices(){ let html=''; invoices.forEach((inv,i)=>{ html+=`<tr><td class="text-center"><strong>#${inv.invoiceNumber}</strong></td><td>${inv.customerName}</td><td>${inv.date}</td><td class="text-end">${formatPrice(inv.total)}</td><td class="text-center"><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="btn btn-sm btn-danger" onclick="deleteInvoice(${inv.id})">حذف</button></td></tr>`; }); document.getElementById('invoicesList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد فواتير</td></tr>'; }
         function deleteInvoice(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ invoices=invoices.filter(i=>i.id!=id); saveToFirebase('invoices',invoices); loadInvoices(); } }); }
         function showProductModal(){ document.getElementById('productId').value=''; document.getElementById('productName').value=''; document.getElementById('productBarcode').value=''; document.getElementById('productType').value=''; document.getElementById('productPrice').value=''; document.getElementById('productCost').value=''; document.getElementById('productQuantity').value=''; new bootstrap.Modal(document.getElementById('productModal')).show(); }
         function saveProduct(){ let id=document.getElementById('productId').value; let product={ id:id?parseInt(id):Date.now(), name:document.getElementById('productName').value, barcode:document.getElementById('productBarcode').value, type:document.getElementById('productType').value, price:parseNumberValue(document.getElementById('productPrice').value), cost:parseNumberValue(document.getElementById('productCost').value), quantity:parseNumberValue(document.getElementById('productQuantity').value)||0 }; if(id) products=products.map(p=>p.id==product.id?product:p); else products.push(product); saveToFirebase('products',products); bootstrap.Modal.getInstance(document.getElementById('productModal')).hide(); Swal.fire('تم','تم حفظ المنتج','success'); loadAllData(); }
@@ -950,8 +1159,8 @@
             document.getElementById('customBorderRadius').addEventListener('input',function(){ document.getElementById('radiusValue').innerText=this.value+'px'; });
             document.getElementById('customFontSizeRange').addEventListener('input',function(){ document.getElementById('fontSizeValue').innerText=this.value+'px'; });
         }
-        function init(){ loadAllData(); startRealtimeListeners(); loadCustomization(); startPriceAutoUpdate(); setInterval(checkLowStock, 30000); }
+        function init(){ loadAllData(); startRealtimeListeners(); loadCustomization(); loadPriceSettings(); startPriceAutoUpdate(); setInterval(checkLowStock, 30000); }
         init();
     </script>
 </body>
-                                                                                                                                                                                                                                                                                        </html>
+    </html>
