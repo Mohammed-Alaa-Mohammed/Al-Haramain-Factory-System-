@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <!-- SEO Meta Tags -->
     <meta name="description" content="مصنع الحرمين للبلاستيك - نظام متكامل لإدارة المبيعات والمشتريات والمخزون والأرباح والشركاء مع تقارير وتحليلات .">
     <meta name="keywords" content="مصنع بلاستيك, إدارة مخزون, مبيعات, مشتريات, أرباح , نظام , harmain plastic">
     <meta name="author" content="مصنع الحرمين للبلاستيك">
     <meta name="robots" content="index, follow">
     <meta name="theme-color" content="#fbbf24">
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="مصنع الحرمين للبلاستيك - نظام إدارة متكامل">
     <meta property="og:description" content="نظام متكامل لإدارة المبيعات والمشتريات والمخزون والأرباح مع تقارير  وتحليلات .">
     <meta property="og:image" content="https://harmain-factory-system.firebaseapp.com/logo.png">
     <meta property="og:url" content="https://harmain-factory-system.web.app">
     <meta property="og:locale" content="ar_AR">
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="مصنع الحرمين للبلاستيك - نظام إدارة متكامل">
     <meta name="twitter:description" content="نظام متكامل لإدارة المبيعات والمشتريات والمخزون والأرباح">
     <meta name="twitter:image" content="https://harmain-factory-system.firebaseapp.com/logo.png">
-    <!-- Icons & Favicon -->
     <link rel="apple-touch-icon" href="https://harmain-factory-system.firebaseapp.com/logo.png">
     <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fbbf24'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%230a0e17' font-weight='bold'%3Eح%3C/text%3E%3C/svg%3E">
     <title>مصنع الحرمين للبلاستيك - نظام متكامل</title>
@@ -86,14 +82,56 @@
         .nav-link-custom { color: var(--text-secondary); padding: 12px 25px; margin: 5px 10px; border-radius: 12px; transition: all 0.3s; display: flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 500; }
         .nav-link-custom i { width: 25px; color: var(--accent-primary); font-size: 1.2rem; }
         .nav-link-custom:hover, .nav-link-custom.active { background: linear-gradient(135deg, var(--accent-primary), #f59e0b); color: #0a0e17; transform: translateX(-5px); box-shadow: 0 5px 15px rgba(251,191,36,0.3); }
-        .inventory-section { padding: 15px; margin: 15px 10px; border-radius: 20px; backdrop-filter: blur(10px); background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border: 1px solid var(--accent-secondary); }
-        .inventory-section-title { font-size: 1rem; font-weight: bold; margin-bottom: 15px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--accent-secondary); }
-        .inventory-item { margin-bottom: 12px; padding: 10px; background: rgba(255, 255, 255, 0.08); border-radius: 12px; }
-        .inventory-item .product-name { font-size: 0.9rem; font-weight: bold; color: var(--accent-secondary); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .inventory-item .product-stats { font-size: 0.75rem; color: var(--text-secondary); margin-top: 8px; }
-        .inventory-item .progress { height: 5px; margin-top: 8px; background: var(--bg-secondary); border-radius: 10px; overflow: hidden; }
-        .inventory-item .progress-bar { background: linear-gradient(90deg, var(--accent-secondary), #34d399); border-radius: 10px; }
-        .inventory-summary { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--accent-secondary); text-align: center; font-size: 0.85rem; font-weight: bold; }
+        
+        /* قسم المخزون الجانبي المعدل - تصميم أخضر منفصل */
+        .inventory-sidebar-card {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+            border: 1px solid var(--accent-secondary);
+            border-radius: 20px;
+            margin: 15px 10px;
+            overflow: hidden;
+        }
+        .inventory-sidebar-header {
+            background: var(--accent-secondary);
+            padding: 10px;
+            text-align: center;
+            color: #0a0e17;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        .inventory-sidebar-items {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .inventory-sidebar-item {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+            transition: 0.2s;
+        }
+        .inventory-sidebar-item:hover {
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .inventory-sidebar-name {
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .inventory-sidebar-stats {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+        .inventory-sidebar-footer {
+            padding: 10px;
+            text-align: center;
+            border-top: 1px solid rgba(16, 185, 129, 0.3);
+            font-size: 0.75rem;
+            font-weight: bold;
+            background: rgba(16, 185, 129, 0.05);
+        }
+
         .stat-card { background: linear-gradient(135deg, var(--bg-card), var(--bg-card-hover)); border-radius: 20px; padding: 20px; text-align: center; transition: all 0.4s; border: 1px solid var(--border-color); cursor: pointer; position: relative; overflow: hidden; }
         .stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary)); transform: scaleX(0); transition: transform 0.3s; }
         .stat-card:hover::after { transform: scaleX(1); }
@@ -104,30 +142,8 @@
         .product-card:hover { transform: translateY(-8px); border-color: var(--accent-primary); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .notification-toast { position: fixed; bottom: 100px; left: 20px; z-index: 1200; background: var(--bg-card); border-right: 4px solid var(--accent-primary); padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 12px; animation: slideInRight 0.3s ease; max-width: 350px; }
         @keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        /* رسالة المخزون المنخفض - تظهر في أسفل اليسار بحجم خط 14px */
-        .alert-toast {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 1300;
-            background: var(--accent-danger);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            font-weight: bold;
-            font-size: 14px;
-            animation: slideInLeft 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            max-width: 350px;
-            direction: rtl;
-        }
-        @keyframes slideInLeft {
-            from { transform: translateX(-100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        .alert-toast { position: fixed; bottom: 20px; left: 20px; z-index: 1300; background: var(--accent-danger); color: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-weight: bold; font-size: 14px; animation: slideInLeft 0.3s ease; display: flex; align-items: center; gap: 10px; max-width: 350px; direction: rtl; }
+        @keyframes slideInLeft { from { transform: translateX(-100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; padding: 10px; background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fbbf24; border-top: 2px solid #fbbf24; z-index: 1000; font-size: 0.85rem; }
         .badge-stock-high { background: linear-gradient(135deg, var(--accent-secondary), #059669); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; }
         .badge-stock-medium { background: linear-gradient(135deg, var(--accent-warning), #d97706); color: white; }
@@ -146,131 +162,19 @@
         .delete-btn { background: #ef4444; color: white; }
         .partner-section { background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(139,92,246,0.05)); border: 1px solid var(--accent-purple); border-radius: 20px; padding: 20px; }
         .partner-item { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; padding: 10px 12px; background: rgba(255,255,255,0.05); border-radius: 12px; transition: all 0.2s; }
-        .partner-item:hover { background: rgba(255,255,255,0.1); transform: translateX(-3px); }
-        .partner-name { font-weight: bold; display: flex; align-items: center; gap: 8px; }
-        .partner-name i { font-size: 1.1rem; }
-        .partner-share { font-weight: bold; font-size: 1.1rem; }
-        .partner-primary { color: var(--accent-primary); }
-        .partner-secondary { color: var(--accent-secondary); }
-
-        /* أسعار الأكياس الحية */
-        .price-card {
-            background: var(--bg-card);
-            border-radius: var(--border-radius);
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-right: 4px solid var(--accent-primary);
-            transition: 0.2s;
-        }
-        .price-card:hover {
-            transform: translateX(-4px);
-            background: var(--bg-card-hover);
-        }
-        .price-type {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: var(--accent-primary);
-        }
-        .price-desc {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .price-detail {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-            font-size: 0.85rem;
-        }
-        .price-live-badge {
-            background: #10b98120;
-            border-radius: 20px;
-            padding: 2px 10px;
-            font-size: 0.7rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .refresh-prices {
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .refresh-prices:hover {
-            transform: rotate(180deg);
-        }
-
-        /* قسم المخزون المنفصل الجديد - متجاوب بالكامل */
-        .inventory-full-section {
-            background: var(--bg-card);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .inventory-full-table-wrapper {
-            overflow-x: auto;
-            width: 100%;
-            -webkit-overflow-scrolling: touch;
-        }
-        .inventory-full-table {
-            width: 100%;
-            min-width: 1000px;
-            border-collapse: collapse;
-        }
-        .inventory-full-table th, .inventory-full-table td {
-            padding: 12px 8px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            white-space: nowrap;
-        }
-        .inventory-full-table th {
-            background: linear-gradient(135deg, var(--accent-primary), #f59e0b);
-            color: #0a0e17;
-            font-weight: bold;
-        }
-        @media (max-width: 768px) {
-            .inventory-full-table th, .inventory-full-table td {
-                padding: 8px 4px;
-                font-size: 0.75rem;
-            }
-            .inventory-full-table .edit-btn, 
-            .inventory-full-table .delete-btn {
-                padding: 2px 6px;
-                font-size: 0.65rem;
-            }
-        }
-        @media (max-width: 576px) {
-            .inventory-full-table th, .inventory-full-table td {
-                white-space: normal;
-                word-break: break-word;
-                min-width: 90px;
-            }
-            .inventory-full-table {
-                min-width: 100%;
-            }
-        }
-        .stock-stats-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .stock-stats-row .stat-card {
-            flex: 1;
-            min-width: 180px;
-        }
-        @media (max-width: 768px) {
-            .stock-stats-row .stat-card {
-                min-width: calc(50% - 10px);
-            }
-        }
-        @media (max-width: 480px) {
-            .stock-stats-row .stat-card {
-                min-width: 100%;
-            }
-        }
+        .price-card { background: var(--bg-card); border-radius: var(--border-radius); padding: 1rem; margin-bottom: 1rem; border-right: 4px solid var(--accent-primary); transition: 0.2s; }
+        .price-card:hover { transform: translateX(-4px); background: var(--bg-card-hover); }
+        .price-type { font-weight: bold; font-size: 1.1rem; color: var(--accent-primary); }
+        .price-desc { font-size: 0.75rem; color: var(--text-secondary); margin: 5px 0; display: flex; align-items: center; gap: 5px; }
+        .price-detail { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.85rem; }
+        .inventory-full-section { background: var(--bg-card); border-radius: var(--border-radius); padding: 20px; margin-bottom: 20px; }
+        .inventory-full-table-wrapper { overflow-x: auto; width: 100%; -webkit-overflow-scrolling: touch; }
+        .inventory-full-table { width: 100%; min-width: 1000px; border-collapse: collapse; }
+        .inventory-full-table th, .inventory-full-table td { padding: 12px 8px; text-align: center; border-bottom: 1px solid var(--border-color); white-space: nowrap; }
+        .inventory-full-table th { background: linear-gradient(135deg, var(--accent-primary), #f59e0b); color: #0a0e17; font-weight: bold; }
+        @media (max-width: 768px) { .inventory-full-table th, .inventory-full-table td { padding: 8px 4px; font-size: 0.75rem; } }
+        .stock-stats-row { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+        .stock-stats-row .stat-card { flex: 1; min-width: 180px; }
         .trend-up { color: var(--accent-secondary); font-weight: bold; }
         .trend-down { color: var(--accent-danger); font-weight: bold; }
         .trend-steady { color: var(--accent-warning); font-weight: bold; }
@@ -278,9 +182,8 @@
 </head>
 <body>
     <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-header"><i class="fas fa-shopping-bag fa-3x" style="color: var(--accent-primary);"></i><h3>مصنع الحرمين للبلاستيك</h3><small id="sidebarSubtitle" style="color: #fff;">نظام متكامل</small></div>
+        <div class="sidebar-header"><i class="fas fa-shopping-bag fa-3x" style="color: var(--accent-primary);"></i><h3>مصنع الحرمين للبلاستيك</h3><small style="color: #fff;">نظام متكامل</small></div>
         <nav class="nav flex-column">
             <a class="nav-link-custom" href="#" onclick="showSection('dashboard')"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a>
             <a class="nav-link-custom" href="#" onclick="showSection('inventoryManagement')"><i class="fas fa-warehouse"></i> المخزون والمستودع</a>
@@ -298,214 +201,55 @@
             <a class="nav-link-custom" href="#" onclick="showSection('customization')"><i class="fas fa-palette"></i> تخصيص الموقع</a>
             <a class="nav-link-custom" href="#" onclick="showSection('settings')"><i class="fas fa-cog"></i> الإعدادات</a>
         </nav>
-        <div class="sidebar-controls">
-            <button onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
-            <button onclick="showLastUpdate()"><i class="fas fa-bell"></i></button>
+        <div class="sidebar-controls"><button onclick="toggleTheme()"><i class="fas fa-moon"></i></button><button onclick="showLastUpdate()"><i class="fas fa-bell"></i></button></div>
+        
+        <!-- قسم المخزون الجانبي المعدل (أخضر منفصل) -->
+        <div class="inventory-sidebar-card">
+            <div class="inventory-sidebar-header"><i class="fas fa-warehouse"></i> المخزون والمستودع</div>
+            <div id="inventorySidebarContent" class="inventory-sidebar-items"><div class="text-center p-3 text-secondary">جاري التحميل...</div></div>
+            <div id="inventorySummarySidebar" class="inventory-sidebar-footer"></div>
         </div>
-
-        <div class="inventory-section" style="background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(139,92,246,0.05)); border-color: var(--accent-purple);">
-            <div class="inventory-section-title" style="color: var(--accent-purple);"><i class="fas fa-file-invoice-dollar"></i> فاتورة مالية شاملة</div>
-            <button class="print-full-report-btn" onclick="printFullFinancialReport()"><i class="fas fa-print"></i> طباعة التقرير المالي الكامل</button>
-        </div>
-
-        <div class="inventory-section">
-            <div class="inventory-section-title"><i class="fas fa-warehouse"></i> المخزون والمستودع <i class="fas fa-chart-line"></i></div>
-            <div id="inventorySidebarContent"><div class="text-center text-secondary small">جاري التحميل...</div></div>
-            <div class="inventory-summary" id="inventorySummary" style="color:#FAFA00;">إجمالي الأصناف: 0</div>
+        
+        <div class="inventory-sidebar-card" style="border-color: var(--accent-purple);">
+            <div class="inventory-sidebar-header" style="background: var(--accent-purple);"><i class="fas fa-file-invoice-dollar"></i> فاتورة مالية شاملة</div>
+            <button class="print-full-report-btn" onclick="printFullFinancialReport()" style="margin: 10px; width: calc(100% - 20px);"><i class="fas fa-print"></i> طباعة التقرير المالي الكامل</button>
         </div>
     </div>
 
     <div class="content-area" id="contentArea" onclick="closeSidebarOnClickOutside(event)">
-        <!-- Dashboard -->
         <div id="dashboard" class="section">
             <div class="section-header"><h2><i class="fas fa-chart-line"></i> لوحة التحكم</h2><button class="export-btn" onclick="exportSectionToTxt('dashboard')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
             <div class="row" id="statsCards"></div>
             <div class="row mt-4"><div class="col-lg-8"><div class="card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">تحليل المبيعات والأرباح</div><div class="card-body"><div id="salesChart"></div></div></div></div><div class="col-lg-4"><div class="card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">توزيع المبيعات</div><div class="card-body"><div id="pieChart"></div></div></div></div></div>
         </div>
-
-        <!-- Inventory Management Full Section (Responsive) -->
         <div id="inventoryManagement" class="section" style="display:none;">
             <div class="section-header"><h2><i class="fas fa-warehouse"></i> إدارة المخزون والمستودع (كامل)</h2><button class="export-btn" onclick="exportSectionToTxt('inventoryManagement')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
             <div class="inventory-full-section">
-                <div class="inventory-full-table-wrapper">
-                    <table class="inventory-full-table">
-                        <thead>
-                            <tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>النوع</th><th>المقاس</th><th>الوزن (كجم)</th><th>سعر البيع</th><th>سعر الشراء</th><th>الكمية الحالية</th><th>الحركة (7 أيام)</th><th>القيمة الإجمالية</th><th>حالة المخزون</th><th>الإجراءات</th></tr>
-                        </thead>
-                        <tbody id="inventoryFullTableBody"></tbody>
-                    </table>
-                </div>
-                <div class="stock-stats-row">
-                    <div class="stat-card"><i class="fas fa-boxes"></i><h3 id="totalProductsCount">0</h3><p>إجمالي الأصناف</p></div>
-                    <div class="stat-card"><i class="fas fa-cubes"></i><h3 id="totalStockQuantity">0</h3><p>إجمالي الكميات</p></div>
-                    <div class="stat-card"><i class="fas fa-dollar-sign"></i><h3 id="totalStockValue">0</h3><p>قيمة المخزون</p></div>
-                </div>
+                <div class="inventory-full-table-wrapper"><table class="inventory-full-table"><thead><tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>النوع</th><th>المقاس</th><th>الوزن (كجم)</th><th>سعر البيع</th><th>سعر الشراء</th><th>الكمية الحالية</th><th>الحركة (7 أيام)</th><th>القيمة الإجمالية</th><th>حالة المخزون</th><th>الإجراءات</th></tr></thead><tbody id="inventoryFullTableBody"></tbody></table></div>
+                <div class="stock-stats-row"><div class="stat-card"><i class="fas fa-boxes"></i><h3 id="totalProductsCount">0</h3><p>إجمالي الأصناف</p></div><div class="stat-card"><i class="fas fa-cubes"></i><h3 id="totalStockQuantity">0</h3><p>إجمالي الكميات</p></div><div class="stat-card"><i class="fas fa-dollar-sign"></i><h3 id="totalStockValue">0</h3><p>قيمة المخزون</p></div></div>
             </div>
         </div>
-
-        <!-- باقي الأقسام -->
         <div id="sales" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-chart-line"></i> تسجيل المبيعات</h2><button class="export-btn" onclick="exportSectionToTxt('sales')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row"><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">تسجيل بيع جديد</div><div class="card-body"><label class="form-label"><i class="fas fa-calendar-alt"></i> التاريخ</label><input type="date" id="saleDate" class="form-control mb-2"><label class="form-label"><i class="fas fa-barcode"></i> مسح الباركود</label><input type="text" id="saleBarcodeInput" class="form-control mb-2" placeholder="ادخل الباركود أو اسم المنتج..." onchange="findProductByBarcode()"><label class="form-label"><i class="fas fa-tag"></i> اسم المنتج</label><input type="text" id="saleProductNameInput" class="form-control mb-2" placeholder="أدخل اسم المنتج..."><label class="form-label"><i class="fas fa-user"></i> اسم العميل</label><input type="text" id="saleCustomerNameInput" class="form-control mb-2" placeholder="أدخل اسم العميل..."><div class="row"><div class="col-6"><label class="form-label"><i class="fas fa-arrows-alt"></i> المقاس</label><input type="text" id="saleSize" class="form-control mb-2" placeholder="مثال: 50×70 سم"></div><div class="col-6"><label class="form-label"><i class="fas fa-weight-hanging"></i> الوزن (كجم)</label><input type="text" id="saleWeight" class="form-control mb-2 number-input" placeholder="الوزن" oninput="formatNumberInput(this)"></div></div><div class="row"><div class="col-8"><label class="form-label">الكمية</label><input type="text" id="saleQuantity" class="form-control mb-2 number-input" placeholder="الكمية" oninput="formatNumberInput(this)"></div><div class="col-4"><label class="form-label">الوحدة</label><select id="saleUnit" class="form-control mb-2"><option value="كيلو">كيلو</option><option value="طن">طن</option><option value="جرام">جرام</option><option value="كيس">كيس</option><option value="قطعة">قطعة</option></select></div></div><label class="form-label"><i class="fas fa-dollar-sign"></i> سعر البيع</label><input type="text" id="salePrice" class="form-control mb-2 number-input" placeholder="سعر البيع" oninput="formatNumberInput(this)"><input type="hidden" id="editSaleId" value=""><button class="btn btn-primary-custom w-100" onclick="saveSale()"><i class="fas fa-save"></i> تسجيل البيع</button></div></div></div><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">آخر المبيعات</div><div class="card-body" style="max-height: 400px; overflow-y: auto;"><div id="salesHistory"></div></div></div></div></div><div class="search-section mt-3"><h5><i class="fas fa-search"></i> بحث متقدم في المبيعات</h5><div class="row"><div class="col-md-4"><input type="text" id="searchSaleCustomer" class="form-control" placeholder="العميل"></div><div class="col-md-4"><input type="text" id="searchSaleProduct" class="form-control" placeholder="المنتج"></div><div class="col-md-4"><input type="date" id="searchSaleDate" class="form-control"></div></div><button class="btn btn-primary-custom mt-2" onclick="searchSales()"><i class="fas fa-filter"></i> بحث</button><div id="salesSearchResults" class="mt-3"></div></div></div>
         <div id="purchases" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-shopping-cart"></i> تسجيل المشتريات</h2><button class="export-btn" onclick="exportSectionToTxt('purchases')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row"><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">تسجيل شراء جديد</div><div class="card-body"><label class="form-label"><i class="fas fa-calendar-alt"></i> التاريخ</label><input type="date" id="purchaseDate" class="form-control mb-2"><label class="form-label">اسم المنتج</label><input type="text" id="purchaseProductNameInput" class="form-control mb-2"><label class="form-label">اسم المورد</label><input type="text" id="purchaseSupplierNameInput" class="form-control mb-2"><div class="row"><div class="col-6"><label class="form-label"><i class="fas fa-arrows-alt"></i> المقاس</label><input type="text" id="purchaseSize" class="form-control mb-2" placeholder="مثال: 50×70 سم"></div><div class="col-6"><label class="form-label"><i class="fas fa-weight-hanging"></i> الوزن (كجم)</label><input type="text" id="purchaseWeight" class="form-control mb-2 number-input" placeholder="الوزن" oninput="formatNumberInput(this)"></div></div><div class="row"><div class="col-8"><label class="form-label">الكمية</label><input type="text" id="purchaseQuantity" class="form-control mb-2 number-input" oninput="formatNumberInput(this)"></div><div class="col-4"><label class="form-label">الوحدة</label><select id="purchaseUnit" class="form-control mb-2"><option value="كيلو">كيلو</option><option value="طن">طن</option><option value="جرام">جرام</option><option value="كيس">كيس</option><option value="قطعة">قطعة</option></select></div></div><label class="form-label">سعر الشراء</label><input type="text" id="purchaseCost" class="form-control mb-2 number-input" oninput="formatNumberInput(this)"><input type="hidden" id="editPurchaseId" value=""><button class="btn btn-primary-custom w-100" onclick="savePurchase()"><i class="fas fa-save"></i> تسجيل الشراء</button></div></div></div><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">آخر المشتريات</div><div class="card-body"><div id="purchasesHistory"></div></div></div></div></div><div class="search-section mt-3"><h5><i class="fas fa-search"></i> بحث متقدم في المشتريات</h5><div class="row"><div class="col-md-4"><input type="text" id="searchPurchaseSupplier" class="form-control" placeholder="المورد"></div><div class="col-md-4"><input type="text" id="searchPurchaseProduct" class="form-control" placeholder="المنتج"></div><div class="col-md-4"><input type="date" id="searchPurchaseDate" class="form-control"></div></div><button class="btn btn-primary-custom mt-2" onclick="searchPurchases()"><i class="fas fa-filter"></i> بحث</button><div id="purchasesSearchResults" class="mt-3"></div></div></div>
-        
-        <!-- Profits with Profit Calculator -->
-        <div id="profits" class="section" style="display:none;">
-            <div class="section-header"><h2><i class="fas fa-coins"></i> تحليل المكاسب والأرباح</h2><button class="export-btn" onclick="exportSectionToTxt('profits')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
-            <div class="row mb-4"><div class="col-md-3"><div class="stat-card"><i class="fas fa-chart-line"></i><h3 id="totalSales">0</h3><p>إجمالي المبيعات</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-shopping-cart"></i><h3 id="totalPurchases">0</h3><p>إجمالي المشتريات</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-coins"></i><h3 id="totalProfit">0</h3><p>صافي الربح</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-percent"></i><h3 id="profitMargin">0%</h3><p>هامش الربح</p></div></div></div>
-            <div class="card" style="background: var(--bg-card); border-radius: 20px; margin-top: 20px;">
-                <div class="card-header" style="background: transparent; font-weight: bold;"><i class="fas fa-calculator"></i> حاسبة الأرباح المتوقعة</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4"><label>سعر البيع المتوقع (ج.م)</label><input type="text" id="expectedPrice" class="form-control number-input" placeholder="مثال: 100" oninput="calculateExpectedProfit()"></div>
-                        <div class="col-md-4"><label>الكمية المتوقعة</label><input type="text" id="expectedQuantity" class="form-control number-input" placeholder="مثال: 50" oninput="calculateExpectedProfit()"></div>
-                        <div class="col-md-4"><label>سعر الشراء / التكلفة (ج.م)</label><input type="text" id="expectedCost" class="form-control number-input" placeholder="مثال: 70" oninput="calculateExpectedProfit()"></div>
-                    </div>
-                    <div class="alert alert-success mt-3 text-center" id="expectedProfitResult" style="background: var(--accent-secondary)20; border-color: var(--accent-secondary);">الربح المتوقع: 0 ج.م</div>
-                </div>
-            </div>
-        </div>
-        
-        <div id="partners" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-handshake"></i> توزيع الأرباح بين الشركاء</h2><button class="export-btn" onclick="exportSectionToTxt('partners')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card partner-section"><div class="card-body"><div class="partner-item"><div class="partner-name partner-primary"><i class="fas fa-crown"></i> الشريك الأول (ثلاثة أرباع الربح - 3/4)</div><div class="partner-share partner-primary" id="partner1Share">0 ج.م</div></div><div class="partner-item"><div class="partner-name partner-secondary"><i class="fas fa-star-of-life"></i> الشريك الثاني (ربع الربح - 1/4)</div><div class="partner-share partner-secondary" id="partner2Share">0 ج.م</div></div><div class="partner-item" style="border-top: 1px solid var(--accent-purple); margin-top: 8px; padding-top: 10px;"><div class="partner-name"><i class="fas fa-chart-line"></i> صافي الربح الإجمالي</div><div class="partner-share" id="netProfitTotal">0 ج.م</div></div><div class="row mt-4"><div class="col-md-6 mb-2"><button class="btn btn-primary-custom w-100" onclick="exportPartnerReport(1)"><i class="fas fa-download"></i> تقرير الشريك الأول (3/4 الربح)</button></div><div class="col-md-6 mb-2"><button class="btn btn-primary-custom w-100" onclick="exportPartnerReport(2)"><i class="fas fa-download"></i> تقرير الشريك الثاني (1/4 الربح)</button></div></div><div class="alert alert-info mt-3 small"><i class="fas fa-info-circle"></i> يتم احتساب الأرباح بناءً على صافي الربح (المبيعات - المشتريات - مصاريف التشغيل). الشريك الأول يحصل على ثلاثة أرباع (3/4) صافي الربح، والشريك الثاني يحصل على الربع (1/4).</div></div></div></div>
-        
-        <!-- قسم أسعار الأكياس الجديدة مع أسعار تقريبية حقيقية -->
-        <div id="plasticPrices" class="section" style="display:none;">
-            <div class="section-header">
-                <h2><i class="fas fa-tags"></i> أسعار الأكياس البلاستيكية - تحديث فوري</h2>
-                <div>
-                    <button class="export-btn" onclick="exportSectionToTxt('plasticPrices')"><i class="fas fa-download"></i> تصدير الأسعار</button>
-                    <button class="btn btn-primary-custom ms-2" onclick="syncWithSabic()"><i class="fab fa-sistrix"></i> مزامنة مع سابك (SABIC)</button>
-                    <button class="btn btn-secondary ms-2" onclick="refreshPlasticPrices()"><i class="fas fa-sync-alt refresh-prices"></i> تحديث الأسعار</button>
-                </div>
-            </div>
-            <div class="alert alert-info mb-3">
-                <i class="fas fa-globe"></i> <strong>أسعار السوق التقريبية:</strong> يتم عرض أسعار تقريبية حقيقية بناءً على بيانات السوق للمواد الخام (HDPE, LDPE, PP) مع إضافة هامش الربح والمصاريف. يمكنك تحديث السعر المرجعي للمادة الخام من خلال تعديل البيانات في الكود.
-                <span class="badge bg-success" id="lastPriceUpdate">آخر تحديث: --</span>
-                <a href="https://www.sabic.com/" target="_blank" class="float-start text-light"><i class="fas fa-external-link-alt"></i> موقع سابك الرسمي</a>
-            </div>
-            <div class="row" id="plasticPricesContainer">
-                <div class="col-12 text-center">جاري تحميل الأسعار...</div>
-            </div>
-        </div>
-
+        <div id="profits" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-coins"></i> تحليل المكاسب والأرباح</h2><button class="export-btn" onclick="exportSectionToTxt('profits')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row mb-4"><div class="col-md-3"><div class="stat-card"><i class="fas fa-chart-line"></i><h3 id="totalSales">0</h3><p>إجمالي المبيعات</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-shopping-cart"></i><h3 id="totalPurchases">0</h3><p>إجمالي المشتريات</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-coins"></i><h3 id="totalProfit">0</h3><p>صافي الربح</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-percent"></i><h3 id="profitMargin">0%</h3><p>هامش الربح</p></div></div></div><div class="card" style="background: var(--bg-card); border-radius: 20px; margin-top: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;"><i class="fas fa-calculator"></i> حاسبة الأرباح المتوقعة</div><div class="card-body"><div class="row"><div class="col-md-4"><label>سعر البيع المتوقع (ج.م)</label><input type="text" id="expectedPrice" class="form-control number-input" placeholder="مثال: 100" oninput="calculateExpectedProfit()"></div><div class="col-md-4"><label>الكمية المتوقعة</label><input type="text" id="expectedQuantity" class="form-control number-input" placeholder="مثال: 50" oninput="calculateExpectedProfit()"></div><div class="col-md-4"><label>سعر الشراء / التكلفة (ج.م)</label><input type="text" id="expectedCost" class="form-control number-input" placeholder="مثال: 70" oninput="calculateExpectedProfit()"></div></div><div class="alert alert-success mt-3 text-center" id="expectedProfitResult" style="background: var(--accent-secondary)20; border-color: var(--accent-secondary);">الربح المتوقع: 0 ج.م</div></div></div></div>
+        <div id="partners" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-handshake"></i> توزيع الأرباح بين الشركاء</h2><button class="export-btn" onclick="exportSectionToTxt('partners')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card partner-section"><div class="card-body"><div class="partner-item"><div class="partner-name partner-primary"><i class="fas fa-crown"></i> الشريك الأول (ثلاثة أرباع الربح - 3/4)</div><div class="partner-share partner-primary" id="partner1Share">0 ج.م</div></div><div class="partner-item"><div class="partner-name partner-secondary"><i class="fas fa-star-of-life"></i> الشريك الثاني (ربع الربح - 1/4)</div><div class="partner-share partner-secondary" id="partner2Share">0 ج.م</div></div><div class="partner-item" style="border-top: 1px solid var(--accent-purple); margin-top: 8px; padding-top: 10px;"><div class="partner-name"><i class="fas fa-chart-line"></i> صافي الربح الإجمالي</div><div class="partner-share" id="netProfitTotal">0 ج.م</div></div><div class="row mt-4"><div class="col-md-6 mb-2"><button class="btn btn-primary-custom w-100" onclick="exportPartnerReport(1)"><i class="fas fa-download"></i> تقرير الشريك الأول (3/4 الربح)</button></div><div class="col-md-6 mb-2"><button class="btn btn-primary-custom w-100" onclick="exportPartnerReport(2)"><i class="fas fa-download"></i> تقرير الشريك الثاني (1/4 الربح)</button></div></div><div class="alert alert-info mt-3 small"><i class="fas fa-info-circle"></i> يتم احتساب الأرباح بناءً على صافي الربح (المبيعات - المشتريات - مصاريف التشغيل).</div></div></div></div>
+        <div id="plasticPrices" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-tags"></i> أسعار الأكياس البلاستيكية</h2><div><button class="export-btn" onclick="exportSectionToTxt('plasticPrices')"><i class="fas fa-download"></i> تصدير الأسعار</button><button class="btn btn-primary-custom ms-2" onclick="syncWithSabic()"><i class="fab fa-sistrix"></i> مزامنة مع سابك</button><button class="btn btn-secondary ms-2" onclick="refreshPlasticPrices()"><i class="fas fa-sync-alt"></i> تحديث الأسعار</button></div></div><div class="alert alert-info mb-3"><i class="fas fa-globe"></i> <strong>أسعار السوق التقريبية:</strong> يتم عرض أسعار تقريبية حقيقية بناءً على بيانات السوق. <span class="badge bg-success" id="lastPriceUpdate">آخر تحديث: --</span><a href="https://www.sabic.com/" target="_blank" class="float-start text-light"><i class="fas fa-external-link-alt"></i> موقع سابك الرسمي</a></div><div class="row" id="plasticPricesContainer"><div class="col-12 text-center">جاري تحميل الأسعار...</div></div></div>
         <div id="customers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-users"></i> إدارة العملاء</h2><button class="export-btn" onclick="exportSectionToTxt('customers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showCustomerModal()">عميل جديد</button><div class="table-responsive"><table class="table table-custom"><thead>70th<th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="customersList"></tbody> </table></div></div>
-        
-        <!-- Products with Size, Weight, Price Tag Print -->
-        <div id="products" class="section" style="display:none;">
-            <div class="section-header"><h2><i class="fas fa-boxes"></i> إدارة الأكياس</h2><button class="export-btn" onclick="exportSectionToTxt('products')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
-            <button class="btn btn-primary-custom mb-3" onclick="showProductModal()">كيس جديد</button>
-            <div class="product-grid" id="productsGrid"></div>
-        </div>
-        
+        <div id="products" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-boxes"></i> إدارة الأكياس</h2><button class="export-btn" onclick="exportSectionToTxt('products')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showProductModal()">كيس جديد</button><div class="product-grid" id="productsGrid"></div></div>
         <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> </table></div></div>
-        
-        <!-- قسم الفواتير مع زر التصدير -->
-        <div id="invoices" class="section" style="display:none;">
-            <div class="section-header">
-                <h2><i class="fas fa-file-invoice"></i> الفواتير</h2>
-                <div>
-                    <button class="export-btn" onclick="exportSectionToTxt('invoices')"><i class="fas fa-download"></i> تصدير كملف نصي</button>
-                    <button class="btn btn-primary-custom ms-2" onclick="exportInvoicesToTxt()"><i class="fas fa-file-export"></i> تصدير الفواتير (نصي)</button>
-                </div>
-            </div>
-            <button class="btn btn-primary-custom mb-3" onclick="showInvoiceModal()">فاتورة جديدة</button>
-            <div class="table-responsive">
-                <table class="table table-custom">
-                    <thead>
-                        <tr><th>رقم الفاتورة</th><th>العميل</th><th>التاريخ</th><th>المجموع</th><th>الإجراءات</th></tr>
-                    </thead>
-                    <tbody id="invoicesList"></tbody>
-                </table>
-            </div>
-        </div>
-        
-        <div id="reports" class="section" style="display:none;">
-            <div class="section-header"><h2><i class="fas fa-chart-bar"></i> التقارير</h2><button class="export-btn" onclick="exportSectionToTxt('reports')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
-            <div class="card mb-3" style="background: var(--bg-card); border-radius: 20px;">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-5"><label>من تاريخ</label><input type="date" id="reportDateFrom" class="form-control"></div>
-                        <div class="col-md-5"><label>إلى تاريخ</label><input type="date" id="reportDateTo" class="form-control"></div>
-                        <div class="col-md-2"><label class="text-white">.</label><button class="btn btn-primary-custom w-100" onclick="clearDateFilter()">مسح التصفية</button></div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateSalesReport()">تقرير المبيعات</button></div>
-                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generatePurchasesReport()">تقرير المشتريات</button></div>
-                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateProfitReport()">تقرير الأرباح</button></div>
-                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateSalesReportWithDate()">تقرير مبيعات (بالفترة)</button></div>
-                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generatePurchasesReportWithDate()">تقرير مشتريات (بالفترة)</button></div>
-                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateProfitReportWithDate()">تقرير أرباح (بالفترة)</button></div>
-            </div>
-        </div>
+        <div id="invoices" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-file-invoice"></i> الفواتير</h2><div><button class="export-btn" onclick="exportSectionToTxt('invoices')"><i class="fas fa-download"></i> تصدير كملف نصي</button><button class="btn btn-primary-custom ms-2" onclick="exportInvoicesToTxt()"><i class="fas fa-file-export"></i> تصدير الفواتير (نصي)</button></div></div><button class="btn btn-primary-custom mb-3" onclick="showInvoiceModal()">فاتورة جديدة</button><div class="table-responsive"><table class="table table-custom"><thead> <th>رقم الفاتورة</th><th>العميل</th><th>التاريخ</th><th>المجموع</th><th>الإجراءات</th> </thead><tbody id="invoicesList"></tbody> </table></div></div>
+        <div id="reports" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-chart-bar"></i> التقارير</h2><button class="export-btn" onclick="exportSectionToTxt('reports')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card mb-3" style="background: var(--bg-card); border-radius: 20px;"><div class="card-body"><div class="row"><div class="col-md-5"><label>من تاريخ</label><input type="date" id="reportDateFrom" class="form-control"></div><div class="col-md-5"><label>إلى تاريخ</label><input type="date" id="reportDateTo" class="form-control"></div><div class="col-md-2"><label class="text-white">.</label><button class="btn btn-primary-custom w-100" onclick="clearDateFilter()">مسح التصفية</button></div></div></div></div><div class="row"><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateSalesReport()">تقرير المبيعات</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generatePurchasesReport()">تقرير المشتريات</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateProfitReport()">تقرير الأرباح</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateSalesReportWithDate()">تقرير مبيعات (بالفترة)</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generatePurchasesReportWithDate()">تقرير مشتريات (بالفترة)</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateProfitReportWithDate()">تقرير أرباح (بالفترة)</button></div></div></div>
         <div id="operatingExpenses" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-charging-station"></i> مصاريف التشغيل</h2><button class="export-btn" onclick="exportSectionToTxt('operatingExpenses')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-body"><div class="row"><div class="col-md-6"><label>كهرباء</label><input type="text" id="operatingElectricity" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>إيجار</label><input type="text" id="operatingRent" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>رواتب</label><input type="text" id="operatingSalaries" class="form-control number-input" value="0" oninput="formatNumberInput(this)"></div><div class="col-md-6"><label>مصروفات نقل</label><input type="text" id="operatingTransport" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>مصروفات متنوعة</label><input type="text" id="operatingMisc" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>طباعة الغلاف</label><input type="text" id="operatingPrinting" class="form-control number-input" value="0" oninput="formatNumberInput(this)"></div></div><button class="btn btn-primary-custom mt-3" onclick="saveOperatingExpenses()">حفظ المصروفات</button></div></div></div>
-        
-        <!-- قسم تخصيص الموقع -->
-        <div id="customization" class="section" style="display:none;">
-            <h2 class="mb-4"><i class="fas fa-palette"></i> تخصيص مظهر الموقع</h2>
-            <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius);">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6"><label>حجم النص الأساسي</label><input type="range" id="customFontSizeRange" class="form-range" min="10" max="22" step="1" value="14"><span id="fontSizeValue" class="badge bg-secondary">14px</span></div>
-                        <div class="col-md-6"><label>نوع الخط</label><select id="customFontSelect" class="form-select"><option value="'Cairo', 'Tajawal', sans-serif">القاهرة</option><option value="'Tajawal', 'Cairo', sans-serif">تاجوال</option><option value="'Amiri', serif">أميري</option><option value="'Noto Kufi Arabic', sans-serif">نوتو كوفي</option></select></div>
-                        <div class="col-md-6"><label>لون النص الرئيسي</label><input type="color" id="customTextColor" class="form-control"></div>
-                        <div class="col-md-6"><label>اللون الأساسي</label><input type="color" id="customAccentPrimary" class="form-control"></div>
-                        <div class="col-md-6"><label>اللون الثانوي</label><input type="color" id="customAccentSecondary" class="form-control"></div>
-                        <div class="col-md-6"><label>لون الخلفية</label><input type="color" id="customBgPrimary" class="form-control"></div>
-                        <div class="col-md-6"><label>لون البطاقات</label><input type="color" id="customCardBg" class="form-control"></div>
-                        <div class="col-md-6"><label>حجم الزوايا</label><input type="range" id="customBorderRadius" class="form-range" min="4" max="30" step="1"><span id="radiusValue" class="badge bg-secondary">12px</span></div>
-                    </div>
-                    <div class="mt-3"><button class="btn btn-primary-custom" onclick="applyCustomization()">تطبيق</button><button class="btn btn-secondary ms-2" onclick="resetCustomization()">إعادة ضبط</button></div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- قسم الإعدادات مع إعدادات الأسعار -->
-        <div id="settings" class="section" style="display:none;">
-            <h2 class="mb-4"><i class="fas fa-cog"></i> الإعدادات</h2>
-            <div class="card mb-4" style="background: var(--bg-card); border-radius: 20px;">
-                <div class="card-header" style="background: transparent; font-weight: bold;"><i class="fas fa-dollar-sign"></i> إعدادات الأسعار والتكلفة</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label class="form-label"><i class="fas fa-exchange-alt"></i> سعر صرف الدولار مقابل الجنيه</label>
-                            <input type="text" id="exchangeRateEGP" class="form-control number-input" value="50.00" oninput="formatNumberInput(this); updateExchangeRate()">
-                            <small class="text-secondary">تستخدم لحساب السعر النهائي من أسعار الدولار</small>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label"><i class="fas fa-percent"></i> نسبة هامش الربح + المصاريف (%)</label>
-                            <input type="text" id="profitMarginPercent" class="form-control number-input" value="15" oninput="formatNumberInput(this); updateProfitMargin()">
-                            <small class="text-secondary">تضاف على سعر المادة الخام لحساب السعر النهائي</small>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="form-label"><i class="fas fa-chart-line"></i> أسعار المواد الخام المرجعية (دولار/طن)</label>
-                            <div class="alert alert-info" id="lastBasePriceDisplay">جاري التحميل...</div>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary-custom mt-2" onclick="resetPriceSettings()"><i class="fas fa-undo-alt"></i> إعادة تعيين الإعدادات الافتراضية</button>
-                </div>
-            </div>
-            <div class="card" style="background: var(--bg-card); border-radius: 20px;">
-                <div class="card-body">
-                    <button class="btn btn-danger" onclick="resetAllData()">إعادة تعيين جميع البيانات</button>
-                </div>
-            </div>
-        </div>
+        <div id="customization" class="section" style="display:none;"><h2 class="mb-4"><i class="fas fa-palette"></i> تخصيص مظهر الموقع</h2><div class="card" style="background: var(--bg-card); border-radius: var(--border-radius);"><div class="card-body"><div class="row"><div class="col-md-6"><label>حجم النص الأساسي</label><input type="range" id="customFontSizeRange" class="form-range" min="10" max="22" step="1" value="14"><span id="fontSizeValue" class="badge bg-secondary">14px</span></div><div class="col-md-6"><label>نوع الخط</label><select id="customFontSelect" class="form-select"><option value="'Cairo', 'Tajawal', sans-serif">القاهرة</option><option value="'Tajawal', 'Cairo', sans-serif">تاجوال</option><option value="'Amiri', serif">أميري</option><option value="'Noto Kufi Arabic', sans-serif">نوتو كوفي</option></select></div><div class="col-md-6"><label>لون النص الرئيسي</label><input type="color" id="customTextColor" class="form-control"></div><div class="col-md-6"><label>اللون الأساسي</label><input type="color" id="customAccentPrimary" class="form-control"></div><div class="col-md-6"><label>اللون الثانوي</label><input type="color" id="customAccentSecondary" class="form-control"></div><div class="col-md-6"><label>لون الخلفية</label><input type="color" id="customBgPrimary" class="form-control"></div><div class="col-md-6"><label>لون البطاقات</label><input type="color" id="customCardBg" class="form-control"></div><div class="col-md-6"><label>حجم الزوايا</label><input type="range" id="customBorderRadius" class="form-range" min="4" max="30" step="1"><span id="radiusValue" class="badge bg-secondary">12px</span></div></div><div class="mt-3"><button class="btn btn-primary-custom" onclick="applyCustomization()">تطبيق</button><button class="btn btn-secondary ms-2" onclick="resetCustomization()">إعادة ضبط</button></div></div></div></div>
+        <div id="settings" class="section" style="display:none;"><h2 class="mb-4"><i class="fas fa-cog"></i> الإعدادات</h2><div class="card mb-4" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;"><i class="fas fa-dollar-sign"></i> إعدادات الأسعار والتكلفة</div><div class="card-body"><div class="row"><div class="col-md-6"><label class="form-label"><i class="fas fa-exchange-alt"></i> سعر صرف الدولار مقابل الجنيه</label><input type="text" id="exchangeRateEGP" class="form-control number-input" value="50.00" oninput="formatNumberInput(this); updateExchangeRate()"><small class="text-secondary">تستخدم لحساب السعر النهائي</small></div><div class="col-md-6"><label class="form-label"><i class="fas fa-percent"></i> نسبة هامش الربح + المصاريف (%)</label><input type="text" id="profitMarginPercent" class="form-control number-input" value="15" oninput="formatNumberInput(this); updateProfitMargin()"><small class="text-secondary">تضاف على سعر المادة الخام</small></div></div><hr><div class="row"><div class="col-12"><label class="form-label"><i class="fas fa-chart-line"></i> أسعار المواد الخام المرجعية (دولار/طن)</label><div class="alert alert-info" id="lastBasePriceDisplay">جاري التحميل...</div></div></div><button class="btn btn-primary-custom mt-2" onclick="resetPriceSettings()"><i class="fas fa-undo-alt"></i> إعادة تعيين الإعدادات الافتراضية</button></div></div><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-body"><button class="btn btn-danger" onclick="resetAllData()">إعادة تعيين جميع البيانات</button></div></div></div>
     </div>
 
     <!-- Modals -->
     <div class="modal fade" id="customerModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات العميل</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="customerId"><input type="text" id="customerName" class="form-control mb-2" placeholder="الاسم"><input type="text" id="customerPhone" class="form-control mb-2" placeholder="الهاتف"><textarea id="customerAddress" class="form-control" placeholder="العنوان"></textarea></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveCustomer()">حفظ</button></div></div></div></div>
-    
-    <!-- Product Modal with Size and Weight Fields -->
     <div class="modal fade" id="productModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات الكيس</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="productId"><input type="text" id="productName" class="form-control mb-2" placeholder="اسم الكيس"><input type="text" id="productBarcode" class="form-control mb-2" placeholder="الباركود"><input type="text" id="productType" class="form-control mb-2" placeholder="النوع"><input type="text" id="productSize" class="form-control mb-2" placeholder="المقاس (مثال: 50×70 سم)"><input type="text" id="productWeight" class="form-control mb-2 number-input" placeholder="الوزن الافتراضي (كجم)" oninput="formatNumberInput(this)"><input type="text" id="productPrice" class="form-control mb-2 number-input" placeholder="سعر البيع" oninput="formatNumberInput(this)"><input type="text" id="productCost" class="form-control mb-2 number-input" placeholder="سعر الشراء" oninput="formatNumberInput(this)"><input type="text" id="productQuantity" class="form-control mb-2 number-input" placeholder="الكمية" oninput="formatNumberInput(this)"></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveProduct()">حفظ</button></div></div></div></div>
-    
     <div class="modal fade" id="supplierModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات المورد</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="supplierId"><input type="text" id="supplierName" class="form-control mb-2" placeholder="الاسم"><input type="text" id="supplierPhone" class="form-control mb-2" placeholder="الهاتف"><textarea id="supplierAddress" class="form-control" placeholder="العنوان"></textarea></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveSupplier()">حفظ</button></div></div></div></div>
     <div class="modal fade" id="invoiceModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">فاتورة جديدة</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><select id="invoiceCustomerSelect" class="form-control mb-2"></select><div id="invoiceItemsContainer"></div><button class="btn btn-secondary mb-2" onclick="addInvoiceItem()">إضافة منتج</button><h5>المجموع: <span id="invoiceTotal">0</span> ج.م</h5></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveInvoiceModal()">حفظ الفاتورة</button></div></div></div></div>
-
     <footer><i class="fas fa-industry"></i> مصنع الحرمين للبلاستيك 🤎</footer>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Firebase config
@@ -527,604 +271,204 @@
         let priceUpdateInterval = null;
         let currentPlasticPrices = [];
         let lowStockAlertShown = {};
-        
-        // إعدادات الأسعار (بيانات مرجعية حقيقية من السوق)
-        let exchangeRateEGP = 50.00;      // سعر صرف الدولار مقابل الجنيه المصري (قابل للتحديث)
-        let profitMarginPercent = 15;      // نسبة هامش الربح + المصاريف (قابلة للتعديل)
-        let lastBasePriceUSD = 0;           // آخر سعر تم جلبه للمادة الخام بالدولار
-        
-        // بيانات مرجعية حقيقية لأسعار المواد الخام (HDPE, LDPE, PP) من السوق الفعلي
-        // هذه الأسعار تعكس متوسط أسعار البولي إيثيلين في الأسواق العالمية (يمكن تحديثها يدوياً)
-        const marketReferencePrices = {
-            HDPE: 1180,   // دولار/طن - سعر HDPE في السوق (مصدر: بورصات السلع)
-            LDPE: 1350,   // دولار/طن - سعر LDPE في السوق
-            LLDPE: 1200,  // دولار/طن - سعر LLDPE في السوق
-            PP: 1250,     // دولار/طن - سعر البولي بروبيلين
-            lastUpdate: new Date().toISOString()
-        };
-        
-        // دالة لحساب السعر النهائي للكيس بناءً على سعر المادة الخام بالدولار والهامش
+        let exchangeRateEGP = 50.00;
+        let profitMarginPercent = 15;
+        const marketReferencePrices = { HDPE: 1180, LDPE: 1350, LLDPE: 1200, PP: 1250, lastUpdate: new Date().toISOString() };
+
         function calculateFinalPricePerKg(basePriceUSDPerTon) {
-            // تحويل من دولار/طن إلى دولار/كجم
-            let pricePerKgUSD = basePriceUSDPerTon / 1000;
-            // تحويل إلى جنيه مصري
-            let pricePerKgEGP = pricePerKgUSD * exchangeRateEGP;
-            // إضافة هامش الربح والمصاريف
-            let finalPrice = pricePerKgEGP * (1 + profitMarginPercent / 100);
-            // تقريب لأقرب 0.01 جنيه
-            return Math.round(finalPrice * 100) / 100;
+            let pricePerKgEGP = (basePriceUSDPerTon / 1000) * exchangeRateEGP;
+            return Math.round((pricePerKgEGP * (1 + profitMarginPercent / 100)) * 100) / 100;
         }
-        
-        // تحديث إعدادات سعر الصرف من واجهة المستخدم
-        function updateExchangeRate() {
-            let input = document.getElementById('exchangeRateEGP');
-            if (input) {
-                let newRate = parseNumberValue(input.value);
-                if (newRate > 0) {
-                    exchangeRateEGP = newRate;
-                    localStorage.setItem('harmain_exchange_rate', exchangeRateEGP);
-                    refreshPlasticPrices();
-                    showNotification('تم تحديث سعر الصرف بنجاح', 'success');
-                }
-            }
-        }
-        
-        // تحديث نسبة هامش الربح من واجهة المستخدم
-        function updateProfitMargin() {
-            let input = document.getElementById('profitMarginPercent');
-            if (input) {
-                let newMargin = parseNumberValue(input.value);
-                if (newMargin >= 0) {
-                    profitMarginPercent = newMargin;
-                    localStorage.setItem('harmain_profit_margin', profitMarginPercent);
-                    refreshPlasticPrices();
-                    showNotification('تم تحديث نسبة هامش الربح بنجاح', 'success');
-                }
-            }
-        }
-        
-        // تحميل الإعدادات المحفوظة
+        function updateExchangeRate() { let input = document.getElementById('exchangeRateEGP'); if (input) { let newRate = parseNumberValue(input.value); if (newRate > 0) { exchangeRateEGP = newRate; localStorage.setItem('harmain_exchange_rate', exchangeRateEGP); refreshPlasticPrices(); showNotification('تم تحديث سعر الصرف', 'success'); } } }
+        function updateProfitMargin() { let input = document.getElementById('profitMarginPercent'); if (input) { let newMargin = parseNumberValue(input.value); if (newMargin >= 0) { profitMarginPercent = newMargin; localStorage.setItem('harmain_profit_margin', profitMarginPercent); refreshPlasticPrices(); showNotification('تم تحديث هامش الربح', 'success'); } } }
         function loadPriceSettings() {
-            let savedRate = localStorage.getItem('harmain_exchange_rate');
-            if (savedRate && !isNaN(parseFloat(savedRate))) {
-                exchangeRateEGP = parseFloat(savedRate);
-                let rateInput = document.getElementById('exchangeRateEGP');
-                if (rateInput) rateInput.value = formatNumberToString(exchangeRateEGP);
-            }
-            let savedMargin = localStorage.getItem('harmain_profit_margin');
-            if (savedMargin && !isNaN(parseFloat(savedMargin))) {
-                profitMarginPercent = parseFloat(savedMargin);
-                let marginInput = document.getElementById('profitMarginPercent');
-                if (marginInput) marginInput.value = formatNumberToString(profitMarginPercent);
-            }
+            let savedRate = localStorage.getItem('harmain_exchange_rate'); if (savedRate && !isNaN(parseFloat(savedRate))) { exchangeRateEGP = parseFloat(savedRate); let rateInput = document.getElementById('exchangeRateEGP'); if (rateInput) rateInput.value = formatNumberToString(exchangeRateEGP); }
+            let savedMargin = localStorage.getItem('harmain_profit_margin'); if (savedMargin && !isNaN(parseFloat(savedMargin))) { profitMarginPercent = parseFloat(savedMargin); let marginInput = document.getElementById('profitMarginPercent'); if (marginInput) marginInput.value = formatNumberToString(profitMarginPercent); }
         }
-        
-        // إعادة تعيين إعدادات الأسعار
-        function resetPriceSettings() {
-            exchangeRateEGP = 50.00;
-            profitMarginPercent = 15;
-            localStorage.setItem('harmain_exchange_rate', exchangeRateEGP);
-            localStorage.setItem('harmain_profit_margin', profitMarginPercent);
-            let rateInput = document.getElementById('exchangeRateEGP');
-            if (rateInput) rateInput.value = formatNumberToString(exchangeRateEGP);
-            let marginInput = document.getElementById('profitMarginPercent');
-            if (marginInput) marginInput.value = formatNumberToString(profitMarginPercent);
-            refreshPlasticPrices();
-            Swal.fire('تم الإعادة', 'تم إعادة تعيين إعدادات الأسعار إلى القيم الافتراضية', 'success');
-        }
-        
-        // جلب الأسعار الحقيقية من بيانات السوق المرجعية
+        function resetPriceSettings() { exchangeRateEGP = 50.00; profitMarginPercent = 15; localStorage.setItem('harmain_exchange_rate', exchangeRateEGP); localStorage.setItem('harmain_profit_margin', profitMarginPercent); let rateInput = document.getElementById('exchangeRateEGP'); if (rateInput) rateInput.value = formatNumberToString(exchangeRateEGP); let marginInput = document.getElementById('profitMarginPercent'); if (marginInput) marginInput.value = formatNumberToString(profitMarginPercent); refreshPlasticPrices(); Swal.fire('تم الإعادة', 'تم إعادة تعيين الإعدادات', 'success'); }
         async function fetchRealPlasticPrices() {
-            try {
-                // استخدام البيانات المرجعية للسوق الفعلي
-                let basePrice = marketReferencePrices.HDPE;
-                lastBasePriceUSD = basePrice;
-                
-                // تحديث العرض في الإعدادات
-                let displayEl = document.getElementById('lastBasePriceDisplay');
-                if (displayEl) {
-                    displayEl.innerHTML = `<i class="fas fa-chart-line"></i> سعر HDPE المرجعي: ${basePrice} دولار/طن (آخر تحديث: ${new Date(marketReferencePrices.lastUpdate).toLocaleString('ar-EG')})<br>
-                    <small class="text-secondary">يتم تطبيق سعر صرف ${exchangeRateEGP} ج.م/دولار وهامش ${profitMarginPercent}% لحساب السعر النهائي</small>`;
-                }
-                
-                // توليد أسعار لكل نوع من الأكياس بناءً على السعر الأساسي
-                const types = [
-                    { name: "كيس أورينت (Orient)", desc: "🧵 مخصص للبناطيل الجينز والملابس الثقيلة - متين ومقاوم للتمزق", multiplier: 1.1 },
-                    { name: "كيس شفاف عالي الجودة", desc: "✨ شفافية ممتازة للعرض في المحلات - مناسب للمنتجات الغذائية والتجزئة", multiplier: 1.05 },
-                    { name: "كيس أسود (مخلفات)", desc: "🗑️ مقاوم للثقوب - مثالي لنفايات المكاتب والمطاعم والمنازل", multiplier: 0.95 },
-                    { name: "كيس أبيض (طعام)", desc: "🥖 صالح للطعام - معتمد للنظافة والتخزين المباشر للمخبوزات والفواكه", multiplier: 1.0 },
-                    { name: "كيس معاد تدويره (Eco)", desc: "🌱 صديق للبيئة - مصنوع من مواد معاد تدويرها بنسبة 70%", multiplier: 0.85 },
-                    { name: "كيس عالي التحمل (Heavy Duty)", desc: "🏋️ تحمل حتى 50 كجم - مثالي للصناعات والمعدات الثقيلة", multiplier: 1.25 },
-                    { name: "كيس قمامة (Garbage Bag)", desc: "🚮 بسماكة مضاعفة - مقاوم للتمزق والروائح", multiplier: 0.9 },
-                    { name: "كيس هدايا (Gift Bag)", desc: "🎁 لامع وفاخر - مع مساحة لربط الشريط، مناسب للمناسبات", multiplier: 1.15 },
-                    { name: "كيس تعبئة (Packaging)", desc: "📦 مقاسات متعددة - مثالي لتغليف المنتجات في المصانع", multiplier: 1.0 },
-                    { name: "كيس صناعي (Industrial)", desc: "🏭 قوة صناعية فائقة - يستخدم في المصانع والإنشاءات", multiplier: 1.2 },
-                    { name: "كيس شفاف فاخر (Premium Clear)", desc: "💎 شفافية كريستالية - أنيق للمتاجر الراقية", multiplier: 1.3 },
-                    { name: "كيس بسحاب (Ziplock)", desc: "🔒 قابل للإغلاق والفتح المتعدد - يحفظ الطعام طازجاً", multiplier: 1.4 },
-                    { name: "زيرو بيور (Zero Pure)", desc: "🥛🍼 أكياس عالية الجودة - مناسبة للحليب (مقاسات 17، 20، 25) والأكياس السوداء (17،20،22،24،30،35) - متوفرة بجميع المقاسات من 13 إلى 35", multiplier: 1.2 }
-                ];
-                
-                const sizes = ["13 سم", "15 سم", "17 سم", "20 سم", "22 سم", "24 سم", "26 سم", "30 سم", "35 سم"];
-                const zeroPureSizes = ["13 سم", "15 سم", "17 سم", "20 سم", "22 سم", "24 سم", "26 سم", "30 سم", "35 سم"];
-                
-                let result = [];
-                for (let type of types) {
-                    // تحديد المقاسات حسب النوع
-                    let typeSizes = sizes;
-                    if (type.name === "زيرو بيور (Zero Pure)") {
-                        typeSizes = zeroPureSizes;
-                    } else if (type.name === "كيس أسود (مخلفات)") {
-                        typeSizes = ["40×60 سم", "50×70 سم"];
-                    } else if (type.name === "كيس أبيض (طعام)") {
-                        typeSizes = ["30×40 سم", "40×60 سم"];
-                    } else if (type.name === "كيس معاد تدويره (Eco)") {
-                        typeSizes = ["40×60 سم", "50×70 سم", "60×80 سم"];
-                    } else if (type.name === "كيس عالي التحمل (Heavy Duty)") {
-                        typeSizes = ["50×70 سم", "60×90 سم", "70×100 سم"];
-                    } else if (type.name === "كيس قمامة (Garbage Bag)") {
-                        typeSizes = ["40×50 سم", "50×70 سم", "70×90 سم"];
-                    } else if (type.name === "كيس هدايا (Gift Bag)") {
-                        typeSizes = ["25×35 سم", "30×40 سم", "35×50 سم"];
-                    } else if (type.name === "كيس تعبئة (Packaging)") {
-                        typeSizes = ["20×30 سم", "30×45 سم", "40×60 سم"];
-                    } else if (type.name === "كيس صناعي (Industrial)") {
-                        typeSizes = ["80×120 سم", "100×150 سم"];
-                    } else if (type.name === "كيس شفاف فاخر (Premium Clear)") {
-                        typeSizes = ["25×35 سم", "35×50 سم", "45×65 سم"];
-                    } else if (type.name === "كيس بسحاب (Ziplock)") {
-                        typeSizes = ["10×15 سم", "15×20 سم", "20×28 سم"];
-                    } else if (type.name === "كيس شفاف عالي الجودة") {
-                        typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم", "70×90 سم"];
-                    } else {
-                        typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم"];
-                    }
-                    
-                    for (let size of typeSizes) {
-                        let adjustedPrice = basePrice * type.multiplier;
-                        let finalPrice = calculateFinalPricePerKg(adjustedPrice);
-                        result.push({
-                            type: type.name,
-                            description: type.desc,
-                            size: size,
-                            price: finalPrice,
-                            unit: "كجم"
-                        });
-                    }
-                }
-                return result;
-            } catch (error) {
-                console.error("خطأ في جلب الأسعار:", error);
-                showNotification("حدث خطأ في جلب الأسعار، يتم استخدام آخر الأسعار المعروفة", "error");
-                return generateFallbackPrices();
-            }
-        }
-        
-        // دالة احتياطية في حالة فشل الجلب
-        function generateFallbackPrices() {
+            let basePrice = marketReferencePrices.HDPE;
+            let displayEl = document.getElementById('lastBasePriceDisplay');
+            if (displayEl) displayEl.innerHTML = `<i class="fas fa-chart-line"></i> سعر HDPE المرجعي: ${basePrice} دولار/طن (آخر تحديث: ${new Date(marketReferencePrices.lastUpdate).toLocaleString('ar-EG')})<br><small>سعر الصرف ${exchangeRateEGP} ج.م/دولار وهامش ${profitMarginPercent}%</small>`;
             const types = [
-                { name: "كيس أورينت (Orient)", desc: "🧵 مخصص للبناطيل الجينز والملابس الثقيلة", multiplier: 1.1 },
-                { name: "زيرو بيور (Zero Pure)", desc: "🥛🍼 أكياس عالية الجودة - مناسبة للحليب", multiplier: 1.2 }
+                { name: "كيس أورينت (Orient)", desc: "🧵 مخصص للبناطيل الجينز", multiplier: 1.1 },
+                { name: "كيس شفاف عالي الجودة", desc: "✨ شفافية ممتازة للعرض", multiplier: 1.05 },
+                { name: "كيس أسود (مخلفات)", desc: "🗑️ مقاوم للثقوب", multiplier: 0.95 },
+                { name: "كيس أبيض (طعام)", desc: "🥖 صالح للطعام", multiplier: 1.0 },
+                { name: "كيس معاد تدويره (Eco)", desc: "🌱 صديق للبيئة", multiplier: 0.85 },
+                { name: "كيس عالي التحمل (Heavy Duty)", desc: "🏋️ تحمل حتى 50 كجم", multiplier: 1.25 },
+                { name: "كيس قمامة (Garbage Bag)", desc: "🚮 بسماكة مضاعفة", multiplier: 0.9 },
+                { name: "كيس هدايا (Gift Bag)", desc: "🎁 لامع وفاخر", multiplier: 1.15 },
+                { name: "كيس تعبئة (Packaging)", desc: "📦 مقاسات متعددة", multiplier: 1.0 },
+                { name: "كيس صناعي (Industrial)", desc: "🏭 قوة صناعية فائقة", multiplier: 1.2 },
+                { name: "كيس شفاف فاخر (Premium Clear)", desc: "💎 شفافية كريستالية", multiplier: 1.3 },
+                { name: "كيس بسحاب (Ziplock)", desc: "🔒 قابل للإغلاق", multiplier: 1.4 },
+                { name: "زيرو بيور (Zero Pure)", desc: "🥛🍼 أكياس عالية الجودة", multiplier: 1.2 }
             ];
             let result = [];
             for (let type of types) {
                 let sizes = ["30×40 سم", "40×60 سم", "50×70 سم"];
+                if (type.name === "زيرو بيور (Zero Pure)") sizes = ["13 سم", "15 سم", "17 سم", "20 سم", "22 سم", "24 سم", "26 سم", "30 سم", "35 سم"];
                 for (let size of sizes) {
-                    result.push({
-                        type: type.name,
-                        description: type.desc,
-                        size: size,
-                        price: 120 + Math.random() * 80,
-                        unit: "كجم"
-                    });
+                    result.push({ type: type.name, description: type.desc, size: size, price: calculateFinalPricePerKg(basePrice * type.multiplier), unit: "كجم" });
                 }
             }
             return result;
         }
-        
-        // تحديث واجهة الأسعار الحية
         function updatePlasticPricesUI() {
-            const container = document.getElementById('plasticPricesContainer');
-            if (!container) return;
-            if (!currentPlasticPrices.length) {
-                container.innerHTML = '<div class="col-12 text-center text-secondary">لا توجد أسعار متاحة حاليًا</div>';
-                return;
-            }
+            const container = document.getElementById('plasticPricesContainer'); if (!container) return;
+            if (!currentPlasticPrices.length) { container.innerHTML = '<div class="col-12 text-center text-secondary">لا توجد أسعار</div>'; return; }
             let html = '';
-            currentPlasticPrices.forEach(item => {
-                html += `<div class="col-md-6 col-lg-4">
-                            <div class="price-card">
-                                <div class="price-type"><i class="fas fa-bag-shopping"></i> ${item.type}</div>
-                                <div class="price-desc"><i class="fas fa-info-circle"></i> ${item.description}</div>
-                                <div class="price-detail"><span>📏 المقاس: ${item.size}</span><span>⚖️ ${item.unit}</span></div>
-                                <div class="price-detail"><span class="price-live-badge"><i class="fas fa-chart-line"></i> السعر التقريبي</span><strong style="font-size:1.2rem;">${formatPrice(item.price)}</strong></div>
-                            </div>
-                        </div>`;
-            });
+            currentPlasticPrices.forEach(item => { html += `<div class="col-md-6 col-lg-4"><div class="price-card"><div class="price-type">${item.type}</div><div class="price-desc">${item.description}</div><div class="price-detail"><span>📏 ${item.size}</span><span>⚖️ ${item.unit}</span></div><div class="price-detail"><span class="price-live-badge">السعر التقريبي</span><strong>${formatPrice(item.price)}</strong></div></div></div>`; });
             container.innerHTML = html;
-            const lastUpdateSpan = document.getElementById('lastPriceUpdate');
-            if (lastUpdateSpan) lastUpdateSpan.innerHTML = `آخر تحديث: ${new Date().toLocaleTimeString('ar-EG')}`;
+            const lastUpdateSpan = document.getElementById('lastPriceUpdate'); if (lastUpdateSpan) lastUpdateSpan.innerHTML = `آخر تحديث: ${new Date().toLocaleTimeString('ar-EG')}`;
         }
+        async function refreshPlasticPrices() { try { let prices = await fetchRealPlasticPrices(); if (prices && prices.length) { currentPlasticPrices = prices; updatePlasticPricesUI(); showNotification('تم تحديث الأسعار', 'success'); } } catch (e) { console.error(e); } }
+        function syncWithSabic() { window.open('https://www.sabic.com/', '_blank'); Swal.fire('مزامنة', 'تم فتح موقع سابك', 'info'); }
+        function startPriceAutoUpdate() { refreshPlasticPrices(); if (priceUpdateInterval) clearInterval(priceUpdateInterval); priceUpdateInterval = setInterval(refreshPlasticPrices, 30000); }
         
-        // تحديث الأسعار (يتم استدعاؤها يدوياً أو تلقائياً)
-        async function refreshPlasticPrices() {
-            try {
-                let prices = await fetchRealPlasticPrices();
-                if (prices && prices.length) {
-                    currentPlasticPrices = prices;
-                    updatePlasticPricesUI();
-                    showNotification('تم تحديث الأسعار بناءً على أسعار السوق المرجعية', 'success');
-                } else {
-                    currentPlasticPrices = generateFallbackPrices();
-                    updatePlasticPricesUI();
-                    showNotification('تم استخدام الأسعار الاحتياطية', 'warning');
-                }
-            } catch (e) {
-                currentPlasticPrices = generateFallbackPrices();
-                updatePlasticPricesUI();
-                showNotification('حدث خطأ، يتم استخدام الأسعار الاحتياطية', 'error');
-            }
-        }
+        function rgbToHex(rgb) { if (!rgb) return '#000000'; let result = rgb.match(/\d+/g); if (!result) return '#000000'; let r = parseInt(result[0]), g = parseInt(result[1]), b = parseInt(result[2]); return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1); }
+        function updateCustomizationPickersFromCSS() { let root = document.documentElement; let computed = getComputedStyle(root); document.getElementById('customTextColor').value = rgbToHex(computed.getPropertyValue('--text-primary').trim()); document.getElementById('customAccentPrimary').value = rgbToHex(computed.getPropertyValue('--accent-primary').trim()); document.getElementById('customAccentSecondary').value = rgbToHex(computed.getPropertyValue('--accent-secondary').trim()); document.getElementById('customBgPrimary').value = rgbToHex(computed.getPropertyValue('--bg-primary').trim()); document.getElementById('customCardBg').value = rgbToHex(computed.getPropertyValue('--bg-card').trim()); }
+        function getStockMovement(productName, currentQty) { let sevenDaysAgo = new Date(); sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); let totalIn = purchases.filter(p => p.productName === productName && new Date(p.date) >= sevenDaysAgo).reduce((s, p) => s + p.quantity, 0); let totalOut = sales.filter(s => s.productName === productName && new Date(s.date) >= sevenDaysAgo).reduce((s, sale) => s + sale.quantity, 0); let qtyBefore = currentQty - totalIn + totalOut; if (qtyBefore === currentQty) return { diff: 0, trend: 'steady', icon: '➖', text: 'ثابت' }; if (currentQty > qtyBefore) return { diff: currentQty - qtyBefore, trend: 'up', icon: '🔼', text: 'زيادة' }; return { diff: qtyBefore - currentQty, trend: 'down', icon: '🔽', text: 'نقصان' }; }
+        function checkLowStock() { products.forEach(p => { if (p.quantity < 50 && p.quantity > 0) { if (!lowStockAlertShown[p.id]) { lowStockAlertShown[p.id] = true; showLowStockAlert(p.name, p.quantity); setTimeout(() => { lowStockAlertShown[p.id] = false; }, 60000); } } else if (p.quantity >= 50) lowStockAlertShown[p.id] = false; }); }
+        function showLowStockAlert(productName, quantity) { let alertDiv = document.createElement('div'); alertDiv.className = 'alert-toast'; alertDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> تنبيه: مخزون ${productName} منخفض! الكمية: ${quantity}`; document.body.appendChild(alertDiv); setTimeout(() => alertDiv.remove(), 5000); }
+        function calculateExpectedProfit() { let price = parseNumberValue(document.getElementById('expectedPrice').value); let qty = parseNumberValue(document.getElementById('expectedQuantity').value); let cost = parseNumberValue(document.getElementById('expectedCost').value); let profit = (price - cost) * qty; let resultDiv = document.getElementById('expectedProfitResult'); if (resultDiv) resultDiv.innerHTML = `الربح المتوقع: ${formatPrice(profit)}`; }
+        function getDateFilter() { let from = document.getElementById('reportDateFrom').value; let to = document.getElementById('reportDateTo').value; return { from, to }; }
+        function clearDateFilter() { document.getElementById('reportDateFrom').value = ''; document.getElementById('reportDateTo').value = ''; Swal.fire('تم المسح', 'تم مسح فلترة التاريخ', 'success'); }
+        function filterByDate(data, dateField) { let { from, to } = getDateFilter(); if (!from && !to) return data; return data.filter(item => { let itemDate = item[dateField]; if (!itemDate) return true; if (from && itemDate < from) return false; if (to && itemDate > to) return false; return true; }); }
+        function generateSalesReportWithDate() { let filtered = filterByDate(sales, 'date'); let total = filtered.reduce((s, i) => s + (i.quantity * i.price), 0); let content = getReportHeader() + `تقرير المبيعات (بالفترة)\nالإجمالي: ${formatPrice(total)}\n`; filtered.forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`; }); downloadTxt(content, `تقرير_المبيعات_فترة.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function generatePurchasesReportWithDate() { let filtered = filterByDate(purchases, 'date'); let total = filtered.reduce((s, i) => s + (i.quantity * i.cost), 0); let content = getReportHeader() + `تقرير المشتريات (بالفترة)\nالإجمالي: ${formatPrice(total)}\n`; filtered.forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`; }); downloadTxt(content, `تقرير_المشتريات_فترة.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function generateProfitReportWithDate() { let filteredSales = filterByDate(sales, 'date'); let filteredPurchases = filterByDate(purchases, 'date'); let salesTotal = filteredSales.reduce((s, i) => s + (i.quantity * i.price), 0); let purchasesTotal = filteredPurchases.reduce((s, i) => s + (i.quantity * i.cost), 0); let net = salesTotal - purchasesTotal; let content = getReportHeader() + `تقرير الأرباح (بالفترة)\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nصافي الربح: ${formatPrice(net)}\n`; downloadTxt(content, `تقرير_الأرباح_فترة.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function exportInvoicesToTxt() { if (!invoices.length) { Swal.fire('تنبيه', 'لا توجد فواتير', 'info'); return; } let content = getReportHeader(); content += `تقرير الفواتير\n${'='.repeat(40)}\n`; invoices.forEach(inv => { content += `رقم الفاتورة: ${inv.invoiceNumber}\nالعميل: ${inv.customerName}\nالتاريخ: ${inv.date}\nالمجموع: ${formatPrice(inv.total)}\nالمنتجات:\n`; inv.items.forEach(item => { let p = products.find(pr => pr.id == item.productId); content += `  - ${p?.name || 'منتج غير معروف'}: ${item.quantity} × ${formatPrice(item.price)}\n`; }); content += `\n${'='.repeat(40)}\n`; }); downloadTxt(content, `الفواتير_${new Date().toISOString().slice(0, 19)}.txt`); Swal.fire('تم', 'تم تصدير الفواتير', 'success'); }
+        function printPriceTag(productId) { let p = products.find(pr => pr.id == productId); if (p) { let win = window.open(); win.document.write(`<html><head><title>بطاقة سعر ${p.name}</title><style>body{font-family:'Cairo',sans-serif;text-align:center;padding:20px;direction:rtl}.card{border:2px solid #333;border-radius:10px;padding:20px;max-width:300px;margin:auto}.product-name{font-size:1.5rem;font-weight:bold}.price{font-size:1.8rem;color:#2e7d32;font-weight:bold;margin:10px 0}</style><script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"><\/script></head><body><div class="card"><div class="product-name">${p.name}</div><div class="price">${formatPrice(p.price)}</div><div>📏 المقاس: ${p.size || 'غير محدد'} | ⚖️ الوزن: ${p.weight ? formatNumberToString(p.weight) + ' كجم' : 'غير محدد'}</div><hr><div><canvas id="barcodePrint"></canvas></div><div>${p.barcode || p.id}</div><hr><div>مصنع الحرمين للبلاستيك</div></div><script>JsBarcode(document.getElementById("barcodePrint"), "${p.barcode || p.id}", { format: "CODE128", width: 2, height: 50 }); setTimeout(() => window.print(), 500); window.onafterprint = () => window.close();<\/script></body></html>`); } }
         
-        // مزامنة مع موقع سابك (فتح الموقع الرسمي)
-        function syncWithSabic() {
-            window.open('https://www.sabic.com/', '_blank');
-            Swal.fire('مزامنة مع سابك', 'تم فتح موقع سابك الرسمي. يمكنك الاطلاع على أحدث المنتجات والبيانات الفنية.', 'info');
-        }
-        
-        // بدء التحديث التلقائي كل 30 ثانية
-        function startPriceAutoUpdate() {
-            refreshPlasticPrices();
-            if (priceUpdateInterval) clearInterval(priceUpdateInterval);
-            priceUpdateInterval = setInterval(() => {
-                refreshPlasticPrices();
-            }, 30000);
-        }
-        
-        // دوال مساعدة للألوان
-        function rgbToHex(rgb) {
-            if (!rgb) return '#000000';
-            let result = rgb.match(/\d+/g);
-            if (!result) return '#000000';
-            let r = parseInt(result[0]), g = parseInt(result[1]), b = parseInt(result[2]);
-            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-        }
-        
-        function updateCustomizationPickersFromCSS() {
-            let root = document.documentElement;
-            let computed = getComputedStyle(root);
-            let textColor = computed.getPropertyValue('--text-primary').trim();
-            let accentPrimary = computed.getPropertyValue('--accent-primary').trim();
-            let accentSecondary = computed.getPropertyValue('--accent-secondary').trim();
-            let bgPrimary = computed.getPropertyValue('--bg-primary').trim();
-            let cardBg = computed.getPropertyValue('--bg-card').trim();
-            document.getElementById('customTextColor').value = rgbToHex(textColor);
-            document.getElementById('customAccentPrimary').value = rgbToHex(accentPrimary);
-            document.getElementById('customAccentSecondary').value = rgbToHex(accentSecondary);
-            document.getElementById('customBgPrimary').value = rgbToHex(bgPrimary);
-            document.getElementById('customCardBg').value = rgbToHex(cardBg);
-        }
-        
-        // حساب حركة المخزون خلال 7 أيام
-        function getStockMovement(productName, currentQty) {
-            let sevenDaysAgo = new Date();
-            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-            let totalIn = purchases.filter(p => p.productName === productName && new Date(p.date) >= sevenDaysAgo).reduce((s,p)=>s+p.quantity,0);
-            let totalOut = sales.filter(s => s.productName === productName && new Date(s.date) >= sevenDaysAgo).reduce((s,sale)=>s+sale.quantity,0);
-            let qtyBefore = currentQty - totalIn + totalOut;
-            if (qtyBefore === currentQty) return { diff: 0, trend: 'steady', icon: '➖', text: 'ثابت' };
-            if (currentQty > qtyBefore) return { diff: currentQty - qtyBefore, trend: 'up', icon: '🔼', text: 'زيادة' };
-            return { diff: qtyBefore - currentQty, trend: 'down', icon: '🔽', text: 'نقصان' };
-        }
-        
-        // فحص المخزون المنخفض وإظهار التنبيهات (تظهر في أسفل اليسار بخط 14px)
-        function checkLowStock() {
-            products.forEach(p => {
-                if (p.quantity < 50 && p.quantity > 0) {
-                    if (!lowStockAlertShown[p.id]) {
-                        lowStockAlertShown[p.id] = true;
-                        showLowStockAlert(p.name, p.quantity);
-                        setTimeout(() => { lowStockAlertShown[p.id] = false; }, 60000);
-                    }
-                } else if (p.quantity >= 50) {
-                    lowStockAlertShown[p.id] = false;
-                }
-            });
-        }
-        
-        function showLowStockAlert(productName, quantity) {
-            let alertDiv = document.createElement('div');
-            alertDiv.className = 'alert-toast';
-            alertDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> تنبيه: مخزون ${productName} منخفض! الكمية الحالية: ${quantity}`;
-            document.body.appendChild(alertDiv);
-            setTimeout(() => alertDiv.remove(), 5000);
-        }
-        
-        // حاسبة الأرباح المتوقعة
-        function calculateExpectedProfit() {
-            let price = parseNumberValue(document.getElementById('expectedPrice').value);
-            let qty = parseNumberValue(document.getElementById('expectedQuantity').value);
-            let cost = parseNumberValue(document.getElementById('expectedCost').value);
-            let profit = (price - cost) * qty;
-            let resultDiv = document.getElementById('expectedProfitResult');
-            if (resultDiv) resultDiv.innerHTML = `الربح المتوقع: ${formatPrice(profit)}`;
-        }
-        
-        // دوال التقارير مع التاريخ
-        function getDateFilter() {
-            let from = document.getElementById('reportDateFrom').value;
-            let to = document.getElementById('reportDateTo').value;
-            return { from, to };
-        }
-        function clearDateFilter() {
-            document.getElementById('reportDateFrom').value = '';
-            document.getElementById('reportDateTo').value = '';
-            Swal.fire('تم المسح', 'تم مسح فلترة التاريخ', 'success');
-        }
-        function filterByDate(data, dateField) {
-            let { from, to } = getDateFilter();
-            if (!from && !to) return data;
-            return data.filter(item => {
-                let itemDate = item[dateField];
-                if (!itemDate) return true;
-                if (from && itemDate < from) return false;
-                if (to && itemDate > to) return false;
-                return true;
-            });
-        }
-        function generateSalesReportWithDate() {
-            let filtered = filterByDate(sales, 'date');
-            let total = filtered.reduce((s,i)=>s+(i.quantity*i.price),0);
-            let content = getReportHeader() + `تقرير المبيعات (بالفترة المحددة)\nإجمالي المبيعات: ${formatPrice(total)}\n\n`;
-            filtered.forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`; });
-            downloadTxt(content, `تقرير_المبيعات_فترة.txt`);
-            Swal.fire('تم', 'تم تصدير تقرير المبيعات للفترة', 'success');
-        }
-        function generatePurchasesReportWithDate() {
-            let filtered = filterByDate(purchases, 'date');
-            let total = filtered.reduce((s,i)=>s+(i.quantity*i.cost),0);
-            let content = getReportHeader() + `تقرير المشتريات (بالفترة المحددة)\nإجمالي المشتريات: ${formatPrice(total)}\n\n`;
-            filtered.forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`; });
-            downloadTxt(content, `تقرير_المشتريات_فترة.txt`);
-            Swal.fire('تم', 'تم تصدير تقرير المشتريات للفترة', 'success');
-        }
-        function generateProfitReportWithDate() {
-            let filteredSales = filterByDate(sales, 'date');
-            let filteredPurchases = filterByDate(purchases, 'date');
-            let salesTotal = filteredSales.reduce((s,i)=>s+(i.quantity*i.price),0);
-            let purchasesTotal = filteredPurchases.reduce((s,i)=>s+(i.quantity*i.cost),0);
-            let net = salesTotal - purchasesTotal;
-            let content = getReportHeader() + `تقرير الأرباح (بالفترة المحددة)\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nصافي الربح: ${formatPrice(net)}\n`;
-            downloadTxt(content, `تقرير_الأرباح_فترة.txt`);
-            Swal.fire('تم', 'تم تصدير تقرير الأرباح للفترة', 'success');
-        }
-        
-        // تصدير الفواتير كملف نصي
-        function exportInvoicesToTxt() {
-            if (!invoices.length) {
-                Swal.fire('تنبيه', 'لا توجد فواتير لتصديرها', 'info');
-                return;
-            }
-            let content = getReportHeader();
-            content += `تقرير الفواتير\n${'='.repeat(40)}\n`;
-            invoices.forEach(inv => {
-                content += `رقم الفاتورة: ${inv.invoiceNumber}\n`;
-                content += `العميل: ${inv.customerName}\n`;
-                content += `التاريخ: ${inv.date}\n`;
-                content += `المجموع: ${formatPrice(inv.total)}\n`;
-                content += `المنتجات:\n`;
-                inv.items.forEach(item => {
-                    let p = products.find(pr => pr.id == item.productId);
-                    content += `  - ${p?.name || 'منتج غير معروف'}: ${item.quantity} × ${formatPrice(item.price)}\n`;
-                });
-                content += `\n${'='.repeat(40)}\n`;
-            });
-            downloadTxt(content, `الفواتير_${new Date().toISOString().slice(0,19)}.txt`);
-            Swal.fire('تم', 'تم تصدير الفواتير بنجاح', 'success');
-        }
-        
-        // طباعة بطاقة سعر المنتج
-        function printPriceTag(productId) {
-            let p = products.find(pr => pr.id == productId);
-            if (p) {
-                let win = window.open();
-                win.document.write(`
-                    <html><head><title>بطاقة سعر ${p.name}</title>
-                    <style>
-                        body { font-family: 'Cairo', sans-serif; text-align: center; padding: 20px; direction: rtl; }
-                        .card { border: 2px solid #333; border-radius: 10px; padding: 20px; max-width: 300px; margin: auto; }
-                        .product-name { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; }
-                        .price { font-size: 1.8rem; color: #2e7d32; font-weight: bold; margin: 10px 0; }
-                        .size { color: #666; margin: 5px 0; }
-                        .barcode { margin: 15px 0; }
-                        hr { margin: 15px 0; }
-                    </style>
-                    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"><\/script>
-                    </head>
-                    <body>
-                        <div class="card">
-                            <div class="product-name">${p.name}</div>
-                            <div class="price">${formatPrice(p.price)}</div>
-                            <div class="size">📏 المقاس: ${p.size || 'غير محدد'} | ⚖️ الوزن: ${p.weight ? formatNumberToString(p.weight) + ' كجم' : 'غير محدد'}</div>
-                            <hr>
-                            <div class="barcode"><canvas id="barcodePrint"></canvas></div>
-                            <div>${p.barcode || p.id}</div>
-                            <hr>
-                            <div style="font-size:0.8rem;">مصنع الحرمين للبلاستيك</div>
-                        </div>
-                        <script>
-                            JsBarcode(document.getElementById("barcodePrint"), "${p.barcode || p.id}", { format: "CODE128", width: 2, height: 50 });
-                            setTimeout(() => window.print(), 500);
-                            window.onafterprint = () => window.close();
-                        <\/script>
-                    </body>
-                    </html>
-                `);
-            }
-        }
-        
-        // باقي الدوال الأساسية (بنفس الكود الأصلي دون تغيير)
         function formatNumberInput(input) { let v = input.value.replace(/,/g, ''); if (!isNaN(v) && v !== '') input.value = new Intl.NumberFormat('en-US').format(parseFloat(v)); }
-        function parseNumberValue(fv) { return parseFloat((fv+'').replace(/,/g, '')) || 0; }
+        function parseNumberValue(fv) { return parseFloat((fv + '').replace(/,/g, '')) || 0; }
         function formatNumberToString(n) { return new Intl.NumberFormat('en-US').format(n); }
         function formatPrice(price) { return formatNumberToString(price) + ' ج.م'; }
         function getQuantityInKilo(quantity, unit) { return unit === 'طن' ? quantity * 1000 : quantity; }
-        function showNotification(msg, type='info'){ let toast=document.createElement('div'); toast.className='notification-toast'; toast.innerHTML=`<i class="fas fa-${type==='success'?'check-circle':'info-circle'}"></i><div>${msg}</div><small>الآن</small>`; document.body.appendChild(toast); setTimeout(()=>toast.remove(),4000); }
-        function saveToFirebase(path,data){ if(useFirebase && db) db.ref(path).set(data); localStorage.setItem(`harmain_${path}`,JSON.stringify(data)); }
-        function loadFromFirebase(path,cb){ if(useFirebase && db){ db.ref(path).once('value',(snap)=>{ let d=snap.val(); cb(d?d:(JSON.parse(localStorage.getItem(`harmain_${path}`))||[])); }); } else cb(JSON.parse(localStorage.getItem(`harmain_${path}`))||[]); }
-        function listenToFirebase(path,cb){ if(useFirebase && db) db.ref(path).on('value',(snap)=>{ cb(snap.val()||[]); showNotification('تم تحديث نتائج الموقع','info'); }); }
+        function showNotification(msg, type = 'info') { let toast = document.createElement('div'); toast.className = 'notification-toast'; toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i><div>${msg}</div><small>الآن</small>`; document.body.appendChild(toast); setTimeout(() => toast.remove(), 4000); }
+        function saveToFirebase(path, data) { if (useFirebase && db) db.ref(path).set(data); localStorage.setItem(`harmain_${path}`, JSON.stringify(data)); }
+        function loadFromFirebase(path, cb) { if (useFirebase && db) { db.ref(path).once('value', (snap) => { let d = snap.val(); cb(d ? d : (JSON.parse(localStorage.getItem(`harmain_${path}`)) || [])); }); } else cb(JSON.parse(localStorage.getItem(`harmain_${path}`)) || []); }
+        function listenToFirebase(path, cb) { if (useFirebase && db) db.ref(path).on('value', (snap) => { cb(snap.val() || []); showNotification('تم تحديث البيانات', 'info'); }); }
+        function getNetProfit() { let totalSales = sales.reduce((s, sl) => s + (sl.quantity * sl.price), 0); let totalPurchases = purchases.reduce((s, p) => s + (p.quantity * p.cost), 0); let totalOp = operatingExpenses.electricity + operatingExpenses.rent + operatingExpenses.salaries + operatingExpenses.transport + operatingExpenses.misc + operatingExpenses.printing; return totalSales - totalPurchases - totalOp; }
+        function updatePartnersSection() { let net = getNetProfit(); let partner1 = net * 3 / 4; let partner2 = net * 1 / 4; let p1El = document.getElementById('partner1Share'); let p2El = document.getElementById('partner2Share'); let netEl = document.getElementById('netProfitTotal'); if (p1El) p1El.innerText = formatPrice(partner1); if (p2El) p2El.innerText = formatPrice(partner2); if (netEl) netEl.innerText = formatPrice(net); }
+        function exportPartnerReport(partnerNum) { let net = getNetProfit(); let share = partnerNum === 1 ? net * 3 / 4 : net * 1 / 4; let partnerName = partnerNum === 1 ? "الشريك الأول" : "الشريك الثاني"; let content = getReportHeader() + `تقرير ${partnerName}\nصافي الربح: ${formatPrice(net)}\nالمستحق: ${formatPrice(share)}\n`; downloadTxt(content, `تقرير_الشريك_${partnerNum}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function downloadTxt(content, filename) { const blob = new Blob([content], { type: 'text/plain;charset=utf-8' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); URL.revokeObjectURL(link.href); }
         
-        function getNetProfit() { let totalSales = sales.reduce((s,sl)=>s+(sl.quantity*sl.price),0); let totalPurchases = purchases.reduce((s,p)=>s+(p.quantity*p.cost),0); let totalOp = operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; return totalSales - totalPurchases - totalOp; }
-        function updatePartnersSection() { let net = getNetProfit(); let partner1 = net * 3 / 4; let partner2 = net * 1 / 4; let p1El = document.getElementById('partner1Share'); let p2El = document.getElementById('partner2Share'); let netEl = document.getElementById('netProfitTotal'); if(p1El) p1El.innerText = formatPrice(partner1); if(p2El) p2El.innerText = formatPrice(partner2); if(netEl) netEl.innerText = formatPrice(net); }
-        function exportPartnerReport(partnerNum) { let net = getNetProfit(); let share = partnerNum === 1 ? net * 3 / 4 : net * 1 / 4; let partnerName = partnerNum === 1 ? "الشريك الأول" : "الشريك الثاني"; let content = getReportHeader() + `تقرير ${partnerName}\nصافي الربح الإجمالي: ${formatPrice(net)}\nالمستحق: ${formatPrice(share)}\n`; downloadTxt(content, `تقرير_الشريك_${partnerNum}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function downloadTxt(content, filename){ const blob = new Blob([content], {type: 'text/plain;charset=utf-8'}); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); URL.revokeObjectURL(link.href); }
-        
+        // تحديث الجدول الرئيسي للمخزون
         function updateInventoryFullSection() {
-            let tbody = document.getElementById('inventoryFullTableBody');
-            if(!tbody) return;
+            let tbody = document.getElementById('inventoryFullTableBody'); if (!tbody) return;
             let html = '';
             products.forEach((p, idx) => {
                 let stockClass = p.quantity > 200 ? 'badge-stock-high' : (p.quantity > 50 ? 'badge-stock-medium' : 'badge-stock-low');
                 let stockText = p.quantity > 200 ? 'مخزون ممتاز' : (p.quantity > 50 ? 'مخزون متوسط' : 'مخزون منخفض ⚠️');
                 let movement = getStockMovement(p.name, p.quantity);
                 let trendClass = movement.trend === 'up' ? 'trend-up' : (movement.trend === 'down' ? 'trend-down' : 'trend-steady');
-                html += `<tr>
-                              <td class="text-center">${idx+1}</td>
-                              <td>${p.name}</td>
-                              <td>${p.barcode || '-'}</td>
-                              <td>${p.type || '-'}</td>
-                              <td>${p.size || '-'}</td>
-                              <td>${p.weight ? formatNumberToString(p.weight) + ' كجم' : '-'}</td>
-                              <td>${formatPrice(p.price)}</td>
-                              <td>${formatPrice(p.cost)}</td>
-                              <td>${formatNumberToString(p.quantity)}</td>
-                              <td class="${trendClass}">${movement.icon} ${movement.text}</td>
-                              <td>${formatPrice(p.quantity * p.price)}</td>
-                              <td><span class="${stockClass}">${stockText}</span></td>
-                              <td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>
-                          </tr>`;
+                html += `<tr><td class="text-center">${idx + 1}</td><td>${p.name}</td><td>${p.barcode || '-'}</td><td>${p.type || '-'}</td><td>${p.size || '-'}</td><td>${p.weight ? formatNumberToString(p.weight) + ' كجم' : '-'}</td><td>${formatPrice(p.price)}</td><td>${formatPrice(p.cost)}</td><td>${formatNumberToString(p.quantity)}</td><td class="${trendClass}">${movement.icon} ${movement.text}</td><td>${formatPrice(p.quantity * p.price)}</td><td><span class="${stockClass}">${stockText}</span></td><td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td></tr>`;
             });
-            tbody.innerHTML = html || '<tr><td colspan="13" class="text-center">لا توجد منتجات</td><\/tr>';
-            let totalQty = products.reduce((s,p)=>s+p.quantity,0);
-            let totalVal = products.reduce((s,p)=>s+(p.quantity*p.price),0);
+            tbody.innerHTML = html || '<tr><td colspan="13" class="text-center">لا توجد منتجات</td></tr>';
+            let totalQty = products.reduce((s, p) => s + p.quantity, 0);
+            let totalVal = products.reduce((s, p) => s + (p.quantity * p.price), 0);
             document.getElementById('totalProductsCount').innerText = products.length;
             document.getElementById('totalStockQuantity').innerText = formatNumberToString(totalQty);
             document.getElementById('totalStockValue').innerText = formatPrice(totalVal);
+            updateInventorySidebar();
             checkLowStock();
         }
         
-        function printFullFinancialReport() {
-            let totalSales = sales.reduce((s,i)=>s+(i.quantity*i.price),0);
-            let totalPurchases = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0);
-            let totalOp = operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing;
-            let net = totalSales - totalPurchases - totalOp;
-            let content = getReportHeader();
-            content += `التقرير المالي الشامل (كامل التفاصيل)\n${'='.repeat(60)}\n`;
-            content += `📊 إجمالي المبيعات: ${formatPrice(totalSales)}\n`;
-            content += `📦 إجمالي المشتريات: ${formatPrice(totalPurchases)}\n`;
-            content += `⚙️ تفاصيل مصاريف التشغيل:\n   - كهرباء: ${formatPrice(operatingExpenses.electricity)}\n   - إيجار: ${formatPrice(operatingExpenses.rent)}\n   - رواتب: ${formatPrice(operatingExpenses.salaries)}\n   - نقل: ${formatPrice(operatingExpenses.transport)}\n   - متنوعة: ${formatPrice(operatingExpenses.misc)}\n   - طباعة: ${formatPrice(operatingExpenses.printing)}\n`;
-            content += `💰 صافي الربح: ${formatPrice(net)}\n📈 هامش الربح: ${totalSales>0?((net/totalSales)*100).toFixed(2):0}%\n\n`;
-            content += `🏭 تفاصيل المخزون الحالي:\n${'='.repeat(40)}\n`;
-            products.forEach(p => { content += `${p.name}: الكمية ${formatNumberToString(p.quantity)} | القيمة ${formatPrice(p.quantity * p.price)}\n`; });
-            content += `\n📝 آخر 10 مبيعات مسجلة:\n${'='.repeat(40)}\n`;
-            sales.slice(-10).forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | العميل: ${s.customerName} | التاريخ: ${s.date}\n`; });
-            content += `\n📥 آخر 10 مشتريات مسجلة:\n${'='.repeat(40)}\n`;
-            purchases.slice(-10).forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | المورد: ${p.supplierName} | التاريخ: ${p.date}\n`; });
-            content += `\n🤝 توزيع الأرباح بين الشركاء:\n${'='.repeat(40)}\nالشريك الأول (3/4): ${formatPrice(net * 3 / 4)}\nالشريك الثاني (1/4): ${formatPrice(net * 1 / 4)}\n`;
-            downloadTxt(content, `تقرير_مالي_شامل_${new Date().toISOString().slice(0,19)}.txt`);
-            Swal.fire('تم', 'تم تصدير التقرير المالي الشامل مع جميع التفاصيل', 'success');
-        }
-        
-        function loadAllData(){
-            loadFromFirebase('customers',d=>{ customers=d; loadCustomers(); });
-            loadFromFirebase('suppliers',d=>{ suppliers=d; loadSuppliers(); });
-            loadFromFirebase('products',d=>{ products=d; loadProducts(); updateInventorySidebar(); updateInventoryFullSection(); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
-            loadFromFirebase('sales',d=>{ sales=d; loadSalesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
-            loadFromFirebase('purchases',d=>{ purchases=d; loadPurchasesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
-            loadFromFirebase('invoices',d=>{ invoices=d; loadInvoices(); });
-            loadFromFirebase('operatingExpenses',d=>{ if(d) operatingExpenses=d; updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
-        }
-        function startRealtimeListeners(){
-            if(!useFirebase) return;
-            listenToFirebase('products',d=>{ products=d; loadProducts(); updateInventorySidebar(); updateInventoryFullSection(); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
-            listenToFirebase('sales',d=>{ sales=d; loadSalesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
-            listenToFirebase('purchases',d=>{ purchases=d; loadPurchasesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
-            listenToFirebase('operatingExpenses',d=>{ if(d) operatingExpenses=d; updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
-        }
-        function updateInventorySidebar(){ let container=document.getElementById('inventorySidebarContent'); if(!container) return; if(products.length===0){ container.innerHTML='<div class="text-center text-secondary small">لا توجد منتجات</div>'; document.getElementById('inventorySummary').innerHTML='إجمالي الأصناف: 0'; return; } let html='', totalItems=0, totalQuantity=0; products.forEach(p=>{ totalItems++; totalQuantity+=p.quantity; let sold=sales.filter(s=>s.productId===p.id).reduce((sum,s)=>sum+s.quantity,0); let percent=p.quantity>0?(p.quantity/(p.quantity+sold)*100):0; let stockClass=p.quantity>200?'badge-stock-high':(p.quantity>50?'badge-stock-medium':'badge-stock-low'); let stockText=p.quantity>200?'مخزون ممتاز':(p.quantity>50?'مخزون متوسط':'مخزون منخفض ⚠️'); html+=`<div class="inventory-item"><div class="product-name"><i class="fas fa-box"></i> ${p.name} <span class="${stockClass}">${stockText}</span></div><div class="product-stats"><div>📦 المتبقي: ${formatNumberToString(p.quantity)}</div><div>💰 القيمة: ${formatPrice(p.quantity * p.price)}</div></div><div class="progress"><div class="progress-bar" style="width:${percent}%"></div></div></div>`; }); container.innerHTML=html; document.getElementById('inventorySummary').innerHTML=`🏭 إجمالي الأصناف: ${totalItems} | 📦 الكمية: ${formatNumberToString(totalQuantity)} | 💰 القيمة: ${formatPrice(products.reduce((s,p)=>s+p.quantity*p.price,0))}`; }
-        function updateDashboard(){ let totalSales=sales.reduce((s,sl)=>s+(sl.quantity*sl.price),0); let totalPurchases=purchases.reduce((s,p)=>s+(p.quantity*p.cost),0); let totalOp=operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net=totalSales-totalPurchases-totalOp; document.getElementById('statsCards').innerHTML=`<div class="col-md-3 mb-3"><div class="stat-card"><i class="fas fa-chart-line"></i><h3>${formatPrice(totalSales)}</h3><p>إجمالي المبيعات</p></div></div><div class="col-md-3 mb-3"><div class="stat-card"><i class="fas fa-shopping-cart"></i><h3>${formatPrice(totalPurchases)}</h3><p>إجمالي المشتريات</p></div></div><div class="col-md-3 mb-3"><div class="stat-card"><i class="fas fa-charging-station"></i><h3>${formatPrice(totalOp)}</h3><p>مصاريف التشغيل</p></div></div><div class="col-md-3 mb-3"><div class="stat-card"><i class="fas fa-coins"></i><h3>${formatPrice(net)}</h3><p>صافي الربح</p></div></div>`; let chartData=sales.slice(-6).map(s=>s.quantity*s.price); if(salesChart) salesChart.destroy(); salesChart=new ApexCharts(document.querySelector("#salesChart"),{series:[{name:'المبيعات',data:chartData.length?chartData:[0,0,0,0,0,0]}],chart:{type:'area',height:350,background:'transparent'},colors:['#fbbf24']}); salesChart.render(); let pieOptions={series:products.slice(0,5).map(p=>p.quantity),chart:{type:'donut',height:350,background:'transparent'},labels:products.slice(0,5).map(p=>p.name),colors:['#fbbf24','#10b981','#ef4444','#3b82f6','#8b5cf6']}; if(pieChart) pieChart.destroy(); pieChart=new ApexCharts(document.querySelector("#pieChart"),pieOptions); pieChart.render(); }
-        function updateProfitAnalysis(){ let totalSales=sales.reduce((s,sl)=>s+(sl.quantity*sl.price),0); let totalPurchases=purchases.reduce((s,p)=>s+(p.quantity*p.cost),0); let totalOp=operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net=totalSales-totalPurchases-totalOp; let margin=totalSales>0?((net/totalSales)*100).toFixed(2):0; document.getElementById('totalSales').innerText=formatPrice(totalSales); document.getElementById('totalPurchases').innerText=formatPrice(totalPurchases); document.getElementById('totalProfit').innerText=formatPrice(net); document.getElementById('profitMargin').innerText=margin+'%'; }
-        function loadSalesHistory(){ let div=document.getElementById('salesHistory'); if(div) div.innerHTML=sales.slice(-10).reverse().map(s=>`<div class="list-group-item"><strong>${s.productName}</strong> | ${s.rawQuantity||s.quantity} ${s.unit} = ${formatPrice(s.total)}<br><small>${s.customerName} | ${s.date}</small><br><button class="edit-btn" onclick="editSale(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSale(${s.id})">حذف</button></div>`).join(''); }
-        function loadPurchasesHistory(){ let div=document.getElementById('purchasesHistory'); if(div) div.innerHTML=purchases.slice(-10).reverse().map(p=>`<div class="list-group-item"><strong>${p.productName}</strong> | ${p.rawQuantity||p.quantity} ${p.unit} = ${formatPrice(p.total)}<br><small>${p.supplierName} | ${p.date}</small><br><button class="edit-btn" onclick="editPurchase(${p.id})">تعديل</button> <button class="delete-btn" onclick="deletePurchase(${p.id})">حذف</button></div>`).join(''); }
-        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button>
-        		                                </tr>`;
-            });
-            document.getElementById('customersList').innerHTML = html || '<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>';
-        }
-
-        function loadSuppliers() {
+        // تحديث قسم المخزون الجانبي (الأخضر المنفصل)
+        function updateInventorySidebar() {
+            let container = document.getElementById('inventorySidebarContent'); if (!container) return;
+            if (products.length === 0) { container.innerHTML = '<div class="text-center p-3 text-secondary">لا توجد منتجات</div>'; document.getElementById('inventorySummarySidebar').innerHTML = ''; return; }
             let html = '';
-            suppliers.forEach((s, i) => {
-                html += `<tr>
-                            <td class="text-center">${i + 1}</td>
-                            <td>${s.name}</td>
-                            <td>${s.phone}</td>
-                            <td>${s.address}</td>
-                            <td class="text-center"><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td>
-                        </tr>`;
-            });
-            document.getElementById('suppliersList').innerHTML = html || '<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>';
-        }
-
-        function loadProducts() {
-            let html = '';
-            products.forEach(p => {
-                html += `<div class="product-card">
-                            <i class="fas fa-shopping-bag fa-2x"></i>
-                            <h5>${p.name}</h5>
-                            <p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p>
-                            <p>📏 المقاس: ${p.size || 'غير محدد'} | ⚖️ الوزن: ${p.weight ? formatNumberToString(p.weight) + ' كجم' : 'غير محدد'}</p>
-                            <canvas id="barcode-${p.id}" style="max-width:150px;"></canvas>
-                            <div>
-                                <button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button>
-                                <button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})"><i class="fas fa-tag"></i> طباعة بطاقة سعر</button>
-                                <button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button>
-                                <button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button>
+            products.slice(0, 6).forEach(p => {
+                let stockClass = p.quantity > 200 ? 'badge-stock-high' : (p.quantity > 50 ? 'badge-stock-medium' : 'badge-stock-low');
+                let stockText = p.quantity > 200 ? 'مخزون ممتاز' : (p.quantity > 50 ? 'مخزون متوسط' : 'مخزون منخفض');
+                html += `<div class="inventory-sidebar-item">
+                            <div class="inventory-sidebar-name">
+                                <span><i class="fas fa-box"></i> ${p.name}</span>
+                                <span class="${stockClass}">${stockText}</span>
                             </div>
+                            <div class="inventory-sidebar-stats">📦 المتبقي: ${formatNumberToString(p.quantity)}</div>
+                            <div class="inventory-sidebar-stats">💰 القيمة: ${formatPrice(p.quantity * p.price)}</div>
                         </div>`;
             });
-            document.getElementById('productsGrid').innerHTML = html || '<p class="text-center">لا توجد منتجات</p>';
-            setTimeout(() => {
-                products.forEach(p => {
-                    let canvas = document.getElementById(`barcode-${p.id}`);
-                    if (canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format: "CODE128", width: 2, height: 40 });
-                });
-            }, 100);
+            container.innerHTML = html;
+            let totalItems = products.length;
+            let totalQuantity = products.reduce((s, p) => s + p.quantity, 0);
+            let totalValue = products.reduce((s, p) => s + (p.quantity * p.price), 0);
+            document.getElementById('inventorySummarySidebar').innerHTML = `<i class="fas fa-chart-line"></i> إجمالي الأصناف: ${totalItems}<br><i class="fas fa-cubes"></i> إجمالي الكميات: ${formatNumberToString(totalQuantity)}<br><i class="fas fa-dollar-sign"></i> القيمة: ${formatPrice(totalValue)}`;
         }
-
-        function loadInvoices() {
-            let html = '';
-            invoices.forEach((inv, i) => {
-                html += `<tr>
-                            <td class="text-center"><strong>#${inv.invoiceNumber}</strong></td>
-                            <td>${inv.customerName}</td>
-                            <td>${inv.date}</td>
-                            <td class="text-end">${formatPrice(inv.total)}</td>
-                            <td class="text-center"><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="btn btn-sm btn-danger" onclick="deleteInvoice(${inv.id})">حذف</button></td>
-                        </tr>`;
-            });
-            document.getElementById('invoicesList').innerHTML = html || '<tr><td colspan="5" class="text-center">لا توجد فواتير</td></tr>';
+        
+        function printFullFinancialReport() {
+            let totalSales = sales.reduce((s, i) => s + (i.quantity * i.price), 0);
+            let totalPurchases = purchases.reduce((s, i) => s + (i.quantity * i.cost), 0);
+            let totalOp = operatingExpenses.electricity + operatingExpenses.rent + operatingExpenses.salaries + operatingExpenses.transport + operatingExpenses.misc + operatingExpenses.printing;
+            let net = totalSales - totalPurchases - totalOp;
+            let content = getReportHeader();
+            content += `التقرير المالي الشامل\n${'='.repeat(60)}\n📊 المبيعات: ${formatPrice(totalSales)}\n📦 المشتريات: ${formatPrice(totalPurchases)}\n⚙️ المصاريف: ${formatPrice(totalOp)}\n💰 صافي الربح: ${formatPrice(net)}\n📈 الهامش: ${totalSales > 0 ? ((net / totalSales) * 100).toFixed(2) : 0}%\n\n`;
+            content += `🏭 المخزون:\n${'='.repeat(40)}\n`;
+            products.forEach(p => { content += `${p.name}: ${formatNumberToString(p.quantity)} | ${formatPrice(p.quantity * p.price)}\n`; });
+            content += `\n🤝 توزيع الأرباح:\nالشريك الأول (3/4): ${formatPrice(net * 3 / 4)}\nالشريك الثاني (1/4): ${formatPrice(net * 1 / 4)}\n`;
+            downloadTxt(content, `تقرير_مالي_شامل_${new Date().toISOString().slice(0, 19)}.txt`);
+            Swal.fire('تم', 'تم تصدير التقرير المالي', 'success');
         }
-
-        function deleteInvoice(id) {
-            Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
-                if (res.isConfirmed) {
-                    invoices = invoices.filter(i => i.id != id);
-                    saveToFirebase('invoices', invoices);
-                    loadInvoices();
-                }
-            });
+        
+        function loadAllData() {
+            loadFromFirebase('customers', d => { customers = d; loadCustomers(); });
+            loadFromFirebase('suppliers', d => { suppliers = d; loadSuppliers(); });
+            loadFromFirebase('products', d => { products = d; loadProducts(); updateInventorySidebar(); updateInventoryFullSection(); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
+            loadFromFirebase('sales', d => { sales = d; loadSalesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
+            loadFromFirebase('purchases', d => { purchases = d; loadPurchasesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
+            loadFromFirebase('invoices', d => { invoices = d; loadInvoices(); });
+            loadFromFirebase('operatingExpenses', d => { if (d) operatingExpenses = d; updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
         }
-
+        function startRealtimeListeners() { if (!useFirebase) return;
+            listenToFirebase('products', d => { products = d; loadProducts(); updateInventorySidebar(); updateInventoryFullSection(); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
+            listenToFirebase('sales', d => { sales = d; loadSalesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
+            listenToFirebase('purchases', d => { purchases = d; loadPurchasesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
+            listenToFirebase('operatingExpenses', d => { if (d) operatingExpenses = d; updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
+        }
+        function updateDashboard() {
+            let totalSales = sales.reduce((s, sl) => s + (sl.quantity * sl.price), 0);
+            let totalPurchases = purchases.reduce((s, p) => s + (p.quantity * p.cost), 0);
+            let totalOp = operatingExpenses.electricity + operatingExpenses.rent + operatingExpenses.salaries + operatingExpenses.transport + operatingExpenses.misc + operatingExpenses.printing;
+            let net = totalSales - totalPurchases - totalOp;
+            document.getElementById('statsCards').innerHTML = `<div class="col-md-3 mb-3"><div class="stat-card"><i class="fas fa-chart-line"></i><h3>${formatPrice(totalSales)}</h3><p>إجمالي المبيعات</p></div></div><div class="col-md-3 mb-3"><div class="stat-card"><i class="fas fa-shopping-cart"></i><h3>${formatPrice(totalPurchases)}</h3><p>إجمالي المشتريات</p></div></div><div class="col-md-3 mb-3"><div class="stat-card"><i class="fas fa-charging-station"></i><h3>${formatPrice(totalOp)}</h3><p>مصاريف التشغيل</p></div></div><div class="col-md-3 mb-3"><div class="stat-card"><i class="fas fa-coins"></i><h3>${formatPrice(net)}</h3><p>صافي الربح</p></div></div>`;
+            let chartData = sales.slice(-6).map(s => s.quantity * s.price);
+            if (salesChart) salesChart.destroy();
+            salesChart = new ApexCharts(document.querySelector("#salesChart"), { series: [{ name: 'المبيعات', data: chartData.length ? chartData : [0, 0, 0, 0, 0, 0] }], chart: { type: 'area', height: 350, background: 'transparent' }, colors: ['#fbbf24'] });
+            salesChart.render();
+            let pieOptions = { series: products.slice(0, 5).map(p => p.quantity), chart: { type: 'donut', height: 350, background: 'transparent' }, labels: products.slice(0, 5).map(p => p.name), colors: ['#fbbf24', '#10b981', '#ef4444', '#3b82f6', '#8b5cf6'] };
+            if (pieChart) pieChart.destroy();
+            pieChart = new ApexCharts(document.querySelector("#pieChart"), pieOptions);
+            pieChart.render();
+        }
+        function updateProfitAnalysis() {
+            let totalSales = sales.reduce((s, sl) => s + (sl.quantity * sl.price), 0);
+            let totalPurchases = purchases.reduce((s, p) => s + (p.quantity * p.cost), 0);
+            let totalOp = operatingExpenses.electricity + operatingExpenses.rent + operatingExpenses.salaries + operatingExpenses.transport + operatingExpenses.misc + operatingExpenses.printing;
+            let net = totalSales - totalPurchases - totalOp;
+            let margin = totalSales > 0 ? ((net / totalSales) * 100).toFixed(2) : 0;
+            document.getElementById('totalSales').innerText = formatPrice(totalSales);
+            document.getElementById('totalPurchases').innerText = formatPrice(totalPurchases);
+            document.getElementById('totalProfit').innerText = formatPrice(net);
+            document.getElementById('profitMargin').innerText = margin + '%';
+        }
+        function loadSalesHistory() { let div = document.getElementById('salesHistory'); if (div) div.innerHTML = sales.slice(-10).reverse().map(s => `<div class="list-group-item"><strong>${s.productName}</strong> | ${s.rawQuantity || s.quantity} ${s.unit} = ${formatPrice(s.total)}<br><small>${s.customerName} | ${s.date}</small><br><button class="edit-btn" onclick="editSale(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSale(${s.id})">حذف</button></div>`).join(''); }
+        function loadPurchasesHistory() { let div = document.getElementById('purchasesHistory'); if (div) div.innerHTML = purchases.slice(-10).reverse().map(p => `<div class="list-group-item"><strong>${p.productName}</strong> | ${p.rawQuantity || p.quantity} ${p.unit} = ${formatPrice(p.total)}<br><small>${p.supplierName} | ${p.date}</small><br><button class="edit-btn" onclick="editPurchase(${p.id})">تعديل</button> <button class="delete-btn" onclick="deletePurchase(${p.id})">حذف</button></div>`).join(''); }
+        function loadCustomers() { let html = ''; customers.forEach((c, i) => { html += `<tr><td class="text-center">${i + 1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML = html || '<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
+        function loadSuppliers() { let html = ''; suppliers.forEach((s, i) => { html += `<tr><td class="text-center">${i + 1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML = html || '<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
+        function loadProducts() { let html = ''; products.forEach(p => { html += `<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><p>📏 ${p.size || 'غير محدد'} | ⚖️ ${p.weight ? formatNumberToString(p.weight) + ' كجم' : 'غير محدد'}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})">طباعة بطاقة سعر</button><button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button><button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML = html || '<p class="text-center">لا توجد منتجات</p>'; setTimeout(() => { products.forEach(p => { let canvas = document.getElementById(`barcode-${p.id}`); if (canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format: "CODE128", width: 2, height: 40 }); }); }, 100); }
+        function loadInvoices() { let html = ''; invoices.forEach((inv, i) => { html += `<tr><td class="text-center"><strong>#${inv.invoiceNumber}</strong></td><td>${inv.customerName}</td><td>${inv.date}</td><td class="text-end">${formatPrice(inv.total)}</td><td><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="btn btn-sm btn-danger" onclick="deleteInvoice(${inv.id})">حذف</button></td></tr>`; }); document.getElementById('invoicesList').innerHTML = html || '<tr><td colspan="5" class="text-center">لا توجد فواتير</td></tr>'; }
+        function deleteInvoice(id) { Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => { if (res.isConfirmed) { invoices = invoices.filter(i => i.id != id); saveToFirebase('invoices', invoices); loadInvoices(); } }); }
+        
+        // التحقق من تكرار الباركود
+        function isBarcodeDuplicate(barcode, excludeId = null) {
+            return products.some(p => p.id !== excludeId && p.barcode && p.barcode === barcode && barcode !== '');
+        }
+        
         function showProductModal() {
             document.getElementById('productId').value = '';
             document.getElementById('productName').value = '';
@@ -1137,13 +481,17 @@
             document.getElementById('productQuantity').value = '';
             new bootstrap.Modal(document.getElementById('productModal')).show();
         }
-
         function saveProduct() {
             let id = document.getElementById('productId').value;
+            let barcode = document.getElementById('productBarcode').value.trim();
+            if (barcode && isBarcodeDuplicate(barcode, id ? parseInt(id) : null)) {
+                Swal.fire('خطأ', 'هذا الباركود مستخدم من قبل! الرجاء إدخال باركود آخر.', 'error');
+                return;
+            }
             let product = {
                 id: id ? parseInt(id) : Date.now(),
                 name: document.getElementById('productName').value,
-                barcode: document.getElementById('productBarcode').value,
+                barcode: barcode,
                 type: document.getElementById('productType').value,
                 size: document.getElementById('productSize').value,
                 weight: parseNumberValue(document.getElementById('productWeight').value),
@@ -1158,632 +506,53 @@
             Swal.fire('تم', 'تم حفظ المنتج', 'success');
             loadAllData();
         }
-
-        function editProduct(id) {
-            let p = products.find(p => p.id == id);
-            document.getElementById('productId').value = p.id;
-            document.getElementById('productName').value = p.name;
-            document.getElementById('productBarcode').value = p.barcode || '';
-            document.getElementById('productType').value = p.type || '';
-            document.getElementById('productSize').value = p.size || '';
-            document.getElementById('productWeight').value = formatNumberToString(p.weight || 0);
-            document.getElementById('productPrice').value = formatNumberToString(p.price);
-            document.getElementById('productCost').value = formatNumberToString(p.cost);
-            document.getElementById('productQuantity').value = formatNumberToString(p.quantity);
-            new bootstrap.Modal(document.getElementById('productModal')).show();
-        }
-
-        function deleteProduct(id) {
-            Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
-                if (res.isConfirmed) {
-                    products = products.filter(p => p.id != id);
-                    saveToFirebase('products', products);
-                    loadAllData();
-                }
-            });
-        }
-
-        function showCustomerModal() {
-            document.getElementById('customerId').value = '';
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerPhone').value = '';
-            document.getElementById('customerAddress').value = '';
-            new bootstrap.Modal(document.getElementById('customerModal')).show();
-        }
-
-        function saveCustomer() {
-            let id = document.getElementById('customerId').value;
-            let customer = {
-                id: id ? parseInt(id) : Date.now(),
-                name: document.getElementById('customerName').value,
-                phone: document.getElementById('customerPhone').value,
-                address: document.getElementById('customerAddress').value
-            };
-            if (id) customers = customers.map(c => c.id == customer.id ? customer : c);
-            else customers.push(customer);
-            saveToFirebase('customers', customers);
-            bootstrap.Modal.getInstance(document.getElementById('customerModal')).hide();
-            Swal.fire('تم', 'تم حفظ العميل', 'success');
-            loadAllData();
-        }
-
-        function editCustomer(id) {
-            let c = customers.find(c => c.id == id);
-            document.getElementById('customerId').value = c.id;
-            document.getElementById('customerName').value = c.name;
-            document.getElementById('customerPhone').value = c.phone;
-            document.getElementById('customerAddress').value = c.address;
-            new bootstrap.Modal(document.getElementById('customerModal')).show();
-        }
-
-        function deleteCustomer(id) {
-            Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
-                if (res.isConfirmed) {
-                    customers = customers.filter(c => c.id != id);
-                    saveToFirebase('customers', customers);
-                    loadAllData();
-                }
-            });
-        }
-
-        function showSupplierModal() {
-            document.getElementById('supplierId').value = '';
-            document.getElementById('supplierName').value = '';
-            document.getElementById('supplierPhone').value = '';
-            document.getElementById('supplierAddress').value = '';
-            new bootstrap.Modal(document.getElementById('supplierModal')).show();
-        }
-
-        function saveSupplier() {
-            let id = document.getElementById('supplierId').value;
-            let supplier = {
-                id: id ? parseInt(id) : Date.now(),
-                name: document.getElementById('supplierName').value,
-                phone: document.getElementById('supplierPhone').value,
-                address: document.getElementById('supplierAddress').value
-            };
-            if (id) suppliers = suppliers.map(s => s.id == supplier.id ? supplier : s);
-            else suppliers.push(supplier);
-            saveToFirebase('suppliers', suppliers);
-            bootstrap.Modal.getInstance(document.getElementById('supplierModal')).hide();
-            Swal.fire('تم', 'تم حفظ المورد', 'success');
-            loadAllData();
-        }
-
-        function editSupplier(id) {
-            let s = suppliers.find(s => s.id == id);
-            document.getElementById('supplierId').value = s.id;
-            document.getElementById('supplierName').value = s.name;
-            document.getElementById('supplierPhone').value = s.phone;
-            document.getElementById('supplierAddress').value = s.address;
-            new bootstrap.Modal(document.getElementById('supplierModal')).show();
-        }
-
-        function deleteSupplier(id) {
-            Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
-                if (res.isConfirmed) {
-                    suppliers = suppliers.filter(s => s.id != id);
-                    saveToFirebase('suppliers', suppliers);
-                    loadAllData();
-                }
-            });
-        }
-
-        function saveSale() {
-            let id = document.getElementById('editSaleId').value;
-            let pName = document.getElementById('saleProductNameInput').value;
-            let cName = document.getElementById('saleCustomerNameInput').value || 'نقدي';
-            let size = document.getElementById('saleSize').value || '';
-            let weight = parseNumberValue(document.getElementById('saleWeight').value);
-            let qty = parseNumberValue(document.getElementById('saleQuantity').value);
-            let price = parseNumberValue(document.getElementById('salePrice').value);
-            let unit = document.getElementById('saleUnit').value;
-            let date = document.getElementById('saleDate').value || new Date().toISOString().split('T')[0];
-            let finalQty = getQuantityInKilo(qty, unit);
-            let product = products.find(p => p.name === pName);
-
-            if (id) {
-                let oldSale = sales.find(s => s.id == id);
-                if (oldSale) {
-                    let oldProduct = products.find(p => p.name === oldSale.productName);
-                    if (oldProduct) oldProduct.quantity += oldSale.quantity;
-                    oldSale.productName = pName;
-                    oldSale.customerName = cName;
-                    oldSale.size = size;
-                    oldSale.weight = weight;
-                    oldSale.rawQuantity = qty;
-                    oldSale.quantity = finalQty;
-                    oldSale.unit = unit;
-                    oldSale.price = price;
-                    oldSale.date = date;
-                    oldSale.total = finalQty * price;
-                    if (product) product.quantity -= finalQty;
-                    saveToFirebase('sales', sales);
-                    saveToFirebase('products', products);
-                    Swal.fire('تم', 'تم تعديل البيع', 'success');
-                }
-            } else {
-                if (product && product.quantity < finalQty) {
-                    Swal.fire('خطأ', 'الكمية غير متوفرة', 'error');
-                    return;
-                }
-                if (product) product.quantity -= finalQty;
-                let sale = {
-                    id: Date.now(),
-                    saleNumber: sales.length + 1,
-                    productName: pName,
-                    quantity: finalQty,
-                    rawQuantity: qty,
-                    unit: unit,
-                    price: price,
-                    customerName: cName,
-                    size: size,
-                    weight: weight,
-                    date: date,
-                    total: finalQty * price
-                };
-                sales.push(sale);
-                saveToFirebase('sales', sales);
-                saveToFirebase('products', products);
-                Swal.fire('تم', 'تم تسجيل البيع', 'success');
-            }
-            clearSaleForm();
-            loadAllData();
-        }
-
-        function editSale(id) {
-            let sale = sales.find(s => s.id == id);
-            if (sale) {
-                document.getElementById('editSaleId').value = sale.id;
-                document.getElementById('saleDate').value = sale.date;
-                document.getElementById('saleProductNameInput').value = sale.productName;
-                document.getElementById('saleCustomerNameInput').value = sale.customerName;
-                document.getElementById('saleSize').value = sale.size || '';
-                document.getElementById('saleWeight').value = formatNumberToString(sale.weight || 0);
-                document.getElementById('saleQuantity').value = formatNumberToString(sale.rawQuantity || sale.quantity);
-                document.getElementById('saleUnit').value = sale.unit;
-                document.getElementById('salePrice').value = formatNumberToString(sale.price);
-                Swal.fire('تم التحميل', 'يمكنك تعديل البيانات', 'info');
-            }
-        }
-
-        function deleteSale(id) {
-            Swal.fire({ title: 'حذف بيع', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
-                if (res.isConfirmed) {
-                    let sale = sales.find(s => s.id == id);
-                    if (sale) {
-                        let product = products.find(p => p.name === sale.productName);
-                        if (product) product.quantity += sale.quantity;
-                        sales = sales.filter(s => s.id != id);
-                        saveToFirebase('sales', sales);
-                        saveToFirebase('products', products);
-                        Swal.fire('تم الحذف', '', 'success');
-                        loadAllData();
-                    }
-                }
-            });
-        }
-
-        function clearSaleForm() {
-            document.getElementById('editSaleId').value = '';
-            document.getElementById('saleDate').value = '';
-            document.getElementById('saleProductNameInput').value = '';
-            document.getElementById('saleCustomerNameInput').value = '';
-            document.getElementById('saleSize').value = '';
-            document.getElementById('saleWeight').value = '';
-            document.getElementById('saleQuantity').value = '';
-            document.getElementById('saleUnit').value = 'كيلو';
-            document.getElementById('salePrice').value = '';
-            document.getElementById('saleBarcodeInput').value = '';
-        }
-
-        function savePurchase() {
-            let id = document.getElementById('editPurchaseId').value;
-            let pName = document.getElementById('purchaseProductNameInput').value;
-            let sName = document.getElementById('purchaseSupplierNameInput').value || 'عام';
-            let size = document.getElementById('purchaseSize').value || '';
-            let weight = parseNumberValue(document.getElementById('purchaseWeight').value);
-            let qty = parseNumberValue(document.getElementById('purchaseQuantity').value);
-            let cost = parseNumberValue(document.getElementById('purchaseCost').value);
-            let unit = document.getElementById('purchaseUnit').value;
-            let date = document.getElementById('purchaseDate').value || new Date().toISOString().split('T')[0];
-            let finalQty = getQuantityInKilo(qty, unit);
-            let product = products.find(p => p.name === pName);
-
-            if (id) {
-                let oldPurchase = purchases.find(p => p.id == id);
-                if (oldPurchase) {
-                    let oldProduct = products.find(p => p.name === oldPurchase.productName);
-                    if (oldProduct) oldProduct.quantity -= oldPurchase.quantity;
-                    oldPurchase.productName = pName;
-                    oldPurchase.supplierName = sName;
-                    oldPurchase.size = size;
-                    oldPurchase.weight = weight;
-                    oldPurchase.rawQuantity = qty;
-                    oldPurchase.quantity = finalQty;
-                    oldPurchase.unit = unit;
-                    oldPurchase.cost = cost;
-                    oldPurchase.date = date;
-                    oldPurchase.total = finalQty * cost;
-                    if (product) product.quantity += finalQty;
-                    else products.push({ id: Date.now(), name: pName, quantity: finalQty, price: 0, cost: cost });
-                    saveToFirebase('purchases', purchases);
-                    saveToFirebase('products', products);
-                    Swal.fire('تم', 'تم تعديل الشراء', 'success');
-                }
-            } else {
-                if (product) product.quantity += finalQty;
-                else products.push({ id: Date.now(), name: pName, quantity: finalQty, price: 0, cost: cost });
-                let purchase = {
-                    id: Date.now(),
-                    purchaseNumber: purchases.length + 1,
-                    productName: pName,
-                    quantity: finalQty,
-                    rawQuantity: qty,
-                    unit: unit,
-                    cost: cost,
-                    supplierName: sName,
-                    size: size,
-                    weight: weight,
-                    date: date,
-                    total: finalQty * cost
-                };
-                purchases.push(purchase);
-                saveToFirebase('purchases', purchases);
-                saveToFirebase('products', products);
-                Swal.fire('تم', 'تم تسجيل الشراء', 'success');
-            }
-            clearPurchaseForm();
-            loadAllData();
-        }
-
-        function editPurchase(id) {
-            let purchase = purchases.find(p => p.id == id);
-            if (purchase) {
-                document.getElementById('editPurchaseId').value = purchase.id;
-                document.getElementById('purchaseDate').value = purchase.date;
-                document.getElementById('purchaseProductNameInput').value = purchase.productName;
-                document.getElementById('purchaseSupplierNameInput').value = purchase.supplierName;
-                document.getElementById('purchaseSize').value = purchase.size || '';
-                document.getElementById('purchaseWeight').value = formatNumberToString(purchase.weight || 0);
-                document.getElementById('purchaseQuantity').value = formatNumberToString(purchase.rawQuantity || purchase.quantity);
-                document.getElementById('purchaseUnit').value = purchase.unit;
-                document.getElementById('purchaseCost').value = formatNumberToString(purchase.cost);
-                Swal.fire('تم التحميل', 'يمكنك تعديل البيانات', 'info');
-            }
-        }
-
-        function deletePurchase(id) {
-            Swal.fire({ title: 'حذف شراء', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
-                if (res.isConfirmed) {
-                    let purchase = purchases.find(p => p.id == id);
-                    if (purchase) {
-                        let product = products.find(p => p.name === purchase.productName);
-                        if (product) product.quantity -= purchase.quantity;
-                        purchases = purchases.filter(p => p.id != id);
-                        saveToFirebase('purchases', purchases);
-                        saveToFirebase('products', products);
-                        Swal.fire('تم الحذف', '', 'success');
-                        loadAllData();
-                    }
-                }
-            });
-        }
-
-        function clearPurchaseForm() {
-            document.getElementById('editPurchaseId').value = '';
-            document.getElementById('purchaseDate').value = '';
-            document.getElementById('purchaseProductNameInput').value = '';
-            document.getElementById('purchaseSupplierNameInput').value = '';
-            document.getElementById('purchaseSize').value = '';
-            document.getElementById('purchaseWeight').value = '';
-            document.getElementById('purchaseQuantity').value = '';
-            document.getElementById('purchaseUnit').value = 'كيلو';
-            document.getElementById('purchaseCost').value = '';
-        }
-
-        function findProductByBarcode() {
-            let code = document.getElementById('saleBarcodeInput').value;
-            let product = products.find(p => (p.barcode && p.barcode === code) || p.id.toString() === code);
-            if (product) {
-                document.getElementById('saleProductNameInput').value = product.name;
-                document.getElementById('salePrice').value = formatNumberToString(product.price);
-                Swal.fire('تم', 'تم العثور على المنتج', 'success');
-            } else if (code) Swal.fire('خطأ', 'لم يتم العثور على منتج', 'error');
-        }
-
-        function printBarcode(productId) {
-            let p = products.find(pr => pr.id == productId);
-            if (p) {
-                let win = window.open();
-                win.document.write(`<html><head><title>باركود ${p.name}</title><script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"><\/script></head><body><canvas id="barcodePrint"></canvas><script>JsBarcode(document.getElementById("barcodePrint"), "${p.barcode || p.id}", { format:"CODE128" });<\/script><button onclick="window.print()">طباعة</button></body></html>`);
-            }
-        }
-
-        function showInvoiceModal() {
-            document.getElementById('invoiceItemsContainer').innerHTML = '';
-            let customerSelect = document.getElementById('invoiceCustomerSelect');
-            customerSelect.innerHTML = '<option value="">اختر العميل</option>';
-            customers.forEach(c => {
-                customerSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`;
-            });
-            addInvoiceItem();
-            new bootstrap.Modal(document.getElementById('invoiceModal')).show();
-        }
-
-        function addInvoiceItem() {
-            let container = document.getElementById('invoiceItemsContainer');
-            let div = document.createElement('div');
-            div.className = 'row mb-2';
-            div.innerHTML = `<div class="col-5"><select class="form-control product-select" onchange="updateInvoiceTotal()">${products.map(p => `<option value="${p.id}" data-price="${p.price}">${p.name}</option>`).join('')}</select></div>
-                            <div class="col-3"><input class="form-control quantity-input" placeholder="كمية" oninput="updateInvoiceTotal()"></div>
-                            <div class="col-3"><input class="form-control price-input" placeholder="سعر" oninput="updateInvoiceTotal()"></div>
-                            <div class="col-1"><button class="btn btn-danger" onclick="removeItem(this)">×</button></div>`;
-            container.appendChild(div);
-            updateInvoiceTotal();
-        }
-
-        function removeItem(btn) {
-            btn.closest('.row').remove();
-            updateInvoiceTotal();
-        }
-
-        function updateInvoiceTotal() {
-            let total = 0;
-            document.querySelectorAll('#invoiceItemsContainer .row').forEach(row => {
-                let qty = parseNumberValue(row.querySelector('.quantity-input').value);
-                let price = parseNumberValue(row.querySelector('.price-input').value);
-                let select = row.querySelector('.product-select');
-                if (!price && select && select.selectedOptions[0]) price = parseNumberValue(select.selectedOptions[0].dataset.price);
-                total += qty * price;
-            });
-            document.getElementById('invoiceTotal').innerText = formatNumberToString(total);
-        }
-
-        function saveInvoiceModal() {
-            let customerId = document.getElementById('invoiceCustomerSelect').value;
-            if (!customerId) {
-                Swal.fire('خطأ', 'اختر العميل', 'error');
-                return;
-            }
-            let customer = customers.find(c => c.id == parseInt(customerId));
-            let items = [];
-            document.querySelectorAll('#invoiceItemsContainer .row').forEach(row => {
-                let productId = row.querySelector('.product-select').value;
-                let qty = parseNumberValue(row.querySelector('.quantity-input').value);
-                let price = parseNumberValue(row.querySelector('.price-input').value);
-                if (productId && qty > 0) {
-                    items.push({ productId: parseInt(productId), quantity: qty, price: price });
-                    let product = products.find(p => p.id == productId);
-                    if (product) product.quantity -= qty;
-                }
-            });
-            let invoice = {
-                id: Date.now(),
-                invoiceNumber: invoices.length + 1,
-                customerId: parseInt(customerId),
-                customerName: customer.name,
-                date: new Date().toISOString().split('T')[0],
-                items: items,
-                total: parseNumberValue(document.getElementById('invoiceTotal').innerText)
-            };
-            invoices.push(invoice);
-            saveToFirebase('invoices', invoices);
-            saveToFirebase('products', products);
-            bootstrap.Modal.getInstance(document.getElementById('invoiceModal')).hide();
-            Swal.fire('تم', 'تم حفظ الفاتورة', 'success');
-            loadAllData();
-        }
-
-        function viewInvoice(id) {
-            let inv = invoices.find(i => i.id == id);
-            let itemsHtml = '<ul>';
-            inv.items.forEach(i => {
-                let p = products.find(p => p.id == i.productId);
-                itemsHtml += `<li>${p?.name} - ${i.quantity} × ${formatPrice(i.price)}</li>`;
-            });
-            itemsHtml += '</ul>';
-            Swal.fire({
-                title: `فاتورة #${inv.invoiceNumber}`,
-                html: `<div><p>العميل: ${inv.customerName}</p><p>المجموع: ${formatPrice(inv.total)}</p>${itemsHtml}</div>`
-            });
-        }
-
-        function getReportHeader() {
-            const now = new Date();
-            return `مصنع الحرمين للبلاستيك\n${now.toLocaleString('ar-EG')}\n${'='.repeat(50)}\n`;
-        }
-
-        function generateSalesReport() {
-            let total = sales.reduce((s, i) => s + (i.quantity * i.price), 0);
-            let content = getReportHeader() + `تقرير المبيعات\nالإجمالي: ${formatPrice(total)}\n`;
-            sales.forEach(s => {
-                content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`;
-            });
-            downloadTxt(content, `تقرير_المبيعات.txt`);
-            Swal.fire('تم', 'تم التصدير', 'success');
-        }
-
-        function generatePurchasesReport() {
-            let total = purchases.reduce((s, i) => s + (i.quantity * i.cost), 0);
-            let content = getReportHeader() + `تقرير المشتريات\nالإجمالي: ${formatPrice(total)}\n`;
-            purchases.forEach(p => {
-                content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`;
-            });
-            downloadTxt(content, `تقرير_المشتريات.txt`);
-            Swal.fire('تم', 'تم التصدير', 'success');
-        }
-
-        function generateProfitReport() {
-            let salesTotal = sales.reduce((s, i) => s + (i.quantity * i.price), 0);
-            let purchasesTotal = purchases.reduce((s, i) => s + (i.quantity * i.cost), 0);
-            let totalOp = operatingExpenses.electricity + operatingExpenses.rent + operatingExpenses.salaries + operatingExpenses.transport + operatingExpenses.misc + operatingExpenses.printing;
-            let net = salesTotal - purchasesTotal - totalOp;
-            let content = getReportHeader() + `تقرير الأرباح\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nالمصاريف: ${formatPrice(totalOp)}\nصافي الربح: ${formatPrice(net)}\n`;
-            downloadTxt(content, `تقرير_الأرباح.txt`);
-            Swal.fire('تم', 'تم التصدير', 'success');
-        }
-
-        function exportSectionToTxt(sectionName) {
-            let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`;
-            if (sectionName === 'inventoryManagement') products.forEach(p => {
-                content += `${p.name} | المقاس: ${p.size || '-'} | الوزن: ${p.weight || '-'} كجم | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`;
-            });
-            else if (sectionName === 'plasticPrices') currentPlasticPrices.forEach(p => {
-                content += `${p.type} | ${p.description} | ${p.size} | ${formatPrice(p.price)}\n`;
-            });
-            else if (sectionName === 'invoices') invoices.forEach(inv => {
-                content += `رقم الفاتورة: ${inv.invoiceNumber} | العميل: ${inv.customerName} | التاريخ: ${inv.date} | المجموع: ${formatPrice(inv.total)}\n`;
-            });
-            downloadTxt(content, `${sectionName}.txt`);
-            Swal.fire('تم', 'تم التصدير', 'success');
-        }
-
-        function saveOperatingExpenses() {
-            operatingExpenses = {
-                electricity: parseNumberValue(document.getElementById('operatingElectricity').value),
-                rent: parseNumberValue(document.getElementById('operatingRent').value),
-                salaries: parseNumberValue(document.getElementById('operatingSalaries').value),
-                transport: parseNumberValue(document.getElementById('operatingTransport').value),
-                misc: parseNumberValue(document.getElementById('operatingMisc').value),
-                printing: parseNumberValue(document.getElementById('operatingPrinting').value)
-            };
-            saveToFirebase('operatingExpenses', operatingExpenses);
-            Swal.fire('تم', 'تم حفظ المصروفات', 'success');
-            updateDashboard();
-            updateProfitAnalysis();
-            updatePartnersSection();
-        }
-
-        function searchSales() {
-            let customer = document.getElementById('searchSaleCustomer').value.toLowerCase();
-            let product = document.getElementById('searchSaleProduct').value.toLowerCase();
-            let date = document.getElementById('searchSaleDate').value;
-            let filtered = sales.filter(s => (!customer || s.customerName.toLowerCase().includes(customer)) && (!product || s.productName.toLowerCase().includes(product)) && (!date || s.date === date));
-            let html = filtered.map(s => `<div>${s.productName} - ${s.customerName} - ${formatPrice(s.total)}</div>`).join('');
-            document.getElementById('salesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>';
-        }
-
-        function searchPurchases() {
-            let supplier = document.getElementById('searchPurchaseSupplier').value.toLowerCase();
-            let product = document.getElementById('searchPurchaseProduct').value.toLowerCase();
-            let date = document.getElementById('searchPurchaseDate').value;
-            let filtered = purchases.filter(p => (!supplier || p.supplierName.toLowerCase().includes(supplier)) && (!product || p.productName.toLowerCase().includes(product)) && (!date || p.date === date));
-            let html = filtered.map(p => `<div>${p.productName} - ${p.supplierName} - ${formatPrice(p.total)}</div>`).join('');
-            document.getElementById('purchasesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>';
-        }
-
-        function toggleTheme() {
-            let theme = document.documentElement.getAttribute('data-theme');
-            if (theme === 'light') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                localStorage.setItem('theme', 'light');
-            }
-            updateCustomizationPickersFromCSS();
-        }
-
+        function editProduct(id) { let p = products.find(p => p.id == id); document.getElementById('productId').value = p.id; document.getElementById('productName').value = p.name; document.getElementById('productBarcode').value = p.barcode || ''; document.getElementById('productType').value = p.type || ''; document.getElementById('productSize').value = p.size || ''; document.getElementById('productWeight').value = formatNumberToString(p.weight || 0); document.getElementById('productPrice').value = formatNumberToString(p.price); document.getElementById('productCost').value = formatNumberToString(p.cost); document.getElementById('productQuantity').value = formatNumberToString(p.quantity); new bootstrap.Modal(document.getElementById('productModal')).show(); }
+        function deleteProduct(id) { Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => { if (res.isConfirmed) { products = products.filter(p => p.id != id); saveToFirebase('products', products); loadAllData(); } }); }
+        function showCustomerModal() { document.getElementById('customerId').value = ''; document.getElementById('customerName').value = ''; document.getElementById('customerPhone').value = ''; document.getElementById('customerAddress').value = ''; new bootstrap.Modal(document.getElementById('customerModal')).show(); }
+        function saveCustomer() { let id = document.getElementById('customerId').value; let customer = { id: id ? parseInt(id) : Date.now(), name: document.getElementById('customerName').value, phone: document.getElementById('customerPhone').value, address: document.getElementById('customerAddress').value }; if (id) customers = customers.map(c => c.id == customer.id ? customer : c); else customers.push(customer); saveToFirebase('customers', customers); bootstrap.Modal.getInstance(document.getElementById('customerModal')).hide(); Swal.fire('تم', 'تم حفظ العميل', 'success'); loadAllData(); }
+        function editCustomer(id) { let c = customers.find(c => c.id == id); document.getElementById('customerId').value = c.id; document.getElementById('customerName').value = c.name; document.getElementById('customerPhone').value = c.phone; document.getElementById('customerAddress').value = c.address; new bootstrap.Modal(document.getElementById('customerModal')).show(); }
+        function deleteCustomer(id) { Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => { if (res.isConfirmed) { customers = customers.filter(c => c.id != id); saveToFirebase('customers', customers); loadAllData(); } }); }
+        function showSupplierModal() { document.getElementById('supplierId').value = ''; document.getElementById('supplierName').value = ''; document.getElementById('supplierPhone').value = ''; document.getElementById('supplierAddress').value = ''; new bootstrap.Modal(document.getElementById('supplierModal')).show(); }
+        function saveSupplier() { let id = document.getElementById('supplierId').value; let supplier = { id: id ? parseInt(id) : Date.now(), name: document.getElementById('supplierName').value, phone: document.getElementById('supplierPhone').value, address: document.getElementById('supplierAddress').value }; if (id) suppliers = suppliers.map(s => s.id == supplier.id ? supplier : s); else suppliers.push(supplier); saveToFirebase('suppliers', suppliers); bootstrap.Modal.getInstance(document.getElementById('supplierModal')).hide(); Swal.fire('تم', 'تم حفظ المورد', 'success'); loadAllData(); }
+        function editSupplier(id) { let s = suppliers.find(s => s.id == id); document.getElementById('supplierId').value = s.id; document.getElementById('supplierName').value = s.name; document.getElementById('supplierPhone').value = s.phone; document.getElementById('supplierAddress').value = s.address; new bootstrap.Modal(document.getElementById('supplierModal')).show(); }
+        function deleteSupplier(id) { Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => { if (res.isConfirmed) { suppliers = suppliers.filter(s => s.id != id); saveToFirebase('suppliers', suppliers); loadAllData(); } }); }
+        
+        function saveSale() { let id = document.getElementById('editSaleId').value; let pName = document.getElementById('saleProductNameInput').value; let cName = document.getElementById('saleCustomerNameInput').value || 'نقدي'; let size = document.getElementById('saleSize').value || ''; let weight = parseNumberValue(document.getElementById('saleWeight').value); let qty = parseNumberValue(document.getElementById('saleQuantity').value); let price = parseNumberValue(document.getElementById('salePrice').value); let unit = document.getElementById('saleUnit').value; let date = document.getElementById('saleDate').value || new Date().toISOString().split('T')[0]; let finalQty = getQuantityInKilo(qty, unit); let product = products.find(p => p.name === pName); if (id) { let oldSale = sales.find(s => s.id == id); if (oldSale) { let oldProduct = products.find(p => p.name === oldSale.productName); if (oldProduct) oldProduct.quantity += oldSale.quantity; oldSale.productName = pName; oldSale.customerName = cName; oldSale.size = size; oldSale.weight = weight; oldSale.rawQuantity = qty; oldSale.quantity = finalQty; oldSale.unit = unit; oldSale.price = price; oldSale.date = date; oldSale.total = finalQty * price; if (product) product.quantity -= finalQty; saveToFirebase('sales', sales); saveToFirebase('products', products); Swal.fire('تم', 'تم تعديل البيع', 'success'); } } else { if (product && product.quantity < finalQty) { Swal.fire('خطأ', 'الكمية غير متوفرة', 'error'); return; } if (product) product.quantity -= finalQty; let sale = { id: Date.now(), saleNumber: sales.length + 1, productName: pName, quantity: finalQty, rawQuantity: qty, unit: unit, price: price, customerName: cName, size: size, weight: weight, date: date, total: finalQty * price }; sales.push(sale); saveToFirebase('sales', sales); saveToFirebase('products', products); Swal.fire('تم', 'تم تسجيل البيع', 'success'); } clearSaleForm(); loadAllData(); }
+        function editSale(id) { let sale = sales.find(s => s.id == id); if (sale) { document.getElementById('editSaleId').value = sale.id; document.getElementById('saleDate').value = sale.date; document.getElementById('saleProductNameInput').value = sale.productName; document.getElementById('saleCustomerNameInput').value = sale.customerName; document.getElementById('saleSize').value = sale.size || ''; document.getElementById('saleWeight').value = formatNumberToString(sale.weight || 0); document.getElementById('saleQuantity').value = formatNumberToString(sale.rawQuantity || sale.quantity); document.getElementById('saleUnit').value = sale.unit; document.getElementById('salePrice').value = formatNumberToString(sale.price); Swal.fire('تم التحميل', 'يمكنك تعديل البيانات', 'info'); } }
+        function deleteSale(id) { Swal.fire({ title: 'حذف بيع', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => { if (res.isConfirmed) { let sale = sales.find(s => s.id == id); if (sale) { let product = products.find(p => p.name === sale.productName); if (product) product.quantity += sale.quantity; sales = sales.filter(s => s.id != id); saveToFirebase('sales', sales); saveToFirebase('products', products); Swal.fire('تم الحذف', '', 'success'); loadAllData(); } } }); }
+        function clearSaleForm() { document.getElementById('editSaleId').value = ''; document.getElementById('saleDate').value = ''; document.getElementById('saleProductNameInput').value = ''; document.getElementById('saleCustomerNameInput').value = ''; document.getElementById('saleSize').value = ''; document.getElementById('saleWeight').value = ''; document.getElementById('saleQuantity').value = ''; document.getElementById('saleUnit').value = 'كيلو'; document.getElementById('salePrice').value = ''; document.getElementById('saleBarcodeInput').value = ''; }
+        function savePurchase() { let id = document.getElementById('editPurchaseId').value; let pName = document.getElementById('purchaseProductNameInput').value; let sName = document.getElementById('purchaseSupplierNameInput').value || 'عام'; let size = document.getElementById('purchaseSize').value || ''; let weight = parseNumberValue(document.getElementById('purchaseWeight').value); let qty = parseNumberValue(document.getElementById('purchaseQuantity').value); let cost = parseNumberValue(document.getElementById('purchaseCost').value); let unit = document.getElementById('purchaseUnit').value; let date = document.getElementById('purchaseDate').value || new Date().toISOString().split('T')[0]; let finalQty = getQuantityInKilo(qty, unit); let product = products.find(p => p.name === pName); if (id) { let oldPurchase = purchases.find(p => p.id == id); if (oldPurchase) { let oldProduct = products.find(p => p.name === oldPurchase.productName); if (oldProduct) oldProduct.quantity -= oldPurchase.quantity; oldPurchase.productName = pName; oldPurchase.supplierName = sName; oldPurchase.size = size; oldPurchase.weight = weight; oldPurchase.rawQuantity = qty; oldPurchase.quantity = finalQty; oldPurchase.unit = unit; oldPurchase.cost = cost; oldPurchase.date = date; oldPurchase.total = finalQty * cost; if (product) product.quantity += finalQty; else products.push({ id: Date.now(), name: pName, quantity: finalQty, price: 0, cost: cost }); saveToFirebase('purchases', purchases); saveToFirebase('products', products); Swal.fire('تم', 'تم تعديل الشراء', 'success'); } } else { if (product) product.quantity += finalQty; else products.push({ id: Date.now(), name: pName, quantity: finalQty, price: 0, cost: cost }); let purchase = { id: Date.now(), purchaseNumber: purchases.length + 1, productName: pName, quantity: finalQty, rawQuantity: qty, unit: unit, cost: cost, supplierName: sName, size: size, weight: weight, date: date, total: finalQty * cost }; purchases.push(purchase); saveToFirebase('purchases', purchases); saveToFirebase('products', products); Swal.fire('تم', 'تم تسجيل الشراء', 'success'); } clearPurchaseForm(); loadAllData(); }
+        function editPurchase(id) { let purchase = purchases.find(p => p.id == id); if (purchase) { document.getElementById('editPurchaseId').value = purchase.id; document.getElementById('purchaseDate').value = purchase.date; document.getElementById('purchaseProductNameInput').value = purchase.productName; document.getElementById('purchaseSupplierNameInput').value = purchase.supplierName; document.getElementById('purchaseSize').value = purchase.size || ''; document.getElementById('purchaseWeight').value = formatNumberToString(purchase.weight || 0); document.getElementById('purchaseQuantity').value = formatNumberToString(purchase.rawQuantity || purchase.quantity); document.getElementById('purchaseUnit').value = purchase.unit; document.getElementById('purchaseCost').value = formatNumberToString(purchase.cost); Swal.fire('تم التحميل', 'يمكنك تعديل البيانات', 'info'); } }
+        function deletePurchase(id) { Swal.fire({ title: 'حذف شراء', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => { if (res.isConfirmed) { let purchase = purchases.find(p => p.id == id); if (purchase) { let product = products.find(p => p.name === purchase.productName); if (product) product.quantity -= purchase.quantity; purchases = purchases.filter(p => p.id != id); saveToFirebase('purchases', purchases); saveToFirebase('products', products); Swal.fire('تم الحذف', '', 'success'); loadAllData(); } } }); }
+        function clearPurchaseForm() { document.getElementById('editPurchaseId').value = ''; document.getElementById('purchaseDate').value = ''; document.getElementById('purchaseProductNameInput').value = ''; document.getElementById('purchaseSupplierNameInput').value = ''; document.getElementById('purchaseSize').value = ''; document.getElementById('purchaseWeight').value = ''; document.getElementById('purchaseQuantity').value = ''; document.getElementById('purchaseUnit').value = 'كيلو'; document.getElementById('purchaseCost').value = ''; }
+        function findProductByBarcode() { let code = document.getElementById('saleBarcodeInput').value; let product = products.find(p => (p.barcode && p.barcode === code) || p.id.toString() === code); if (product) { document.getElementById('saleProductNameInput').value = product.name; document.getElementById('salePrice').value = formatNumberToString(product.price); Swal.fire('تم', 'تم العثور على المنتج', 'success'); } else if (code) Swal.fire('خطأ', 'لم يتم العثور على منتج', 'error'); }
+        function printBarcode(productId) { let p = products.find(pr => pr.id == productId); if (p) { let win = window.open(); win.document.write(`<html><head><title>باركود ${p.name}</title><script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"><\/script></head><body><canvas id="barcodePrint"></canvas><script>JsBarcode(document.getElementById("barcodePrint"), "${p.barcode || p.id}", { format:"CODE128" });<\/script><button onclick="window.print()">طباعة</button></body></html>`); } }
+        function showInvoiceModal() { document.getElementById('invoiceItemsContainer').innerHTML = ''; let customerSelect = document.getElementById('invoiceCustomerSelect'); customerSelect.innerHTML = '<option value="">اختر العميل</option>'; customers.forEach(c => { customerSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`; }); addInvoiceItem(); new bootstrap.Modal(document.getElementById('invoiceModal')).show(); }
+        function addInvoiceItem() { let container = document.getElementById('invoiceItemsContainer'); let div = document.createElement('div'); div.className = 'row mb-2'; div.innerHTML = `<div class="col-5"><select class="form-control product-select" onchange="updateInvoiceTotal()">${products.map(p => `<option value="${p.id}" data-price="${p.price}">${p.name}</option>`).join('')}</select></div><div class="col-3"><input class="form-control quantity-input" placeholder="كمية" oninput="updateInvoiceTotal()"></div><div class="col-3"><input class="form-control price-input" placeholder="سعر" oninput="updateInvoiceTotal()"></div><div class="col-1"><button class="btn btn-danger" onclick="removeItem(this)">×</button></div>`; container.appendChild(div); updateInvoiceTotal(); }
+        function removeItem(btn) { btn.closest('.row').remove(); updateInvoiceTotal(); }
+        function updateInvoiceTotal() { let total = 0; document.querySelectorAll('#invoiceItemsContainer .row').forEach(row => { let qty = parseNumberValue(row.querySelector('.quantity-input').value); let price = parseNumberValue(row.querySelector('.price-input').value); let select = row.querySelector('.product-select'); if (!price && select && select.selectedOptions[0]) price = parseNumberValue(select.selectedOptions[0].dataset.price); total += qty * price; }); document.getElementById('invoiceTotal').innerText = formatNumberToString(total); }
+        function saveInvoiceModal() { let customerId = document.getElementById('invoiceCustomerSelect').value; if (!customerId) { Swal.fire('خطأ', 'اختر العميل', 'error'); return; } let customer = customers.find(c => c.id == parseInt(customerId)); let items = []; document.querySelectorAll('#invoiceItemsContainer .row').forEach(row => { let productId = row.querySelector('.product-select').value; let qty = parseNumberValue(row.querySelector('.quantity-input').value); let price = parseNumberValue(row.querySelector('.price-input').value); if (productId && qty > 0) { items.push({ productId: parseInt(productId), quantity: qty, price: price }); let product = products.find(p => p.id == productId); if (product) product.quantity -= qty; } }); let invoice = { id: Date.now(), invoiceNumber: invoices.length + 1, customerId: parseInt(customerId), customerName: customer.name, date: new Date().toISOString().split('T')[0], items: items, total: parseNumberValue(document.getElementById('invoiceTotal').innerText) }; invoices.push(invoice); saveToFirebase('invoices', invoices); saveToFirebase('products', products); bootstrap.Modal.getInstance(document.getElementById('invoiceModal')).hide(); Swal.fire('تم', 'تم حفظ الفاتورة', 'success'); loadAllData(); }
+        function viewInvoice(id) { let inv = invoices.find(i => i.id == id); let itemsHtml = '<ul>'; inv.items.forEach(i => { let p = products.find(p => p.id == i.productId); itemsHtml += `<li>${p?.name} - ${i.quantity} × ${formatPrice(i.price)}</li>`; }); itemsHtml += '</ul>'; Swal.fire({ title: `فاتورة #${inv.invoiceNumber}`, html: `<div><p>العميل: ${inv.customerName}</p><p>المجموع: ${formatPrice(inv.total)}</p>${itemsHtml}</div>` }); }
+        function getReportHeader() { const now = new Date(); return `مصنع الحرمين للبلاستيك\n${now.toLocaleString('ar-EG')}\n${'='.repeat(50)}\n`; }
+        function generateSalesReport() { let total = sales.reduce((s, i) => s + (i.quantity * i.price), 0); let content = getReportHeader() + `تقرير المبيعات\nالإجمالي: ${formatPrice(total)}\n`; sales.forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`; }); downloadTxt(content, `تقرير_المبيعات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function generatePurchasesReport() { let total = purchases.reduce((s, i) => s + (i.quantity * i.cost), 0); let content = getReportHeader() + `تقرير المشتريات\nالإجمالي: ${formatPrice(total)}\n`; purchases.forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`; }); downloadTxt(content, `تقرير_المشتريات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function generateProfitReport() { let salesTotal = sales.reduce((s, i) => s + (i.quantity * i.price), 0); let purchasesTotal = purchases.reduce((s, i) => s + (i.quantity * i.cost), 0); let totalOp = operatingExpenses.electricity + operatingExpenses.rent + operatingExpenses.salaries + operatingExpenses.transport + operatingExpenses.misc + operatingExpenses.printing; let net = salesTotal - purchasesTotal - totalOp; let content = getReportHeader() + `تقرير الأرباح\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nالمصاريف: ${formatPrice(totalOp)}\nصافي الربح: ${formatPrice(net)}\n`; downloadTxt(content, `تقرير_الأرباح.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function exportSectionToTxt(sectionName) { let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`; if (sectionName === 'inventoryManagement') products.forEach(p => { content += `${p.name} | المقاس: ${p.size || '-'} | الوزن: ${p.weight || '-'} كجم | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`; }); else if (sectionName === 'plasticPrices') currentPlasticPrices.forEach(p => { content += `${p.type} | ${p.description} | ${p.size} | ${formatPrice(p.price)}\n`; }); else if (sectionName === 'invoices') invoices.forEach(inv => { content += `رقم الفاتورة: ${inv.invoiceNumber} | العميل: ${inv.customerName} | التاريخ: ${inv.date} | المجموع: ${formatPrice(inv.total)}\n`; }); downloadTxt(content, `${sectionName}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function saveOperatingExpenses() { operatingExpenses = { electricity: parseNumberValue(document.getElementById('operatingElectricity').value), rent: parseNumberValue(document.getElementById('operatingRent').value), salaries: parseNumberValue(document.getElementById('operatingSalaries').value), transport: parseNumberValue(document.getElementById('operatingTransport').value), misc: parseNumberValue(document.getElementById('operatingMisc').value), printing: parseNumberValue(document.getElementById('operatingPrinting').value) }; saveToFirebase('operatingExpenses', operatingExpenses); Swal.fire('تم', 'تم حفظ المصروفات', 'success'); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); }
+        function searchSales() { let customer = document.getElementById('searchSaleCustomer').value.toLowerCase(); let product = document.getElementById('searchSaleProduct').value.toLowerCase(); let date = document.getElementById('searchSaleDate').value; let filtered = sales.filter(s => (!customer || s.customerName.toLowerCase().includes(customer)) && (!product || s.productName.toLowerCase().includes(product)) && (!date || s.date === date)); let html = filtered.map(s => `<div>${s.productName} - ${s.customerName} - ${formatPrice(s.total)}</div>`).join(''); document.getElementById('salesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>'; }
+        function searchPurchases() { let supplier = document.getElementById('searchPurchaseSupplier').value.toLowerCase(); let product = document.getElementById('searchPurchaseProduct').value.toLowerCase(); let date = document.getElementById('searchPurchaseDate').value; let filtered = purchases.filter(p => (!supplier || p.supplierName.toLowerCase().includes(supplier)) && (!product || p.productName.toLowerCase().includes(product)) && (!date || p.date === date)); let html = filtered.map(p => `<div>${p.productName} - ${p.supplierName} - ${formatPrice(p.total)}</div>`).join(''); document.getElementById('purchasesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>'; }
+        function toggleTheme() { let theme = document.documentElement.getAttribute('data-theme'); if (theme === 'light') { document.documentElement.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); } else { document.documentElement.setAttribute('data-theme', 'light'); localStorage.setItem('theme', 'light'); } updateCustomizationPickersFromCSS(); }
         if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-        }
-
-        function closeSidebarOnClickOutside(event) {
-            if (window.innerWidth <= 768 && document.getElementById('sidebar').classList.contains('active')) document.getElementById('sidebar').classList.remove('active');
-        }
-
-        function showSection(section) {
-            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
-            document.getElementById(section).style.display = 'block';
-            if (section === 'dashboard') updateDashboard();
-            if (section === 'profits') updateProfitAnalysis();
-            if (section === 'partners') updatePartnersSection();
-            if (section === 'plasticPrices') {
-                if (!currentPlasticPrices.length) refreshPlasticPrices();
-            }
-            if (section === 'inventoryManagement') updateInventoryFullSection();
-        }
-
-        function showLastUpdate() {
-            Swal.fire('المزامنة', 'جميع التحديثات تتم تلقائياً', 'info');
-        }
-
-        function resetAllData() {
-            Swal.fire({ title: 'تحذير!', text: 'سيتم حذف جميع البيانات!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33' }).then(res => {
-                if (res.isConfirmed) {
-                    if (useFirebase && db) db.ref().remove();
-                    localStorage.clear();
-                    location.reload();
-                }
-            });
-        }
-
-        function applyCustomization() {
-            let fontSize = document.getElementById('customFontSizeRange').value;
-            document.documentElement.style.setProperty('--base-font-size', fontSize + 'px');
-            let font = document.getElementById('customFontSelect').value;
-            document.documentElement.style.setProperty('--font-family-main', font);
-            let textColor = document.getElementById('customTextColor').value;
-            document.documentElement.style.setProperty('--text-primary', textColor);
-            let accentPrimary = document.getElementById('customAccentPrimary').value;
-            document.documentElement.style.setProperty('--accent-primary', accentPrimary);
-            let accentSecondary = document.getElementById('customAccentSecondary').value;
-            document.documentElement.style.setProperty('--accent-secondary', accentSecondary);
-            let bgPrimary = document.getElementById('customBgPrimary').value;
-            document.documentElement.style.setProperty('--bg-primary', bgPrimary);
-            let cardBg = document.getElementById('customCardBg').value;
-            document.documentElement.style.setProperty('--bg-card', cardBg);
-            let borderRadius = document.getElementById('customBorderRadius').value;
-            document.documentElement.style.setProperty('--border-radius', borderRadius + 'px');
-            localStorage.setItem('harmain_custom_style', JSON.stringify({ fontSize, font, textColor, accentPrimary, accentSecondary, bgPrimary, cardBg, borderRadius }));
-            Swal.fire('تم', 'تم تحديث المظهر', 'success');
-            updateCustomizationPickersFromCSS();
-        }
-
-        function resetCustomization() {
-            localStorage.removeItem('harmain_custom_style');
-            location.reload();
-        }
-
-        function loadCustomization() {
-            let saved = localStorage.getItem('harmain_custom_style');
-            if (saved) {
-                let s = JSON.parse(saved);
-                document.documentElement.style.setProperty('--base-font-size', s.fontSize + 'px');
-                document.documentElement.style.setProperty('--font-family-main', s.font);
-                document.documentElement.style.setProperty('--text-primary', s.textColor);
-                document.documentElement.style.setProperty('--accent-primary', s.accentPrimary);
-                document.documentElement.style.setProperty('--accent-secondary', s.accentSecondary);
-                document.documentElement.style.setProperty('--bg-primary', s.bgPrimary);
-                document.documentElement.style.setProperty('--bg-card', s.cardBg);
-                document.documentElement.style.setProperty('--border-radius', s.borderRadius + 'px');
-                document.getElementById('customFontSizeRange').value = s.fontSize;
-                document.getElementById('fontSizeValue').innerText = s.fontSize + 'px';
-                document.getElementById('customFontSelect').value = s.font;
-                document.getElementById('customBorderRadius').value = s.borderRadius;
-                document.getElementById('radiusValue').innerText = s.borderRadius + 'px';
-            }
-            updateCustomizationPickersFromCSS();
-            document.getElementById('customBorderRadius').addEventListener('input', function () {
-                document.getElementById('radiusValue').innerText = this.value + 'px';
-            });
-            document.getElementById('customFontSizeRange').addEventListener('input', function () {
-                document.getElementById('fontSizeValue').innerText = this.value + 'px';
-            });
-        }
-
-        function init() {
-            loadAllData();
-            startRealtimeListeners();
-            loadCustomization();
-            loadPriceSettings();
-            startPriceAutoUpdate();
-            setInterval(checkLowStock, 30000);
-        }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        function closeSidebarOnClickOutside(event) { if (window.innerWidth <= 768 && document.getElementById('sidebar').classList.contains('active')) document.getElementById('sidebar').classList.remove('active'); }
+        function showSection(section) { document.querySelectorAll('.section').forEach(s => s.style.display = 'none'); document.getElementById(section).style.display = 'block'; if (section === 'dashboard') updateDashboard(); if (section === 'profits') updateProfitAnalysis(); if (section === 'partners') updatePartnersSection(); if (section === 'plasticPrices') { if (!currentPlasticPrices.length) refreshPlasticPrices(); } if (section === 'inventoryManagement') updateInventoryFullSection(); }
+        function showLastUpdate() { Swal.fire('المزامنة', 'جميع التحديثات تتم تلقائياً', 'info'); }
+        function resetAllData() { Swal.fire({ title: 'تحذير!', text: 'سيتم حذف جميع البيانات!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33' }).then(res => { if (res.isConfirmed) { if (useFirebase && db) db.ref().remove(); localStorage.clear(); location.reload(); } }); }
+        function applyCustomization() { let fontSize = document.getElementById('customFontSizeRange').value; document.documentElement.style.setProperty('--base-font-size', fontSize + 'px'); let font = document.getElementById('customFontSelect').value; document.documentElement.style.setProperty('--font-family-main', font); let textColor = document.getElementById('customTextColor').value; document.documentElement.style.setProperty('--text-primary', textColor); let accentPrimary = document.getElementById('customAccentPrimary').value; document.documentElement.style.setProperty('--accent-primary', accentPrimary); let accentSecondary = document.getElementById('customAccentSecondary').value; document.documentElement.style.setProperty('--accent-secondary', accentSecondary); let bgPrimary = document.getElementById('customBgPrimary').value; document.documentElement.style.setProperty('--bg-primary', bgPrimary); let cardBg = document.getElementById('customCardBg').value; document.documentElement.style.setProperty('--bg-card', cardBg); let borderRadius = document.getElementById('customBorderRadius').value; document.documentElement.style.setProperty('--border-radius', borderRadius + 'px'); localStorage.setItem('harmain_custom_style', JSON.stringify({ fontSize, font, textColor, accentPrimary, accentSecondary, bgPrimary, cardBg, borderRadius })); Swal.fire('تم', 'تم تحديث المظهر', 'success'); updateCustomizationPickersFromCSS(); }
+        function resetCustomization() { localStorage.removeItem('harmain_custom_style'); location.reload(); }
+        function loadCustomization() { let saved = localStorage.getItem('harmain_custom_style'); if (saved) { let s = JSON.parse(saved); document.documentElement.style.setProperty('--base-font-size', s.fontSize + 'px'); document.documentElement.style.setProperty('--font-family-main', s.font); document.documentElement.style.setProperty('--text-primary', s.textColor); document.documentElement.style.setProperty('--accent-primary', s.accentPrimary); document.documentElement.style.setProperty('--accent-secondary', s.accentSecondary); document.documentElement.style.setProperty('--bg-primary', s.bgPrimary); document.documentElement.style.setProperty('--bg-card', s.cardBg); document.documentElement.style.setProperty('--border-radius', s.borderRadius + 'px'); document.getElementById('customFontSizeRange').value = s.fontSize; document.getElementById('fontSizeValue').innerText = s.fontSize + 'px'; document.getElementById('customFontSelect').value = s.font; document.getElementById('customBorderRadius').value = s.borderRadius; document.getElementById('radiusValue').innerText = s.borderRadius + 'px'; } updateCustomizationPickersFromCSS(); document.getElementById('customBorderRadius').addEventListener('input', function () { document.getElementById('radiusValue').innerText = this.value + 'px'; }); document.getElementById('customFontSizeRange').addEventListener('input', function () { document.getElementById('fontSizeValue').innerText = this.value + 'px'; }); }
+        function init() { loadAllData(); startRealtimeListeners(); loadCustomization(); loadPriceSettings(); startPriceAutoUpdate(); setInterval(checkLowStock, 30000); }
         init();
     </script>
 </body>
-                                                                                 </html>
+                                                      </html>
