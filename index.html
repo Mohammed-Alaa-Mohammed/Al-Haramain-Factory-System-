@@ -274,7 +274,6 @@
         <div class="sidebar-controls">
             <button onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
             <button onclick="showLastUpdate()"><i class="fas fa-bell"></i></button>
-            <button onclick="toggleLanguage()"><i class="fas fa-language"></i></button>
         </div>
 
         <div class="inventory-section" style="background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(139,92,246,0.05)); border-color: var(--accent-purple);">
@@ -345,12 +344,12 @@
 
         <div id="customers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-users"></i> إدارة العملاء</h2><button class="export-btn" onclick="exportSectionToTxt('customers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showCustomerModal()">عميل جديد</button><div class="table-responsive"><table class="table table-custom"><thead>70th<th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="customersList"></tbody> </table></div></div>
         <div id="products" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-boxes"></i> إدارة الأكياس</h2><button class="export-btn" onclick="exportSectionToTxt('products')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showProductModal()">كيس جديد</button><div class="product-grid" id="productsGrid"></div></div>
-        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> <table></div></div>
+        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> </table></div></div>
         <div id="invoices" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-file-invoice"></i> الفواتير</h2><button class="export-btn" onclick="exportSectionToTxt('invoices')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showInvoiceModal()">فاتورة جديدة</button><div class="table-responsive"><table class="table table-custom"><thead> <th>رقم الفاتورة</th><th>العميل</th><th>التاريخ</th><th>المجموع</th><th>الإجراءات</th> </thead><tbody id="invoicesList"></tbody> </table></div></div>
         <div id="reports" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-chart-bar"></i> التقارير</h2><button class="export-btn" onclick="exportSectionToTxt('reports')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row"><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateSalesReport()">تقرير المبيعات</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generatePurchasesReport()">تقرير المشتريات</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateProfitReport()">تقرير الأرباح</button></div></div></div>
         <div id="operatingExpenses" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-charging-station"></i> مصاريف التشغيل</h2><button class="export-btn" onclick="exportSectionToTxt('operatingExpenses')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-body"><div class="row"><div class="col-md-6"><label>كهرباء</label><input type="text" id="operatingElectricity" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>إيجار</label><input type="text" id="operatingRent" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>رواتب</label><input type="text" id="operatingSalaries" class="form-control number-input" value="0" oninput="formatNumberInput(this)"></div><div class="col-md-6"><label>مصروفات نقل</label><input type="text" id="operatingTransport" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>مصروفات متنوعة</label><input type="text" id="operatingMisc" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>طباعة الغلاف</label><input type="text" id="operatingPrinting" class="form-control number-input" value="0" oninput="formatNumberInput(this)"></div></div><button class="btn btn-primary-custom mt-3" onclick="saveOperatingExpenses()">حفظ المصروفات</button></div></div></div>
         
-        <!-- قسم تخصيص الموقع (تم تطويره ليعكس الألوان الحالية) -->
+        <!-- قسم تخصيص الموقع (تم تطويره ليعكس الألوان الحالية ويتيح التخصيص الكامل) -->
         <div id="customization" class="section" style="display:none;">
             <h2 class="mb-4"><i class="fas fa-palette"></i> تخصيص مظهر الموقع</h2>
             <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius);">
@@ -398,7 +397,6 @@
         let customers = [], suppliers = [], products = [], sales = [], purchases = [], invoices = [];
         let operatingExpenses = { electricity:0, rent:0, salaries:0, transport:0, misc:0, printing:0 };
         let salesChart, pieChart;
-        let currentLanguage = 'ar';
         let priceUpdateInterval = null;
         let currentPlasticPrices = [];
 
@@ -410,7 +408,7 @@
                 { name: "كيس أسود (مخلفات)", desc: "🗑️ مقاوم للثقوب - مثالي لنفايات المكاتب والمطاعم والمنازل", sizes: ["40×60 سم", "50×70 سم"] },
                 { name: "كيس أبيض (طعام)", desc: "🥖 صالح للطعام - معتمد للنظافة والتخزين المباشر للمخبوزات والفواكه", sizes: ["30×40 سم", "40×60 سم"] },
                 { name: "كيس معاد تدويره (Eco)", desc: "🌱 صديق للبيئة - مصنوع من مواد معاد تدويرها بنسبة 70%", sizes: ["40×60 سم", "50×70 سم", "60×80 سم"] },
-                { name: "كيس عالي التحمل (Heavy Duty)", desc: "🏋️ تحمل حتى 50 كجم - مثالي للصناعات والمعدات الثقيلة", sizes: ["50×70 سم", "60×90 سم", "70×100 см"] },
+                { name: "كيس عالي التحمل (Heavy Duty)", desc: "🏋️ تحمل حتى 50 كجم - مثالي للصناعات والمعدات الثقيلة", sizes: ["50×70 سم", "60×90 سم", "70×100 سم"] },
                 { name: "كيس قمامة (Garbage Bag)", desc: "🚮 بسماكة مضاعفة - مقاوم للتمزق والروائح", sizes: ["40×50 سم", "50×70 سم", "70×90 سم"] },
                 { name: "كيس هدايا (Gift Bag)", desc: "🎁 لامع وفاخر - مع مساحة لربط الشريط، مناسب للمناسبات", sizes: ["25×35 سم", "30×40 سم", "35×50 سم"] },
                 { name: "كيس تعبئة (Packaging)", desc: "📦 مقاسات متعددة - مثالي لتغليف المنتجات في المصانع", sizes: ["20×30 سم", "30×45 سم", "40×60 سم"] },
@@ -480,7 +478,6 @@
         // دوال مساعدة للألوان
         function rgbToHex(rgb) {
             if (!rgb) return '#000000';
-            // Extract numbers using match
             let result = rgb.match(/\d+/g);
             if (!result) return '#000000';
             let r = parseInt(result[0]), g = parseInt(result[1]), b = parseInt(result[2]);
@@ -538,7 +535,7 @@
                              <td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>
                          </tr>`;
             });
-            tbody.innerHTML = html || '<tr><td colspan="10">لا توجد منتجات</td></tr>';
+            tbody.innerHTML = html || '<tr><td colspan="10">لا توجد منتجات<\/td><\/tr>';
             let totalQty = products.reduce((s,p)=>s+p.quantity,0);
             let totalVal = products.reduce((s,p)=>s+(p.quantity*p.price),0);
             document.getElementById('totalProductsCount').innerText = products.length;
@@ -589,8 +586,8 @@
         function updateProfitAnalysis(){ let totalSales=sales.reduce((s,sl)=>s+(sl.quantity*sl.price),0); let totalPurchases=purchases.reduce((s,p)=>s+(p.quantity*p.cost),0); let totalOp=operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net=totalSales-totalPurchases-totalOp; let margin=totalSales>0?((net/totalSales)*100).toFixed(2):0; document.getElementById('totalSales').innerText=formatPrice(totalSales); document.getElementById('totalPurchases').innerText=formatPrice(totalPurchases); document.getElementById('totalProfit').innerText=formatPrice(net); document.getElementById('profitMargin').innerText=margin+'%'; }
         function loadSalesHistory(){ let div=document.getElementById('salesHistory'); if(div) div.innerHTML=sales.slice(-10).reverse().map(s=>`<div class="list-group-item"><strong>${s.productName}</strong> | ${s.rawQuantity||s.quantity} ${s.unit} = ${formatPrice(s.total)}<br><small>${s.customerName} | ${s.date}</small><br><button class="edit-btn" onclick="editSale(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSale(${s.id})">حذف</button></div>`).join(''); }
         function loadPurchasesHistory(){ let div=document.getElementById('purchasesHistory'); if(div) div.innerHTML=purchases.slice(-10).reverse().map(p=>`<div class="list-group-item"><strong>${p.productName}</strong> | ${p.rawQuantity||p.quantity} ${p.unit} = ${formatPrice(p.total)}<br><small>${p.supplierName} | ${p.date}</small><br><button class="edit-btn" onclick="editPurchase(${p.id})">تعديل</button> <button class="delete-btn" onclick="deletePurchase(${p.id})">حذف</button></div>`).join(''); }
-        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td>${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<tr><td colspan="5">لا توجد بيانات</td></tr>'; }
-        function loadSuppliers(){ let html=''; suppliers.forEach((s,i)=>{ html+=`<tr><td>${i+1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML=html||'<tr><td colspan="5">لا توجد بيانات</td></tr>'; }
+        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<tr><td colspan="5">لا توجد بيانات</td></tr>'; }
+        function loadSuppliers(){ let html=''; suppliers.forEach((s,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML=html||'<tr><td colspan="5">لا توجد بيانات</td></tr>'; }
         function loadProducts(){ let html=''; products.forEach(p=>{ html+=`<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-warning" onclick="editProduct(${p.id})">تعديل</button> <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML=html||'<p>لا توجد منتجات</p>'; setTimeout(()=>{ products.forEach(p=>{ let canvas=document.getElementById(`barcode-${p.id}`); if(canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format:"CODE128", width:2, height:40 }); }); },100); }
         function loadInvoices(){ let html=''; invoices.forEach((inv,i)=>{ html+=`<tr><td>#${inv.invoiceNumber}</td><td>${inv.customerName}</td><td>${inv.date}</td><td class="text-end">${formatPrice(inv.total)}</td><td><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="delete-btn" onclick="deleteInvoice(${inv.id})">حذف</button></td></tr>`; }); document.getElementById('invoicesList').innerHTML=html||'<tr><td colspan="5">لا توجد فواتير</td></tr>'; }
         function deleteInvoice(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ invoices=invoices.filter(i=>i.id!=id); saveToFirebase('invoices',invoices); loadInvoices(); } }); }
@@ -698,9 +695,8 @@
             document.getElementById('customBorderRadius').addEventListener('input',function(){ document.getElementById('radiusValue').innerText=this.value+'px'; });
             document.getElementById('customFontSizeRange').addEventListener('input',function(){ document.getElementById('fontSizeValue').innerText=this.value+'px'; });
         }
-        function toggleLanguage(){ currentLanguage = currentLanguage === 'ar' ? 'en' : 'ar'; Swal.fire('تبديل اللغة', currentLanguage === 'ar' ? 'تم التبديل إلى العربية' : 'Switched to English', 'info'); }
         function init(){ loadAllData(); startRealtimeListeners(); loadCustomization(); startPriceAutoUpdate(); }
         init();
     </script>
 </body>
-</html>
+                                                                                 </html>
