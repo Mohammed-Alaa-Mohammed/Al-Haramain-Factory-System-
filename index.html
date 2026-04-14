@@ -216,7 +216,7 @@
         }
         .inventory-full-table {
             width: 100%;
-            min-width: 900px;
+            min-width: 1000px;
             border-collapse: collapse;
         }
         .inventory-full-table th, .inventory-full-table td {
@@ -330,7 +330,7 @@
                 <div class="inventory-full-table-wrapper">
                     <table class="inventory-full-table">
                         <thead>
-                            <tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>النوع</th><th>الوزن (كجم)</th><th>سعر البيع</th><th>سعر الشراء</th><th>الكمية الحالية</th><th>الحركة (7 أيام)</th><th>القيمة الإجمالية</th><th>حالة المخزون</th><th>الإجراءات</th></tr>
+                            <tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>النوع</th><th>المقاس</th><th>الوزن (كجم)</th><th>سعر البيع</th><th>سعر الشراء</th><th>الكمية الحالية</th><th>الحركة (7 أيام)</th><th>القيمة الإجمالية</th><th>حالة المخزون</th><th>الإجراءات</th></tr>
                         </thead>
                         <tbody id="inventoryFullTableBody"></tbody>
                     </table>
@@ -388,7 +388,7 @@
 
         <div id="customers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-users"></i> إدارة العملاء</h2><button class="export-btn" onclick="exportSectionToTxt('customers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showCustomerModal()">عميل جديد</button><div class="table-responsive"><table class="table table-custom"><thead>70th<th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="customersList"></tbody> </table></div></div>
         
-        <!-- Products with Price Tag Print and Weight Field -->
+        <!-- Products with Size, Weight, Price Tag Print -->
         <div id="products" class="section" style="display:none;">
             <div class="section-header"><h2><i class="fas fa-boxes"></i> إدارة الأكياس</h2><button class="export-btn" onclick="exportSectionToTxt('products')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
             <button class="btn btn-primary-custom mb-3" onclick="showProductModal()">كيس جديد</button>
@@ -498,8 +498,8 @@
     <!-- Modals -->
     <div class="modal fade" id="customerModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات العميل</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="customerId"><input type="text" id="customerName" class="form-control mb-2" placeholder="الاسم"><input type="text" id="customerPhone" class="form-control mb-2" placeholder="الهاتف"><textarea id="customerAddress" class="form-control" placeholder="العنوان"></textarea></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveCustomer()">حفظ</button></div></div></div></div>
     
-    <!-- Product Modal with Weight Field -->
-    <div class="modal fade" id="productModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات الكيس</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="productId"><input type="text" id="productName" class="form-control mb-2" placeholder="اسم الكيس"><input type="text" id="productBarcode" class="form-control mb-2" placeholder="الباركود"><input type="text" id="productType" class="form-control mb-2" placeholder="النوع"><input type="text" id="productWeight" class="form-control mb-2 number-input" placeholder="الوزن الافتراضي (كجم)" oninput="formatNumberInput(this)"><input type="text" id="productPrice" class="form-control mb-2 number-input" placeholder="سعر البيع" oninput="formatNumberInput(this)"><input type="text" id="productCost" class="form-control mb-2 number-input" placeholder="سعر الشراء" oninput="formatNumberInput(this)"><input type="text" id="productQuantity" class="form-control mb-2 number-input" placeholder="الكمية" oninput="formatNumberInput(this)"></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveProduct()">حفظ</button></div></div></div></div>
+    <!-- Product Modal with Size and Weight Fields -->
+    <div class="modal fade" id="productModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات الكيس</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="productId"><input type="text" id="productName" class="form-control mb-2" placeholder="اسم الكيس"><input type="text" id="productBarcode" class="form-control mb-2" placeholder="الباركود"><input type="text" id="productType" class="form-control mb-2" placeholder="النوع"><input type="text" id="productSize" class="form-control mb-2" placeholder="المقاس (مثال: 50×70 سم)"><input type="text" id="productWeight" class="form-control mb-2 number-input" placeholder="الوزن الافتراضي (كجم)" oninput="formatNumberInput(this)"><input type="text" id="productPrice" class="form-control mb-2 number-input" placeholder="سعر البيع" oninput="formatNumberInput(this)"><input type="text" id="productCost" class="form-control mb-2 number-input" placeholder="سعر الشراء" oninput="formatNumberInput(this)"><input type="text" id="productQuantity" class="form-control mb-2 number-input" placeholder="الكمية" oninput="formatNumberInput(this)"></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveProduct()">حفظ</button></div></div></div></div>
     
     <div class="modal fade" id="supplierModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات المورد</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="supplierId"><input type="text" id="supplierName" class="form-control mb-2" placeholder="الاسم"><input type="text" id="supplierPhone" class="form-control mb-2" placeholder="الهاتف"><textarea id="supplierAddress" class="form-control" placeholder="العنوان"></textarea></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveSupplier()">حفظ</button></div></div></div></div>
     <div class="modal fade" id="invoiceModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">فاتورة جديدة</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><select id="invoiceCustomerSelect" class="form-control mb-2"></select><div id="invoiceItemsContainer"></div><button class="btn btn-secondary mb-2" onclick="addInvoiceItem()">إضافة منتج</button><h5>المجموع: <span id="invoiceTotal">0</span> ج.م</h5></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveInvoiceModal()">حفظ الفاتورة</button></div></div></div></div>
@@ -674,7 +674,7 @@
                     } else if (type.name === "كيس بسحاب (Ziplock)") {
                         typeSizes = ["10×15 سم", "15×20 سم", "20×28 سم"];
                     } else if (type.name === "كيس شفاف عالي الجودة") {
-                        typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم", "70×90 см"];
+                        typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم", "70×90 سم"];
                     } else {
                         typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم"];
                     }
@@ -944,7 +944,7 @@
                         <div class="card">
                             <div class="product-name">${p.name}</div>
                             <div class="price">${formatPrice(p.price)}</div>
-                            <div class="size">📏 الوزن: ${p.weight || 'غير محدد'} كجم | النوع: ${p.type || 'قياسي'}</div>
+                            <div class="size">📏 المقاس: ${p.size || 'غير محدد'} | ⚖️ الوزن: ${p.weight ? formatNumberToString(p.weight) + ' كجم' : 'غير محدد'}</div>
                             <hr>
                             <div class="barcode"><canvas id="barcodePrint"></canvas></div>
                             <div>${p.barcode || p.id}</div>
@@ -992,6 +992,7 @@
                               <td>${p.name}</td>
                               <td>${p.barcode || '-'}</td>
                               <td>${p.type || '-'}</td>
+                              <td>${p.size || '-'}</td>
                               <td>${p.weight ? formatNumberToString(p.weight) + ' كجم' : '-'}</td>
                               <td>${formatPrice(p.price)}</td>
                               <td>${formatPrice(p.cost)}</td>
@@ -1000,9 +1001,9 @@
                               <td>${formatPrice(p.quantity * p.price)}</td>
                               <td><span class="${stockClass}">${stockText}</span></td>
                               <td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>
-                        </tr>`;
+                          </tr>`;
             });
-            tbody.innerHTML = html || '<td><td colspan="12" class="text-center">لا توجد منتجات</td></tr>';
+            tbody.innerHTML = html || '<tr><td colspan="13" class="text-center">لا توجد منتجات</td><\/tr>';
             let totalQty = products.reduce((s,p)=>s+p.quantity,0);
             let totalVal = products.reduce((s,p)=>s+(p.quantity*p.price),0);
             document.getElementById('totalProductsCount').innerText = products.length;
@@ -1054,117 +1055,735 @@
         function updateProfitAnalysis(){ let totalSales=sales.reduce((s,sl)=>s+(sl.quantity*sl.price),0); let totalPurchases=purchases.reduce((s,p)=>s+(p.quantity*p.cost),0); let totalOp=operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net=totalSales-totalPurchases-totalOp; let margin=totalSales>0?((net/totalSales)*100).toFixed(2):0; document.getElementById('totalSales').innerText=formatPrice(totalSales); document.getElementById('totalPurchases').innerText=formatPrice(totalPurchases); document.getElementById('totalProfit').innerText=formatPrice(net); document.getElementById('profitMargin').innerText=margin+'%'; }
         function loadSalesHistory(){ let div=document.getElementById('salesHistory'); if(div) div.innerHTML=sales.slice(-10).reverse().map(s=>`<div class="list-group-item"><strong>${s.productName}</strong> | ${s.rawQuantity||s.quantity} ${s.unit} = ${formatPrice(s.total)}<br><small>${s.customerName} | ${s.date}</small><br><button class="edit-btn" onclick="editSale(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSale(${s.id})">حذف</button></div>`).join(''); }
         function loadPurchasesHistory(){ let div=document.getElementById('purchasesHistory'); if(div) div.innerHTML=purchases.slice(-10).reverse().map(p=>`<div class="list-group-item"><strong>${p.productName}</strong> | ${p.rawQuantity||p.quantity} ${p.unit} = ${formatPrice(p.total)}<br><small>${p.supplierName} | ${p.date}</small><br><button class="edit-btn" onclick="editPurchase(${p.id})">تعديل</button> <button class="delete-btn" onclick="deletePurchase(${p.id})">حذف</button></div>`).join(''); }
-        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<td><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
-        function loadSuppliers(){ let html=''; suppliers.forEach((s,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
-        function loadProducts(){ let html=''; products.forEach(p=>{ html+=`<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><p>⚖️ الوزن: ${p.weight ? formatNumberToString(p.weight) + ' كجم' : 'غير محدد'}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})"><i class="fas fa-tag"></i> طباعة بطاقة سعر</button><button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button> <button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML=html||'<p class="text-center">لا توجد منتجات</p>'; setTimeout(()=>{ products.forEach(p=>{ let canvas=document.getElementById(`barcode-${p.id}`); if(canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format:"CODE128", width:2, height:40 }); }); },100); }
-        function loadInvoices(){ let html=''; invoices.forEach((inv,i)=>{ html+=`<tr><td class="text-center"><strong>#${inv.invoiceNumber}</strong></td><td>${inv.customerName}</td><td>${inv.date}</td><td class="text-end">${formatPrice(inv.total)}</td><td class="text-center"><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="btn btn-sm btn-danger" onclick="deleteInvoice(${inv.id})">حذف</button></td></tr>`; }); document.getElementById('invoicesList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد فواتير</td></tr>'; }
-        function deleteInvoice(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ invoices=invoices.filter(i=>i.id!=id); saveToFirebase('invoices',invoices); loadInvoices(); } }); }
-        function showProductModal(){ document.getElementById('productId').value=''; document.getElementById('productName').value=''; document.getElementById('productBarcode').value=''; document.getElementById('productType').value=''; document.getElementById('productWeight').value=''; document.getElementById('productPrice').value=''; document.getElementById('productCost').value=''; document.getElementById('productQuantity').value=''; new bootstrap.Modal(document.getElementById('productModal')).show(); }
-        function saveProduct(){ let id=document.getElementById('productId').value; let product={ id:id?parseInt(id):Date.now(), name:document.getElementById('productName').value, barcode:document.getElementById('productBarcode').value, type:document.getElementById('productType').value, weight:parseNumberValue(document.getElementById('productWeight').value), price:parseNumberValue(document.getElementById('productPrice').value), cost:parseNumberValue(document.getElementById('productCost').value), quantity:parseNumberValue(document.getElementById('productQuantity').value)||0 }; if(id) products=products.map(p=>p.id==product.id?product:p); else products.push(product); saveToFirebase('products',products); bootstrap.Modal.getInstance(document.getElementById('productModal')).hide(); Swal.fire('تم','تم حفظ المنتج','success'); loadAllData(); }
-        function editProduct(id){ let p=products.find(p=>p.id==id); document.getElementById('productId').value=p.id; document.getElementById('productName').value=p.name; document.getElementById('productBarcode').value=p.barcode||''; document.getElementById('productType').value=p.type; document.getElementById('productWeight').value=formatNumberToString(p.weight||0); document.getElementById('productPrice').value=formatNumberToString(p.price); document.getElementById('productCost').value=formatNumberToString(p.cost); document.getElementById('productQuantity').value=formatNumberToString(p.quantity); new bootstrap.Modal(document.getElementById('productModal')).show(); }
-        function deleteProduct(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ products=products.filter(p=>p.id!=id); saveToFirebase('products',products); loadAllData(); } }); }
-        function showCustomerModal(){ document.getElementById('customerId').value=''; document.getElementById('customerName').value=''; document.getElementById('customerPhone').value=''; document.getElementById('customerAddress').value=''; new bootstrap.Modal(document.getElementById('customerModal')).show(); }
-        function saveCustomer(){ let id=document.getElementById('customerId').value; let customer={ id:id?parseInt(id):Date.now(), name:document.getElementById('customerName').value, phone:document.getElementById('customerPhone').value, address:document.getElementById('customerAddress').value }; if(id) customers=customers.map(c=>c.id==customer.id?customer:c); else customers.push(customer); saveToFirebase('customers',customers); bootstrap.Modal.getInstance(document.getElementById('customerModal')).hide(); Swal.fire('تم','تم حفظ العميل','success'); loadAllData(); }
-        function editCustomer(id){ let c=customers.find(c=>c.id==id); document.getElementById('customerId').value=c.id; document.getElementById('customerName').value=c.name; document.getElementById('customerPhone').value=c.phone; document.getElementById('customerAddress').value=c.address; new bootstrap.Modal(document.getElementById('customerModal')).show(); }
-        function deleteCustomer(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ customers=customers.filter(c=>c.id!=id); saveToFirebase('customers',customers); loadAllData(); } }); }
-        function showSupplierModal(){ document.getElementById('supplierId').value=''; document.getElementById('supplierName').value=''; document.getElementById('supplierPhone').value=''; document.getElementById('supplierAddress').value=''; new bootstrap.Modal(document.getElementById('supplierModal')).show(); }
-        function saveSupplier(){ let id=document.getElementById('supplierId').value; let supplier={ id:id?parseInt(id):Date.now(), name:document.getElementById('supplierName').value, phone:document.getElementById('supplierPhone').value, address:document.getElementById('supplierAddress').value }; if(id) suppliers=suppliers.map(s=>s.id==supplier.id?supplier:s); else suppliers.push(supplier); saveToFirebase('suppliers',suppliers); bootstrap.Modal.getInstance(document.getElementById('supplierModal')).hide(); Swal.fire('تم','تم حفظ المورد','success'); loadAllData(); }
-        function editSupplier(id){ let s=suppliers.find(s=>s.id==id); document.getElementById('supplierId').value=s.id; document.getElementById('supplierName').value=s.name; document.getElementById('supplierPhone').value=s.phone; document.getElementById('supplierAddress').value=s.address; new bootstrap.Modal(document.getElementById('supplierModal')).show(); }
-        function deleteSupplier(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ suppliers=suppliers.filter(s=>s.id!=id); saveToFirebase('suppliers',suppliers); loadAllData(); } }); }
-        function saveSale(){ let id = document.getElementById('editSaleId').value; let pName = document.getElementById('saleProductNameInput').value; let cName = document.getElementById('saleCustomerNameInput').value || 'نقدي'; let size = document.getElementById('saleSize').value || ''; let weight = parseNumberValue(document.getElementById('saleWeight').value); let qty = parseNumberValue(document.getElementById('saleQuantity').value); let price = parseNumberValue(document.getElementById('salePrice').value); let unit = document.getElementById('saleUnit').value; let date = document.getElementById('saleDate').value || new Date().toISOString().split('T')[0]; let finalQty = getQuantityInKilo(qty, unit); let product = products.find(p=>p.name===pName); if(id){ let oldSale = sales.find(s=>s.id==id); if(oldSale){ let oldProduct = products.find(p=>p.name===oldSale.productName); if(oldProduct) oldProduct.quantity += oldSale.quantity; oldSale.productName = pName; oldSale.customerName = cName; oldSale.size = size; oldSale.weight = weight; oldSale.rawQuantity = qty; oldSale.quantity = finalQty; oldSale.unit = unit; oldSale.price = price; oldSale.date = date; oldSale.total = finalQty * price; if(product) product.quantity -= finalQty; saveToFirebase('sales',sales); saveToFirebase('products',products); Swal.fire('تم','تم تعديل البيع','success'); } } else { if(product && product.quantity < finalQty){ Swal.fire('خطأ','الكمية غير متوفرة','error'); return; } if(product) product.quantity -= finalQty; let sale = { id:Date.now(), saleNumber:sales.length+1, productName:pName, quantity:finalQty, rawQuantity:qty, unit:unit, price:price, customerName:cName, size:size, weight:weight, date:date, total:finalQty*price }; sales.push(sale); saveToFirebase('sales',sales); saveToFirebase('products',products); Swal.fire('تم','تم تسجيل البيع','success'); } clearSaleForm(); loadAllData(); }
-        function editSale(id){ let sale=sales.find(s=>s.id==id); if(sale){ document.getElementById('editSaleId').value=sale.id; document.getElementById('saleDate').value=sale.date; document.getElementById('saleProductNameInput').value=sale.productName; document.getElementById('saleCustomerNameInput').value=sale.customerName; document.getElementById('saleSize').value=sale.size||''; document.getElementById('saleWeight').value=formatNumberToString(sale.weight||0); document.getElementById('saleQuantity').value=formatNumberToString(sale.rawQuantity||sale.quantity); document.getElementById('saleUnit').value=sale.unit; document.getElementById('salePrice').value=formatNumberToString(sale.price); Swal.fire('تم التحميل','يمكنك تعديل البيانات','info'); } }
-        function deleteSale(id){ Swal.fire({title:'حذف بيع',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ let sale=sales.find(s=>s.id==id); if(sale){ let product=products.find(p=>p.name===sale.productName); if(product) product.quantity+=sale.quantity; sales=sales.filter(s=>s.id!=id); saveToFirebase('sales',sales); saveToFirebase('products',products); Swal.fire('تم الحذف','','success'); loadAllData(); } } }); }
-        function clearSaleForm(){ document.getElementById('editSaleId').value=''; document.getElementById('saleDate').value=''; document.getElementById('saleProductNameInput').value=''; document.getElementById('saleCustomerNameInput').value=''; document.getElementById('saleSize').value=''; document.getElementById('saleWeight').value=''; document.getElementById('saleQuantity').value=''; document.getElementById('saleUnit').value='كيلو'; document.getElementById('salePrice').value=''; document.getElementById('saleBarcodeInput').value=''; }
-        function savePurchase(){ let id = document.getElementById('editPurchaseId').value; let pName = document.getElementById('purchaseProductNameInput').value; let sName = document.getElementById('purchaseSupplierNameInput').value || 'عام'; let size = document.getElementById('purchaseSize').value || ''; let weight = parseNumberValue(document.getElementById('purchaseWeight').value); let qty = parseNumberValue(document.getElementById('purchaseQuantity').value); let cost = parseNumberValue(document.getElementById('purchaseCost').value); let unit = document.getElementById('purchaseUnit').value; let date = document.getElementById('purchaseDate').value || new Date().toISOString().split('T')[0]; let finalQty = getQuantityInKilo(qty, unit); let product = products.find(p=>p.name===pName); if(id){ let oldPurchase=purchases.find(p=>p.id==id); if(oldPurchase){ let oldProduct=products.find(p=>p.name===oldPurchase.productName); if(oldProduct) oldProduct.quantity-=oldPurchase.quantity; oldPurchase.productName=pName; oldPurchase.supplierName=sName; oldPurchase.size=size; oldPurchase.weight=weight; oldPurchase.rawQuantity=qty; oldPurchase.quantity=finalQty; oldPurchase.unit=unit; oldPurchase.cost=cost; oldPurchase.date=date; oldPurchase.total=finalQty*cost; if(product) product.quantity+=finalQty; else products.push({ id:Date.now(), name:pName, quantity:finalQty, price:0, cost:cost }); saveToFirebase('purchases',purchases); saveToFirebase('products',products); Swal.fire('تم','تم تعديل الشراء','success'); } } else { if(product) product.quantity+=finalQty; else products.push({ id:Date.now(), name:pName, quantity:finalQty, price:0, cost:cost }); let purchase={ id:Date.now(), purchaseNumber:purchases.length+1, productName:pName, quantity:finalQty, rawQuantity:qty, unit:unit, cost:cost, supplierName:sName, size:size, weight:weight, date:date, total:finalQty*cost }; purchases.push(purchase); saveToFirebase('purchases',purchases); saveToFirebase('products',products); Swal.fire('تم','تم تسجيل الشراء','success'); } clearPurchaseForm(); loadAllData(); }
-        function editPurchase(id){ let purchase=purchases.find(p=>p.id==id); if(purchase){ document.getElementById('editPurchaseId').value=purchase.id; document.getElementById('purchaseDate').value=purchase.date; document.getElementById('purchaseProductNameInput').value=purchase.productName; document.getElementById('purchaseSupplierNameInput').value=purchase.supplierName; document.getElementById('purchaseSize').value=purchase.size||''; document.getElementById('purchaseWeight').value=formatNumberToString(purchase.weight||0); document.getElementById('purchaseQuantity').value=formatNumberToString(purchase.rawQuantity||purchase.quantity); document.getElementById('purchaseUnit').value=purchase.unit; document.getElementById('purchaseCost').value=formatNumberToString(purchase.cost); Swal.fire('تم التحميل','يمكنك تعديل البيانات','info'); } }
-        function deletePurchase(id){ Swal.fire({title:'حذف شراء',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ let purchase=purchases.find(p=>p.id==id); if(purchase){ let product=products.find(p=>p.name===purchase.productName); if(product) product.quantity-=purchase.quantity; purchases=purchases.filter(p=>p.id!=id); saveToFirebase('purchases',purchases); saveToFirebase('products',products); Swal.fire('تم الحذف','','success'); loadAllData(); } } }); }
-        function clearPurchaseForm(){ document.getElementById('editPurchaseId').value=''; document.getElementById('purchaseDate').value=''; document.getElementById('purchaseProductNameInput').value=''; document.getElementById('purchaseSupplierNameInput').value=''; document.getElementById('purchaseSize').value=''; document.getElementById('purchaseWeight').value=''; document.getElementById('purchaseQuantity').value=''; document.getElementById('purchaseUnit').value='كيلو'; document.getElementById('purchaseCost').value=''; }
-        function findProductByBarcode(){ let code=document.getElementById('saleBarcodeInput').value; let product=products.find(p=> (p.barcode && p.barcode===code) || p.id.toString()===code); if(product){ document.getElementById('saleProductNameInput').value=product.name; document.getElementById('salePrice').value=formatNumberToString(product.price); Swal.fire('تم','تم العثور على المنتج','success'); } else if(code) Swal.fire('خطأ','لم يتم العثور على منتج','error'); }
-        function printBarcode(productId){ let p=products.find(pr=>pr.id==productId); if(p){ let win=window.open(); win.document.write(`<html><head><title>باركود ${p.name}</title><script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"><\/script></head><body><canvas id="barcodePrint"></canvas><script>JsBarcode(document.getElementById("barcodePrint"), "${p.barcode || p.id}", { format:"CODE128" });<\/script><button onclick="window.print()">طباعة</button></body></html>`); } }
-        function showInvoiceModal(){ document.getElementById('invoiceItemsContainer').innerHTML=''; let customerSelect=document.getElementById('invoiceCustomerSelect'); customerSelect.innerHTML='<option value="">اختر العميل</option>'; customers.forEach(c=>{ customerSelect.innerHTML+=`<option value="${c.id}">${c.name}</option>`; }); addInvoiceItem(); new bootstrap.Modal(document.getElementById('invoiceModal')).show(); }
-        function addInvoiceItem(){ let container=document.getElementById('invoiceItemsContainer'); let div=document.createElement('div'); div.className='row mb-2'; div.innerHTML=`<div class="col-5"><select class="form-control product-select" onchange="updateInvoiceTotal()">${products.map(p=>`<option value="${p.id}" data-price="${p.price}">${p.name}</option>`).join('')}</select></div><div class="col-3"><input class="form-control quantity-input" placeholder="كمية" oninput="updateInvoiceTotal()"></div><div class="col-3"><input class="form-control price-input" placeholder="سعر" oninput="updateInvoiceTotal()"></div><div class="col-1"><button class="btn btn-danger" onclick="removeItem(this)">×</button></div>`; container.appendChild(div); updateInvoiceTotal(); }
-        function removeItem(btn){ btn.closest('.row').remove(); updateInvoiceTotal(); }
-        function updateInvoiceTotal(){ let total=0; document.querySelectorAll('#invoiceItemsContainer .row').forEach(row=>{ let qty=parseNumberValue(row.querySelector('.quantity-input').value); let price=parseNumberValue(row.querySelector('.price-input').value); let select=row.querySelector('.product-select'); if(!price && select && select.selectedOptions[0]) price=parseNumberValue(select.selectedOptions[0].dataset.price); total+=qty*price; }); document.getElementById('invoiceTotal').innerText=formatNumberToString(total); }
-        function saveInvoiceModal(){ let customerId=document.getElementById('invoiceCustomerSelect').value; if(!customerId){ Swal.fire('خطأ','اختر العميل','error'); return; } let customer=customers.find(c=>c.id==parseInt(customerId)); let items=[]; document.querySelectorAll('#invoiceItemsContainer .row').forEach(row=>{ let productId=row.querySelector('.product-select').value; let qty=parseNumberValue(row.querySelector('.quantity-input').value); let price=parseNumberValue(row.querySelector('.price-input').value); if(productId && qty>0){ items.push({ productId:parseInt(productId), quantity:qty, price:price }); let product=products.find(p=>p.id==productId); if(product) product.quantity-=qty; } }); let invoice={ id:Date.now(), invoiceNumber:invoices.length+1, customerId:parseInt(customerId), customerName:customer.name, date:new Date().toISOString().split('T')[0], items:items, total:parseNumberValue(document.getElementById('invoiceTotal').innerText) }; invoices.push(invoice); saveToFirebase('invoices',invoices); saveToFirebase('products',products); bootstrap.Modal.getInstance(document.getElementById('invoiceModal')).hide(); Swal.fire('تم','تم حفظ الفاتورة','success'); loadAllData(); }
-        function viewInvoice(id){ let inv=invoices.find(i=>i.id==id); let itemsHtml='<ul>'; inv.items.forEach(i=>{ let p=products.find(p=>p.id==i.productId); itemsHtml+=`<li>${p?.name} - ${i.quantity} × ${formatPrice(i.price)}</li>`; }); itemsHtml+='</ul>'; Swal.fire({ title:`فاتورة #${inv.invoiceNumber}`, html:`<div><p>العميل: ${inv.customerName}</p><p>المجموع: ${formatPrice(inv.total)}</p>${itemsHtml}</div>` }); }
-        function getReportHeader() { const now = new Date(); return `مصنع الحرمين للبلاستيك\n${now.toLocaleString('ar-EG')}\n${'='.repeat(50)}\n`; }
-        function generateSalesReport(){ let total = sales.reduce((s,i)=>s+(i.quantity*i.price),0); let content = getReportHeader() + `تقرير المبيعات\nالإجمالي: ${formatPrice(total)}\n`; sales.forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`; }); downloadTxt(content, `تقرير_المبيعات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function generatePurchasesReport(){ let total = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0); let content = getReportHeader() + `تقرير المشتريات\nالإجمالي: ${formatPrice(total)}\n`; purchases.forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`; }); downloadTxt(content, `تقرير_المشتريات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function generateProfitReport(){ let salesTotal = sales.reduce((s,i)=>s+(i.quantity*i.price),0); let purchasesTotal = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0); let totalOp = operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net = salesTotal - purchasesTotal - totalOp; let content = getReportHeader() + `تقرير الأرباح\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nالمصاريف: ${formatPrice(totalOp)}\nصافي الربح: ${formatPrice(net)}\n`; downloadTxt(content, `تقرير_الأرباح.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function exportSectionToTxt(sectionName){ let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`; if(sectionName === 'inventoryManagement') products.forEach(p=>{ content += `${p.name} | الوزن: ${p.weight || '-'} كجم | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`; }); else if(sectionName === 'plasticPrices') currentPlasticPrices.forEach(p=>{ content += `${p.type} | ${p.description} | ${p.size} | ${formatPrice(p.price)}\n`; }); else if(sectionName === 'invoices') invoices.forEach(inv=>{ content += `رقم الفاتورة: ${inv.invoiceNumber} | العميل: ${inv.customerName} | التاريخ: ${inv.date} | المجموع: ${formatPrice(inv.total)}\n`; }); downloadTxt(content, `${sectionName}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function saveOperatingExpenses(){ operatingExpenses={ electricity:parseNumberValue(document.getElementById('operatingElectricity').value), rent:parseNumberValue(document.getElementById('operatingRent').value), salaries:parseNumberValue(document.getElementById('operatingSalaries').value), transport:parseNumberValue(document.getElementById('operatingTransport').value), misc:parseNumberValue(document.getElementById('operatingMisc').value), printing:parseNumberValue(document.getElementById('operatingPrinting').value) }; saveToFirebase('operatingExpenses',operatingExpenses); Swal.fire('تم','تم حفظ المصروفات','success'); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); }
-        function searchSales(){ let customer=document.getElementById('searchSaleCustomer').value.toLowerCase(); let product=document.getElementById('searchSaleProduct').value.toLowerCase(); let date=document.getElementById('searchSaleDate').value; let filtered=sales.filter(s=>(!customer||s.customerName.toLowerCase().includes(customer))&&(!product||s.productName.toLowerCase().includes(product))&&(!date||s.date===date)); let html=filtered.map(s=>`<div>${s.productName} - ${s.customerName} - ${formatPrice(s.total)}</div>`).join(''); document.getElementById('salesSearchResults').innerHTML=html||'<div class="alert alert-warning">لا توجد نتائج</div>'; }
-        function searchPurchases(){ let supplier=document.getElementById('searchPurchaseSupplier').value.toLowerCase(); let product=document.getElementById('searchPurchaseProduct').value.toLowerCase(); let date=document.getElementById('searchPurchaseDate').value; let filtered=purchases.filter(p=>(!supplier||p.supplierName.toLowerCase().includes(supplier))&&(!product||p.productName.toLowerCase().includes(product))&&(!date||p.date===date)); let html=filtered.map(p=>`<div>${p.productName} - ${p.supplierName} - ${formatPrice(p.total)}</div>`).join(''); document.getElementById('purchasesSearchResults').innerHTML=html||'<div class="alert alert-warning">لا توجد نتائج</div>'; }
-        
-        // تحديث دالة تبديل الثيم لتحديث منتقيات الألوان
-        function toggleTheme(){ 
-            let theme=document.documentElement.getAttribute('data-theme'); 
-            if(theme==='light'){ 
-                document.documentElement.setAttribute('data-theme','dark'); 
-                localStorage.setItem('theme','dark'); 
-            } else { 
-                document.documentElement.setAttribute('data-theme','light'); 
-                localStorage.setItem('theme','light'); 
+        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button>
+        		                                </tr>`;
+            });
+            document.getElementById('customersList').innerHTML = html || '<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>';
+        }
+
+        function loadSuppliers() {
+            let html = '';
+            suppliers.forEach((s, i) => {
+                html += `<tr>
+                            <td class="text-center">${i + 1}</td>
+                            <td>${s.name}</td>
+                            <td>${s.phone}</td>
+                            <td>${s.address}</td>
+                            <td class="text-center"><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td>
+                        </tr>`;
+            });
+            document.getElementById('suppliersList').innerHTML = html || '<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>';
+        }
+
+        function loadProducts() {
+            let html = '';
+            products.forEach(p => {
+                html += `<div class="product-card">
+                            <i class="fas fa-shopping-bag fa-2x"></i>
+                            <h5>${p.name}</h5>
+                            <p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p>
+                            <p>📏 المقاس: ${p.size || 'غير محدد'} | ⚖️ الوزن: ${p.weight ? formatNumberToString(p.weight) + ' كجم' : 'غير محدد'}</p>
+                            <canvas id="barcode-${p.id}" style="max-width:150px;"></canvas>
+                            <div>
+                                <button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button>
+                                <button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})"><i class="fas fa-tag"></i> طباعة بطاقة سعر</button>
+                                <button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button>
+                                <button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button>
+                            </div>
+                        </div>`;
+            });
+            document.getElementById('productsGrid').innerHTML = html || '<p class="text-center">لا توجد منتجات</p>';
+            setTimeout(() => {
+                products.forEach(p => {
+                    let canvas = document.getElementById(`barcode-${p.id}`);
+                    if (canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format: "CODE128", width: 2, height: 40 });
+                });
+            }, 100);
+        }
+
+        function loadInvoices() {
+            let html = '';
+            invoices.forEach((inv, i) => {
+                html += `<tr>
+                            <td class="text-center"><strong>#${inv.invoiceNumber}</strong></td>
+                            <td>${inv.customerName}</td>
+                            <td>${inv.date}</td>
+                            <td class="text-end">${formatPrice(inv.total)}</td>
+                            <td class="text-center"><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="btn btn-sm btn-danger" onclick="deleteInvoice(${inv.id})">حذف</button></td>
+                        </tr>`;
+            });
+            document.getElementById('invoicesList').innerHTML = html || '<tr><td colspan="5" class="text-center">لا توجد فواتير</td></tr>';
+        }
+
+        function deleteInvoice(id) {
+            Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
+                if (res.isConfirmed) {
+                    invoices = invoices.filter(i => i.id != id);
+                    saveToFirebase('invoices', invoices);
+                    loadInvoices();
+                }
+            });
+        }
+
+        function showProductModal() {
+            document.getElementById('productId').value = '';
+            document.getElementById('productName').value = '';
+            document.getElementById('productBarcode').value = '';
+            document.getElementById('productType').value = '';
+            document.getElementById('productSize').value = '';
+            document.getElementById('productWeight').value = '';
+            document.getElementById('productPrice').value = '';
+            document.getElementById('productCost').value = '';
+            document.getElementById('productQuantity').value = '';
+            new bootstrap.Modal(document.getElementById('productModal')).show();
+        }
+
+        function saveProduct() {
+            let id = document.getElementById('productId').value;
+            let product = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById('productName').value,
+                barcode: document.getElementById('productBarcode').value,
+                type: document.getElementById('productType').value,
+                size: document.getElementById('productSize').value,
+                weight: parseNumberValue(document.getElementById('productWeight').value),
+                price: parseNumberValue(document.getElementById('productPrice').value),
+                cost: parseNumberValue(document.getElementById('productCost').value),
+                quantity: parseNumberValue(document.getElementById('productQuantity').value) || 0
+            };
+            if (id) products = products.map(p => p.id == product.id ? product : p);
+            else products.push(product);
+            saveToFirebase('products', products);
+            bootstrap.Modal.getInstance(document.getElementById('productModal')).hide();
+            Swal.fire('تم', 'تم حفظ المنتج', 'success');
+            loadAllData();
+        }
+
+        function editProduct(id) {
+            let p = products.find(p => p.id == id);
+            document.getElementById('productId').value = p.id;
+            document.getElementById('productName').value = p.name;
+            document.getElementById('productBarcode').value = p.barcode || '';
+            document.getElementById('productType').value = p.type || '';
+            document.getElementById('productSize').value = p.size || '';
+            document.getElementById('productWeight').value = formatNumberToString(p.weight || 0);
+            document.getElementById('productPrice').value = formatNumberToString(p.price);
+            document.getElementById('productCost').value = formatNumberToString(p.cost);
+            document.getElementById('productQuantity').value = formatNumberToString(p.quantity);
+            new bootstrap.Modal(document.getElementById('productModal')).show();
+        }
+
+        function deleteProduct(id) {
+            Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
+                if (res.isConfirmed) {
+                    products = products.filter(p => p.id != id);
+                    saveToFirebase('products', products);
+                    loadAllData();
+                }
+            });
+        }
+
+        function showCustomerModal() {
+            document.getElementById('customerId').value = '';
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerAddress').value = '';
+            new bootstrap.Modal(document.getElementById('customerModal')).show();
+        }
+
+        function saveCustomer() {
+            let id = document.getElementById('customerId').value;
+            let customer = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById('customerName').value,
+                phone: document.getElementById('customerPhone').value,
+                address: document.getElementById('customerAddress').value
+            };
+            if (id) customers = customers.map(c => c.id == customer.id ? customer : c);
+            else customers.push(customer);
+            saveToFirebase('customers', customers);
+            bootstrap.Modal.getInstance(document.getElementById('customerModal')).hide();
+            Swal.fire('تم', 'تم حفظ العميل', 'success');
+            loadAllData();
+        }
+
+        function editCustomer(id) {
+            let c = customers.find(c => c.id == id);
+            document.getElementById('customerId').value = c.id;
+            document.getElementById('customerName').value = c.name;
+            document.getElementById('customerPhone').value = c.phone;
+            document.getElementById('customerAddress').value = c.address;
+            new bootstrap.Modal(document.getElementById('customerModal')).show();
+        }
+
+        function deleteCustomer(id) {
+            Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
+                if (res.isConfirmed) {
+                    customers = customers.filter(c => c.id != id);
+                    saveToFirebase('customers', customers);
+                    loadAllData();
+                }
+            });
+        }
+
+        function showSupplierModal() {
+            document.getElementById('supplierId').value = '';
+            document.getElementById('supplierName').value = '';
+            document.getElementById('supplierPhone').value = '';
+            document.getElementById('supplierAddress').value = '';
+            new bootstrap.Modal(document.getElementById('supplierModal')).show();
+        }
+
+        function saveSupplier() {
+            let id = document.getElementById('supplierId').value;
+            let supplier = {
+                id: id ? parseInt(id) : Date.now(),
+                name: document.getElementById('supplierName').value,
+                phone: document.getElementById('supplierPhone').value,
+                address: document.getElementById('supplierAddress').value
+            };
+            if (id) suppliers = suppliers.map(s => s.id == supplier.id ? supplier : s);
+            else suppliers.push(supplier);
+            saveToFirebase('suppliers', suppliers);
+            bootstrap.Modal.getInstance(document.getElementById('supplierModal')).hide();
+            Swal.fire('تم', 'تم حفظ المورد', 'success');
+            loadAllData();
+        }
+
+        function editSupplier(id) {
+            let s = suppliers.find(s => s.id == id);
+            document.getElementById('supplierId').value = s.id;
+            document.getElementById('supplierName').value = s.name;
+            document.getElementById('supplierPhone').value = s.phone;
+            document.getElementById('supplierAddress').value = s.address;
+            new bootstrap.Modal(document.getElementById('supplierModal')).show();
+        }
+
+        function deleteSupplier(id) {
+            Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
+                if (res.isConfirmed) {
+                    suppliers = suppliers.filter(s => s.id != id);
+                    saveToFirebase('suppliers', suppliers);
+                    loadAllData();
+                }
+            });
+        }
+
+        function saveSale() {
+            let id = document.getElementById('editSaleId').value;
+            let pName = document.getElementById('saleProductNameInput').value;
+            let cName = document.getElementById('saleCustomerNameInput').value || 'نقدي';
+            let size = document.getElementById('saleSize').value || '';
+            let weight = parseNumberValue(document.getElementById('saleWeight').value);
+            let qty = parseNumberValue(document.getElementById('saleQuantity').value);
+            let price = parseNumberValue(document.getElementById('salePrice').value);
+            let unit = document.getElementById('saleUnit').value;
+            let date = document.getElementById('saleDate').value || new Date().toISOString().split('T')[0];
+            let finalQty = getQuantityInKilo(qty, unit);
+            let product = products.find(p => p.name === pName);
+
+            if (id) {
+                let oldSale = sales.find(s => s.id == id);
+                if (oldSale) {
+                    let oldProduct = products.find(p => p.name === oldSale.productName);
+                    if (oldProduct) oldProduct.quantity += oldSale.quantity;
+                    oldSale.productName = pName;
+                    oldSale.customerName = cName;
+                    oldSale.size = size;
+                    oldSale.weight = weight;
+                    oldSale.rawQuantity = qty;
+                    oldSale.quantity = finalQty;
+                    oldSale.unit = unit;
+                    oldSale.price = price;
+                    oldSale.date = date;
+                    oldSale.total = finalQty * price;
+                    if (product) product.quantity -= finalQty;
+                    saveToFirebase('sales', sales);
+                    saveToFirebase('products', products);
+                    Swal.fire('تم', 'تم تعديل البيع', 'success');
+                }
+            } else {
+                if (product && product.quantity < finalQty) {
+                    Swal.fire('خطأ', 'الكمية غير متوفرة', 'error');
+                    return;
+                }
+                if (product) product.quantity -= finalQty;
+                let sale = {
+                    id: Date.now(),
+                    saleNumber: sales.length + 1,
+                    productName: pName,
+                    quantity: finalQty,
+                    rawQuantity: qty,
+                    unit: unit,
+                    price: price,
+                    customerName: cName,
+                    size: size,
+                    weight: weight,
+                    date: date,
+                    total: finalQty * price
+                };
+                sales.push(sale);
+                saveToFirebase('sales', sales);
+                saveToFirebase('products', products);
+                Swal.fire('تم', 'تم تسجيل البيع', 'success');
+            }
+            clearSaleForm();
+            loadAllData();
+        }
+
+        function editSale(id) {
+            let sale = sales.find(s => s.id == id);
+            if (sale) {
+                document.getElementById('editSaleId').value = sale.id;
+                document.getElementById('saleDate').value = sale.date;
+                document.getElementById('saleProductNameInput').value = sale.productName;
+                document.getElementById('saleCustomerNameInput').value = sale.customerName;
+                document.getElementById('saleSize').value = sale.size || '';
+                document.getElementById('saleWeight').value = formatNumberToString(sale.weight || 0);
+                document.getElementById('saleQuantity').value = formatNumberToString(sale.rawQuantity || sale.quantity);
+                document.getElementById('saleUnit').value = sale.unit;
+                document.getElementById('salePrice').value = formatNumberToString(sale.price);
+                Swal.fire('تم التحميل', 'يمكنك تعديل البيانات', 'info');
+            }
+        }
+
+        function deleteSale(id) {
+            Swal.fire({ title: 'حذف بيع', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
+                if (res.isConfirmed) {
+                    let sale = sales.find(s => s.id == id);
+                    if (sale) {
+                        let product = products.find(p => p.name === sale.productName);
+                        if (product) product.quantity += sale.quantity;
+                        sales = sales.filter(s => s.id != id);
+                        saveToFirebase('sales', sales);
+                        saveToFirebase('products', products);
+                        Swal.fire('تم الحذف', '', 'success');
+                        loadAllData();
+                    }
+                }
+            });
+        }
+
+        function clearSaleForm() {
+            document.getElementById('editSaleId').value = '';
+            document.getElementById('saleDate').value = '';
+            document.getElementById('saleProductNameInput').value = '';
+            document.getElementById('saleCustomerNameInput').value = '';
+            document.getElementById('saleSize').value = '';
+            document.getElementById('saleWeight').value = '';
+            document.getElementById('saleQuantity').value = '';
+            document.getElementById('saleUnit').value = 'كيلو';
+            document.getElementById('salePrice').value = '';
+            document.getElementById('saleBarcodeInput').value = '';
+        }
+
+        function savePurchase() {
+            let id = document.getElementById('editPurchaseId').value;
+            let pName = document.getElementById('purchaseProductNameInput').value;
+            let sName = document.getElementById('purchaseSupplierNameInput').value || 'عام';
+            let size = document.getElementById('purchaseSize').value || '';
+            let weight = parseNumberValue(document.getElementById('purchaseWeight').value);
+            let qty = parseNumberValue(document.getElementById('purchaseQuantity').value);
+            let cost = parseNumberValue(document.getElementById('purchaseCost').value);
+            let unit = document.getElementById('purchaseUnit').value;
+            let date = document.getElementById('purchaseDate').value || new Date().toISOString().split('T')[0];
+            let finalQty = getQuantityInKilo(qty, unit);
+            let product = products.find(p => p.name === pName);
+
+            if (id) {
+                let oldPurchase = purchases.find(p => p.id == id);
+                if (oldPurchase) {
+                    let oldProduct = products.find(p => p.name === oldPurchase.productName);
+                    if (oldProduct) oldProduct.quantity -= oldPurchase.quantity;
+                    oldPurchase.productName = pName;
+                    oldPurchase.supplierName = sName;
+                    oldPurchase.size = size;
+                    oldPurchase.weight = weight;
+                    oldPurchase.rawQuantity = qty;
+                    oldPurchase.quantity = finalQty;
+                    oldPurchase.unit = unit;
+                    oldPurchase.cost = cost;
+                    oldPurchase.date = date;
+                    oldPurchase.total = finalQty * cost;
+                    if (product) product.quantity += finalQty;
+                    else products.push({ id: Date.now(), name: pName, quantity: finalQty, price: 0, cost: cost });
+                    saveToFirebase('purchases', purchases);
+                    saveToFirebase('products', products);
+                    Swal.fire('تم', 'تم تعديل الشراء', 'success');
+                }
+            } else {
+                if (product) product.quantity += finalQty;
+                else products.push({ id: Date.now(), name: pName, quantity: finalQty, price: 0, cost: cost });
+                let purchase = {
+                    id: Date.now(),
+                    purchaseNumber: purchases.length + 1,
+                    productName: pName,
+                    quantity: finalQty,
+                    rawQuantity: qty,
+                    unit: unit,
+                    cost: cost,
+                    supplierName: sName,
+                    size: size,
+                    weight: weight,
+                    date: date,
+                    total: finalQty * cost
+                };
+                purchases.push(purchase);
+                saveToFirebase('purchases', purchases);
+                saveToFirebase('products', products);
+                Swal.fire('تم', 'تم تسجيل الشراء', 'success');
+            }
+            clearPurchaseForm();
+            loadAllData();
+        }
+
+        function editPurchase(id) {
+            let purchase = purchases.find(p => p.id == id);
+            if (purchase) {
+                document.getElementById('editPurchaseId').value = purchase.id;
+                document.getElementById('purchaseDate').value = purchase.date;
+                document.getElementById('purchaseProductNameInput').value = purchase.productName;
+                document.getElementById('purchaseSupplierNameInput').value = purchase.supplierName;
+                document.getElementById('purchaseSize').value = purchase.size || '';
+                document.getElementById('purchaseWeight').value = formatNumberToString(purchase.weight || 0);
+                document.getElementById('purchaseQuantity').value = formatNumberToString(purchase.rawQuantity || purchase.quantity);
+                document.getElementById('purchaseUnit').value = purchase.unit;
+                document.getElementById('purchaseCost').value = formatNumberToString(purchase.cost);
+                Swal.fire('تم التحميل', 'يمكنك تعديل البيانات', 'info');
+            }
+        }
+
+        function deletePurchase(id) {
+            Swal.fire({ title: 'حذف شراء', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => {
+                if (res.isConfirmed) {
+                    let purchase = purchases.find(p => p.id == id);
+                    if (purchase) {
+                        let product = products.find(p => p.name === purchase.productName);
+                        if (product) product.quantity -= purchase.quantity;
+                        purchases = purchases.filter(p => p.id != id);
+                        saveToFirebase('purchases', purchases);
+                        saveToFirebase('products', products);
+                        Swal.fire('تم الحذف', '', 'success');
+                        loadAllData();
+                    }
+                }
+            });
+        }
+
+        function clearPurchaseForm() {
+            document.getElementById('editPurchaseId').value = '';
+            document.getElementById('purchaseDate').value = '';
+            document.getElementById('purchaseProductNameInput').value = '';
+            document.getElementById('purchaseSupplierNameInput').value = '';
+            document.getElementById('purchaseSize').value = '';
+            document.getElementById('purchaseWeight').value = '';
+            document.getElementById('purchaseQuantity').value = '';
+            document.getElementById('purchaseUnit').value = 'كيلو';
+            document.getElementById('purchaseCost').value = '';
+        }
+
+        function findProductByBarcode() {
+            let code = document.getElementById('saleBarcodeInput').value;
+            let product = products.find(p => (p.barcode && p.barcode === code) || p.id.toString() === code);
+            if (product) {
+                document.getElementById('saleProductNameInput').value = product.name;
+                document.getElementById('salePrice').value = formatNumberToString(product.price);
+                Swal.fire('تم', 'تم العثور على المنتج', 'success');
+            } else if (code) Swal.fire('خطأ', 'لم يتم العثور على منتج', 'error');
+        }
+
+        function printBarcode(productId) {
+            let p = products.find(pr => pr.id == productId);
+            if (p) {
+                let win = window.open();
+                win.document.write(`<html><head><title>باركود ${p.name}</title><script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"><\/script></head><body><canvas id="barcodePrint"></canvas><script>JsBarcode(document.getElementById("barcodePrint"), "${p.barcode || p.id}", { format:"CODE128" });<\/script><button onclick="window.print()">طباعة</button></body></html>`);
+            }
+        }
+
+        function showInvoiceModal() {
+            document.getElementById('invoiceItemsContainer').innerHTML = '';
+            let customerSelect = document.getElementById('invoiceCustomerSelect');
+            customerSelect.innerHTML = '<option value="">اختر العميل</option>';
+            customers.forEach(c => {
+                customerSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+            });
+            addInvoiceItem();
+            new bootstrap.Modal(document.getElementById('invoiceModal')).show();
+        }
+
+        function addInvoiceItem() {
+            let container = document.getElementById('invoiceItemsContainer');
+            let div = document.createElement('div');
+            div.className = 'row mb-2';
+            div.innerHTML = `<div class="col-5"><select class="form-control product-select" onchange="updateInvoiceTotal()">${products.map(p => `<option value="${p.id}" data-price="${p.price}">${p.name}</option>`).join('')}</select></div>
+                            <div class="col-3"><input class="form-control quantity-input" placeholder="كمية" oninput="updateInvoiceTotal()"></div>
+                            <div class="col-3"><input class="form-control price-input" placeholder="سعر" oninput="updateInvoiceTotal()"></div>
+                            <div class="col-1"><button class="btn btn-danger" onclick="removeItem(this)">×</button></div>`;
+            container.appendChild(div);
+            updateInvoiceTotal();
+        }
+
+        function removeItem(btn) {
+            btn.closest('.row').remove();
+            updateInvoiceTotal();
+        }
+
+        function updateInvoiceTotal() {
+            let total = 0;
+            document.querySelectorAll('#invoiceItemsContainer .row').forEach(row => {
+                let qty = parseNumberValue(row.querySelector('.quantity-input').value);
+                let price = parseNumberValue(row.querySelector('.price-input').value);
+                let select = row.querySelector('.product-select');
+                if (!price && select && select.selectedOptions[0]) price = parseNumberValue(select.selectedOptions[0].dataset.price);
+                total += qty * price;
+            });
+            document.getElementById('invoiceTotal').innerText = formatNumberToString(total);
+        }
+
+        function saveInvoiceModal() {
+            let customerId = document.getElementById('invoiceCustomerSelect').value;
+            if (!customerId) {
+                Swal.fire('خطأ', 'اختر العميل', 'error');
+                return;
+            }
+            let customer = customers.find(c => c.id == parseInt(customerId));
+            let items = [];
+            document.querySelectorAll('#invoiceItemsContainer .row').forEach(row => {
+                let productId = row.querySelector('.product-select').value;
+                let qty = parseNumberValue(row.querySelector('.quantity-input').value);
+                let price = parseNumberValue(row.querySelector('.price-input').value);
+                if (productId && qty > 0) {
+                    items.push({ productId: parseInt(productId), quantity: qty, price: price });
+                    let product = products.find(p => p.id == productId);
+                    if (product) product.quantity -= qty;
+                }
+            });
+            let invoice = {
+                id: Date.now(),
+                invoiceNumber: invoices.length + 1,
+                customerId: parseInt(customerId),
+                customerName: customer.name,
+                date: new Date().toISOString().split('T')[0],
+                items: items,
+                total: parseNumberValue(document.getElementById('invoiceTotal').innerText)
+            };
+            invoices.push(invoice);
+            saveToFirebase('invoices', invoices);
+            saveToFirebase('products', products);
+            bootstrap.Modal.getInstance(document.getElementById('invoiceModal')).hide();
+            Swal.fire('تم', 'تم حفظ الفاتورة', 'success');
+            loadAllData();
+        }
+
+        function viewInvoice(id) {
+            let inv = invoices.find(i => i.id == id);
+            let itemsHtml = '<ul>';
+            inv.items.forEach(i => {
+                let p = products.find(p => p.id == i.productId);
+                itemsHtml += `<li>${p?.name} - ${i.quantity} × ${formatPrice(i.price)}</li>`;
+            });
+            itemsHtml += '</ul>';
+            Swal.fire({
+                title: `فاتورة #${inv.invoiceNumber}`,
+                html: `<div><p>العميل: ${inv.customerName}</p><p>المجموع: ${formatPrice(inv.total)}</p>${itemsHtml}</div>`
+            });
+        }
+
+        function getReportHeader() {
+            const now = new Date();
+            return `مصنع الحرمين للبلاستيك\n${now.toLocaleString('ar-EG')}\n${'='.repeat(50)}\n`;
+        }
+
+        function generateSalesReport() {
+            let total = sales.reduce((s, i) => s + (i.quantity * i.price), 0);
+            let content = getReportHeader() + `تقرير المبيعات\nالإجمالي: ${formatPrice(total)}\n`;
+            sales.forEach(s => {
+                content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`;
+            });
+            downloadTxt(content, `تقرير_المبيعات.txt`);
+            Swal.fire('تم', 'تم التصدير', 'success');
+        }
+
+        function generatePurchasesReport() {
+            let total = purchases.reduce((s, i) => s + (i.quantity * i.cost), 0);
+            let content = getReportHeader() + `تقرير المشتريات\nالإجمالي: ${formatPrice(total)}\n`;
+            purchases.forEach(p => {
+                content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`;
+            });
+            downloadTxt(content, `تقرير_المشتريات.txt`);
+            Swal.fire('تم', 'تم التصدير', 'success');
+        }
+
+        function generateProfitReport() {
+            let salesTotal = sales.reduce((s, i) => s + (i.quantity * i.price), 0);
+            let purchasesTotal = purchases.reduce((s, i) => s + (i.quantity * i.cost), 0);
+            let totalOp = operatingExpenses.electricity + operatingExpenses.rent + operatingExpenses.salaries + operatingExpenses.transport + operatingExpenses.misc + operatingExpenses.printing;
+            let net = salesTotal - purchasesTotal - totalOp;
+            let content = getReportHeader() + `تقرير الأرباح\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nالمصاريف: ${formatPrice(totalOp)}\nصافي الربح: ${formatPrice(net)}\n`;
+            downloadTxt(content, `تقرير_الأرباح.txt`);
+            Swal.fire('تم', 'تم التصدير', 'success');
+        }
+
+        function exportSectionToTxt(sectionName) {
+            let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`;
+            if (sectionName === 'inventoryManagement') products.forEach(p => {
+                content += `${p.name} | المقاس: ${p.size || '-'} | الوزن: ${p.weight || '-'} كجم | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`;
+            });
+            else if (sectionName === 'plasticPrices') currentPlasticPrices.forEach(p => {
+                content += `${p.type} | ${p.description} | ${p.size} | ${formatPrice(p.price)}\n`;
+            });
+            else if (sectionName === 'invoices') invoices.forEach(inv => {
+                content += `رقم الفاتورة: ${inv.invoiceNumber} | العميل: ${inv.customerName} | التاريخ: ${inv.date} | المجموع: ${formatPrice(inv.total)}\n`;
+            });
+            downloadTxt(content, `${sectionName}.txt`);
+            Swal.fire('تم', 'تم التصدير', 'success');
+        }
+
+        function saveOperatingExpenses() {
+            operatingExpenses = {
+                electricity: parseNumberValue(document.getElementById('operatingElectricity').value),
+                rent: parseNumberValue(document.getElementById('operatingRent').value),
+                salaries: parseNumberValue(document.getElementById('operatingSalaries').value),
+                transport: parseNumberValue(document.getElementById('operatingTransport').value),
+                misc: parseNumberValue(document.getElementById('operatingMisc').value),
+                printing: parseNumberValue(document.getElementById('operatingPrinting').value)
+            };
+            saveToFirebase('operatingExpenses', operatingExpenses);
+            Swal.fire('تم', 'تم حفظ المصروفات', 'success');
+            updateDashboard();
+            updateProfitAnalysis();
+            updatePartnersSection();
+        }
+
+        function searchSales() {
+            let customer = document.getElementById('searchSaleCustomer').value.toLowerCase();
+            let product = document.getElementById('searchSaleProduct').value.toLowerCase();
+            let date = document.getElementById('searchSaleDate').value;
+            let filtered = sales.filter(s => (!customer || s.customerName.toLowerCase().includes(customer)) && (!product || s.productName.toLowerCase().includes(product)) && (!date || s.date === date));
+            let html = filtered.map(s => `<div>${s.productName} - ${s.customerName} - ${formatPrice(s.total)}</div>`).join('');
+            document.getElementById('salesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>';
+        }
+
+        function searchPurchases() {
+            let supplier = document.getElementById('searchPurchaseSupplier').value.toLowerCase();
+            let product = document.getElementById('searchPurchaseProduct').value.toLowerCase();
+            let date = document.getElementById('searchPurchaseDate').value;
+            let filtered = purchases.filter(p => (!supplier || p.supplierName.toLowerCase().includes(supplier)) && (!product || p.productName.toLowerCase().includes(product)) && (!date || p.date === date));
+            let html = filtered.map(p => `<div>${p.productName} - ${p.supplierName} - ${formatPrice(p.total)}</div>`).join('');
+            document.getElementById('purchasesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>';
+        }
+
+        function toggleTheme() {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
             }
             updateCustomizationPickersFromCSS();
         }
-        if(localStorage.getItem('theme')==='light') document.documentElement.setAttribute('data-theme','light');
-        
-        function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('active'); }
-        function closeSidebarOnClickOutside(event) { if (window.innerWidth <= 768 && document.getElementById('sidebar').classList.contains('active')) document.getElementById('sidebar').classList.remove('active'); }
-        function showSection(section){ document.querySelectorAll('.section').forEach(s=>s.style.display='none'); document.getElementById(section).style.display='block'; if(section==='dashboard') updateDashboard(); if(section==='profits') updateProfitAnalysis(); if(section==='partners') updatePartnersSection(); if(section==='plasticPrices') { if (!currentPlasticPrices.length) refreshPlasticPrices(); } if(section==='inventoryManagement') updateInventoryFullSection(); }
-        function showLastUpdate(){ Swal.fire('المزامنة','جميع التحديثات تتم تلقائياً','info'); }
-        function resetAllData(){ Swal.fire({title:'تحذير!',text:'سيتم حذف جميع البيانات!',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ if(useFirebase && db) db.ref().remove(); localStorage.clear(); location.reload(); } }); }
-        
-        function applyCustomization(){ 
-            let fontSize=document.getElementById('customFontSizeRange').value; 
-            document.documentElement.style.setProperty('--base-font-size', fontSize+'px'); 
-            let font=document.getElementById('customFontSelect').value; 
-            document.documentElement.style.setProperty('--font-family-main', font); 
-            let textColor=document.getElementById('customTextColor').value; 
-            document.documentElement.style.setProperty('--text-primary', textColor); 
-            let accentPrimary=document.getElementById('customAccentPrimary').value; 
-            document.documentElement.style.setProperty('--accent-primary', accentPrimary); 
-            let accentSecondary=document.getElementById('customAccentSecondary').value; 
-            document.documentElement.style.setProperty('--accent-secondary', accentSecondary); 
-            let bgPrimary=document.getElementById('customBgPrimary').value; 
-            document.documentElement.style.setProperty('--bg-primary', bgPrimary); 
-            let cardBg=document.getElementById('customCardBg').value; 
-            document.documentElement.style.setProperty('--bg-card', cardBg); 
-            let borderRadius=document.getElementById('customBorderRadius').value; 
-            document.documentElement.style.setProperty('--border-radius', borderRadius+'px'); 
-            localStorage.setItem('harmain_custom_style', JSON.stringify({fontSize,font,textColor,accentPrimary,accentSecondary,bgPrimary,cardBg,borderRadius})); 
-            Swal.fire('تم','تم تحديث المظهر','success');
+
+        if (localStorage.getItem('theme') === 'light') document.documentElement.setAttribute('data-theme', 'light');
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        function closeSidebarOnClickOutside(event) {
+            if (window.innerWidth <= 768 && document.getElementById('sidebar').classList.contains('active')) document.getElementById('sidebar').classList.remove('active');
+        }
+
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById(section).style.display = 'block';
+            if (section === 'dashboard') updateDashboard();
+            if (section === 'profits') updateProfitAnalysis();
+            if (section === 'partners') updatePartnersSection();
+            if (section === 'plasticPrices') {
+                if (!currentPlasticPrices.length) refreshPlasticPrices();
+            }
+            if (section === 'inventoryManagement') updateInventoryFullSection();
+        }
+
+        function showLastUpdate() {
+            Swal.fire('المزامنة', 'جميع التحديثات تتم تلقائياً', 'info');
+        }
+
+        function resetAllData() {
+            Swal.fire({ title: 'تحذير!', text: 'سيتم حذف جميع البيانات!', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33' }).then(res => {
+                if (res.isConfirmed) {
+                    if (useFirebase && db) db.ref().remove();
+                    localStorage.clear();
+                    location.reload();
+                }
+            });
+        }
+
+        function applyCustomization() {
+            let fontSize = document.getElementById('customFontSizeRange').value;
+            document.documentElement.style.setProperty('--base-font-size', fontSize + 'px');
+            let font = document.getElementById('customFontSelect').value;
+            document.documentElement.style.setProperty('--font-family-main', font);
+            let textColor = document.getElementById('customTextColor').value;
+            document.documentElement.style.setProperty('--text-primary', textColor);
+            let accentPrimary = document.getElementById('customAccentPrimary').value;
+            document.documentElement.style.setProperty('--accent-primary', accentPrimary);
+            let accentSecondary = document.getElementById('customAccentSecondary').value;
+            document.documentElement.style.setProperty('--accent-secondary', accentSecondary);
+            let bgPrimary = document.getElementById('customBgPrimary').value;
+            document.documentElement.style.setProperty('--bg-primary', bgPrimary);
+            let cardBg = document.getElementById('customCardBg').value;
+            document.documentElement.style.setProperty('--bg-card', cardBg);
+            let borderRadius = document.getElementById('customBorderRadius').value;
+            document.documentElement.style.setProperty('--border-radius', borderRadius + 'px');
+            localStorage.setItem('harmain_custom_style', JSON.stringify({ fontSize, font, textColor, accentPrimary, accentSecondary, bgPrimary, cardBg, borderRadius }));
+            Swal.fire('تم', 'تم تحديث المظهر', 'success');
             updateCustomizationPickersFromCSS();
         }
-        function resetCustomization(){ 
-            localStorage.removeItem('harmain_custom_style'); 
-            location.reload(); 
+
+        function resetCustomization() {
+            localStorage.removeItem('harmain_custom_style');
+            location.reload();
         }
-        function loadCustomization(){ 
-            let saved=localStorage.getItem('harmain_custom_style'); 
-            if(saved){ 
-                let s=JSON.parse(saved); 
-                document.documentElement.style.setProperty('--base-font-size', s.fontSize+'px'); 
-                document.documentElement.style.setProperty('--font-family-main', s.font); 
-                document.documentElement.style.setProperty('--text-primary', s.textColor); 
-                document.documentElement.style.setProperty('--accent-primary', s.accentPrimary); 
-                document.documentElement.style.setProperty('--accent-secondary', s.accentSecondary); 
-                document.documentElement.style.setProperty('--bg-primary', s.bgPrimary); 
-                document.documentElement.style.setProperty('--bg-card', s.cardBg); 
-                document.documentElement.style.setProperty('--border-radius', s.borderRadius+'px'); 
+
+        function loadCustomization() {
+            let saved = localStorage.getItem('harmain_custom_style');
+            if (saved) {
+                let s = JSON.parse(saved);
+                document.documentElement.style.setProperty('--base-font-size', s.fontSize + 'px');
+                document.documentElement.style.setProperty('--font-family-main', s.font);
+                document.documentElement.style.setProperty('--text-primary', s.textColor);
+                document.documentElement.style.setProperty('--accent-primary', s.accentPrimary);
+                document.documentElement.style.setProperty('--accent-secondary', s.accentSecondary);
+                document.documentElement.style.setProperty('--bg-primary', s.bgPrimary);
+                document.documentElement.style.setProperty('--bg-card', s.cardBg);
+                document.documentElement.style.setProperty('--border-radius', s.borderRadius + 'px');
                 document.getElementById('customFontSizeRange').value = s.fontSize;
-                document.getElementById('fontSizeValue').innerText = s.fontSize+'px';
+                document.getElementById('fontSizeValue').innerText = s.fontSize + 'px';
                 document.getElementById('customFontSelect').value = s.font;
                 document.getElementById('customBorderRadius').value = s.borderRadius;
-                document.getElementById('radiusValue').innerText = s.borderRadius+'px';
+                document.getElementById('radiusValue').innerText = s.borderRadius + 'px';
             }
             updateCustomizationPickersFromCSS();
-            document.getElementById('customBorderRadius').addEventListener('input',function(){ document.getElementById('radiusValue').innerText=this.value+'px'; });
-            document.getElementById('customFontSizeRange').addEventListener('input',function(){ document.getElementById('fontSizeValue').innerText=this.value+'px'; });
+            document.getElementById('customBorderRadius').addEventListener('input', function () {
+                document.getElementById('radiusValue').innerText = this.value + 'px';
+            });
+            document.getElementById('customFontSizeRange').addEventListener('input', function () {
+                document.getElementById('fontSizeValue').innerText = this.value + 'px';
+            });
         }
-        function init(){ loadAllData(); startRealtimeListeners(); loadCustomization(); loadPriceSettings(); startPriceAutoUpdate(); setInterval(checkLowStock, 30000); }
+
+        function init() {
+            loadAllData();
+            startRealtimeListeners();
+            loadCustomization();
+            loadPriceSettings();
+            startPriceAutoUpdate();
+            setInterval(checkLowStock, 30000);
+        }
         init();
     </script>
 </body>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </html>
+                                                                                 </html>
