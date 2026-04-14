@@ -104,8 +104,30 @@
         .product-card:hover { transform: translateY(-8px); border-color: var(--accent-primary); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .notification-toast { position: fixed; bottom: 100px; left: 20px; z-index: 1200; background: var(--bg-card); border-right: 4px solid var(--accent-primary); padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 12px; animation: slideInRight 0.3s ease; max-width: 350px; }
         @keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        .alert-toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 1300; background: var(--accent-danger); color: white; padding: 12px 24px; border-radius: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-weight: bold; animation: slideDown 0.3s ease; display: flex; align-items: center; gap: 10px; }
-        @keyframes slideDown { from { top: -50px; opacity: 0; } to { top: 80px; opacity: 1; } }
+        /* رسالة المخزون المنخفض - تظهر في أسفل اليسار بحجم خط 14px */
+        .alert-toast {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1300;
+            background: var(--accent-danger);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-weight: bold;
+            font-size: 14px;
+            animation: slideInLeft 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 350px;
+            direction: rtl;
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
         footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; padding: 10px; background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fbbf24; border-top: 2px solid #fbbf24; z-index: 1000; font-size: 0.85rem; }
         .badge-stock-high { background: linear-gradient(135deg, var(--accent-secondary), #059669); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; }
         .badge-stock-medium { background: linear-gradient(135deg, var(--accent-warning), #d97706); color: white; }
@@ -321,7 +343,7 @@
             </div>
         </div>
 
-        <!-- باقي الأقسام (تم اختصارها للحفاظ على الطول ولكنها كاملة الوظائف) -->
+        <!-- باقي الأقسام -->
         <div id="sales" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-chart-line"></i> تسجيل المبيعات</h2><button class="export-btn" onclick="exportSectionToTxt('sales')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row"><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">تسجيل بيع جديد</div><div class="card-body"><label class="form-label"><i class="fas fa-calendar-alt"></i> التاريخ</label><input type="date" id="saleDate" class="form-control mb-2"><label class="form-label"><i class="fas fa-barcode"></i> مسح الباركود</label><input type="text" id="saleBarcodeInput" class="form-control mb-2" placeholder="ادخل الباركود أو اسم المنتج..." onchange="findProductByBarcode()"><label class="form-label"><i class="fas fa-tag"></i> اسم المنتج</label><input type="text" id="saleProductNameInput" class="form-control mb-2" placeholder="أدخل اسم المنتج..."><label class="form-label"><i class="fas fa-user"></i> اسم العميل</label><input type="text" id="saleCustomerNameInput" class="form-control mb-2" placeholder="أدخل اسم العميل..."><div class="row"><div class="col-6"><label class="form-label"><i class="fas fa-arrows-alt"></i> المقاس</label><input type="text" id="saleSize" class="form-control mb-2" placeholder="مثال: 50×70 سم"></div><div class="col-6"><label class="form-label"><i class="fas fa-weight-hanging"></i> الوزن (كجم)</label><input type="text" id="saleWeight" class="form-control mb-2 number-input" placeholder="الوزن" oninput="formatNumberInput(this)"></div></div><div class="row"><div class="col-8"><label class="form-label">الكمية</label><input type="text" id="saleQuantity" class="form-control mb-2 number-input" placeholder="الكمية" oninput="formatNumberInput(this)"></div><div class="col-4"><label class="form-label">الوحدة</label><select id="saleUnit" class="form-control mb-2"><option value="كيلو">كيلو</option><option value="طن">طن</option><option value="جرام">جرام</option><option value="كيس">كيس</option><option value="قطعة">قطعة</option></select></div></div><label class="form-label"><i class="fas fa-dollar-sign"></i> سعر البيع</label><input type="text" id="salePrice" class="form-control mb-2 number-input" placeholder="سعر البيع" oninput="formatNumberInput(this)"><input type="hidden" id="editSaleId" value=""><button class="btn btn-primary-custom w-100" onclick="saveSale()"><i class="fas fa-save"></i> تسجيل البيع</button></div></div></div><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">آخر المبيعات</div><div class="card-body" style="max-height: 400px; overflow-y: auto;"><div id="salesHistory"></div></div></div></div></div><div class="search-section mt-3"><h5><i class="fas fa-search"></i> بحث متقدم في المبيعات</h5><div class="row"><div class="col-md-4"><input type="text" id="searchSaleCustomer" class="form-control" placeholder="العميل"></div><div class="col-md-4"><input type="text" id="searchSaleProduct" class="form-control" placeholder="المنتج"></div><div class="col-md-4"><input type="date" id="searchSaleDate" class="form-control"></div></div><button class="btn btn-primary-custom mt-2" onclick="searchSales()"><i class="fas fa-filter"></i> بحث</button><div id="salesSearchResults" class="mt-3"></div></div></div>
         <div id="purchases" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-shopping-cart"></i> تسجيل المشتريات</h2><button class="export-btn" onclick="exportSectionToTxt('purchases')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row"><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">تسجيل شراء جديد</div><div class="card-body"><label class="form-label"><i class="fas fa-calendar-alt"></i> التاريخ</label><input type="date" id="purchaseDate" class="form-control mb-2"><label class="form-label">اسم المنتج</label><input type="text" id="purchaseProductNameInput" class="form-control mb-2"><label class="form-label">اسم المورد</label><input type="text" id="purchaseSupplierNameInput" class="form-control mb-2"><div class="row"><div class="col-6"><label class="form-label"><i class="fas fa-arrows-alt"></i> المقاس</label><input type="text" id="purchaseSize" class="form-control mb-2" placeholder="مثال: 50×70 سم"></div><div class="col-6"><label class="form-label"><i class="fas fa-weight-hanging"></i> الوزن (كجم)</label><input type="text" id="purchaseWeight" class="form-control mb-2 number-input" placeholder="الوزن" oninput="formatNumberInput(this)"></div></div><div class="row"><div class="col-8"><label class="form-label">الكمية</label><input type="text" id="purchaseQuantity" class="form-control mb-2 number-input" oninput="formatNumberInput(this)"></div><div class="col-4"><label class="form-label">الوحدة</label><select id="purchaseUnit" class="form-control mb-2"><option value="كيلو">كيلو</option><option value="طن">طن</option><option value="جرام">جرام</option><option value="كيس">كيس</option><option value="قطعة">قطعة</option></select></div></div><label class="form-label">سعر الشراء</label><input type="text" id="purchaseCost" class="form-control mb-2 number-input" oninput="formatNumberInput(this)"><input type="hidden" id="editPurchaseId" value=""><button class="btn btn-primary-custom w-100" onclick="savePurchase()"><i class="fas fa-save"></i> تسجيل الشراء</button></div></div></div><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">آخر المشتريات</div><div class="card-body"><div id="purchasesHistory"></div></div></div></div></div><div class="search-section mt-3"><h5><i class="fas fa-search"></i> بحث متقدم في المشتريات</h5><div class="row"><div class="col-md-4"><input type="text" id="searchPurchaseSupplier" class="form-control" placeholder="المورد"></div><div class="col-md-4"><input type="text" id="searchPurchaseProduct" class="form-control" placeholder="المنتج"></div><div class="col-md-4"><input type="date" id="searchPurchaseDate" class="form-control"></div></div><button class="btn btn-primary-custom mt-2" onclick="searchPurchases()"><i class="fas fa-filter"></i> بحث</button><div id="purchasesSearchResults" class="mt-3"></div></div></div>
         
@@ -373,10 +395,28 @@
             <div class="product-grid" id="productsGrid"></div>
         </div>
         
-        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> <table></div></div>
-        <div id="invoices" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-file-invoice"></i> الفواتير</h2><button class="export-btn" onclick="exportSectionToTxt('invoices')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showInvoiceModal()">فاتورة جديدة</button><div class="table-responsive"><table class="table table-custom"><thead> <th>رقم الفاتورة</th><th>العميل</th><th>التاريخ</th><th>المجموع</th><th>الإجراءات</th> </thead><tbody id="invoicesList"></tbody> </table></div></div>
+        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> </table></div></div>
         
-        <!-- Reports with Date Range Filter -->
+        <!-- قسم الفواتير مع زر التصدير -->
+        <div id="invoices" class="section" style="display:none;">
+            <div class="section-header">
+                <h2><i class="fas fa-file-invoice"></i> الفواتير</h2>
+                <div>
+                    <button class="export-btn" onclick="exportSectionToTxt('invoices')"><i class="fas fa-download"></i> تصدير كملف نصي</button>
+                    <button class="btn btn-primary-custom ms-2" onclick="exportInvoicesToTxt()"><i class="fas fa-file-export"></i> تصدير الفواتير (نصي)</button>
+                </div>
+            </div>
+            <button class="btn btn-primary-custom mb-3" onclick="showInvoiceModal()">فاتورة جديدة</button>
+            <div class="table-responsive">
+                <table class="table table-custom">
+                    <thead>
+                        <tr><th>رقم الفاتورة</th><th>العميل</th><th>التاريخ</th><th>المجموع</th><th>الإجراءات</th></tr>
+                    </thead>
+                    <tbody id="invoicesList"></tbody>
+                </table>
+            </div>
+        </div>
+        
         <div id="reports" class="section" style="display:none;">
             <div class="section-header"><h2><i class="fas fa-chart-bar"></i> التقارير</h2><button class="export-btn" onclick="exportSectionToTxt('reports')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
             <div class="card mb-3" style="background: var(--bg-card); border-radius: 20px;">
@@ -399,7 +439,7 @@
         </div>
         <div id="operatingExpenses" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-charging-station"></i> مصاريف التشغيل</h2><button class="export-btn" onclick="exportSectionToTxt('operatingExpenses')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-body"><div class="row"><div class="col-md-6"><label>كهرباء</label><input type="text" id="operatingElectricity" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>إيجار</label><input type="text" id="operatingRent" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>رواتب</label><input type="text" id="operatingSalaries" class="form-control number-input" value="0" oninput="formatNumberInput(this)"></div><div class="col-md-6"><label>مصروفات نقل</label><input type="text" id="operatingTransport" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>مصروفات متنوعة</label><input type="text" id="operatingMisc" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>طباعة الغلاف</label><input type="text" id="operatingPrinting" class="form-control number-input" value="0" oninput="formatNumberInput(this)"></div></div><button class="btn btn-primary-custom mt-3" onclick="saveOperatingExpenses()">حفظ المصروفات</button></div></div></div>
         
-        <!-- قسم تخصيص الموقع (تم تطويره ليعكس الألوان الحالية ويتيح التخصيص الكامل) -->
+        <!-- قسم تخصيص الموقع -->
         <div id="customization" class="section" style="display:none;">
             <h2 class="mb-4"><i class="fas fa-palette"></i> تخصيص مظهر الموقع</h2>
             <div class="card" style="background: var(--bg-card); border-radius: var(--border-radius);">
@@ -562,7 +602,7 @@
             return { diff: qtyBefore - currentQty, trend: 'down', icon: '🔽', text: 'نقصان' };
         }
 
-        // فحص المخزون المنخفض وإظهار التنبيهات
+        // فحص المخزون المنخفض وإظهار التنبيهات (تظهر في أسفل اليسار بخط 14px)
         function checkLowStock() {
             products.forEach(p => {
                 if (p.quantity < 50 && p.quantity > 0) {
@@ -644,6 +684,30 @@
             Swal.fire('تم', 'تم تصدير تقرير الأرباح للفترة', 'success');
         }
 
+        // تصدير الفواتير كملف نصي
+        function exportInvoicesToTxt() {
+            if (!invoices.length) {
+                Swal.fire('تنبيه', 'لا توجد فواتير لتصديرها', 'info');
+                return;
+            }
+            let content = getReportHeader();
+            content += `تقرير الفواتير\n${'='.repeat(40)}\n`;
+            invoices.forEach(inv => {
+                content += `رقم الفاتورة: ${inv.invoiceNumber}\n`;
+                content += `العميل: ${inv.customerName}\n`;
+                content += `التاريخ: ${inv.date}\n`;
+                content += `المجموع: ${formatPrice(inv.total)}\n`;
+                content += `المنتجات:\n`;
+                inv.items.forEach(item => {
+                    let p = products.find(pr => pr.id == item.productId);
+                    content += `  - ${p?.name || 'منتج غير معروف'}: ${item.quantity} × ${formatPrice(item.price)}\n`;
+                });
+                content += `\n${'='.repeat(40)}\n`;
+            });
+            downloadTxt(content, `الفواتير_${new Date().toISOString().slice(0,19)}.txt`);
+            Swal.fire('تم', 'تم تصدير الفواتير بنجاح', 'success');
+        }
+
         // طباعة بطاقة سعر المنتج
         function printPriceTag(productId) {
             let p = products.find(pr => pr.id == productId);
@@ -684,7 +748,7 @@
             }
         }
 
-        // باقي الدوال الأساسية
+        // باقي الدوال الأساسية (بنفس الكود الأصلي دون تغيير)
         function formatNumberInput(input) { let v = input.value.replace(/,/g, ''); if (!isNaN(v) && v !== '') input.value = new Intl.NumberFormat('en-US').format(parseFloat(v)); }
         function parseNumberValue(fv) { return parseFloat((fv+'').replace(/,/g, '')) || 0; }
         function formatNumberToString(n) { return new Intl.NumberFormat('en-US').format(n); }
@@ -710,20 +774,20 @@
                 let movement = getStockMovement(p.name, p.quantity);
                 let trendClass = movement.trend === 'up' ? 'trend-up' : (movement.trend === 'down' ? 'trend-down' : 'trend-steady');
                 html += `<tr>
-                             <td>${idx+1}</td>
-                             <td>${p.name}</td>
-                             <td>${p.barcode || '-'}</td>
-                             <td>${p.type || '-'}</td>
-                             <td>${formatPrice(p.price)}</td>
-                             <td>${formatPrice(p.cost)}</td>
-                             <td>${formatNumberToString(p.quantity)}</td>
+                              <td class="text-center">${idx+1}</td>
+                              <td>${p.name}</td>
+                              <td>${p.barcode || '-'}</td>
+                              <td>${p.type || '-'}</td>
+                              <td>${formatPrice(p.price)}</td>
+                              <td>${formatPrice(p.cost)}</td>
+                              <td>${formatNumberToString(p.quantity)}</td>
                               <td class="${trendClass}">${movement.icon} ${movement.text}</td>
                               <td>${formatPrice(p.quantity * p.price)}</td>
                               <td><span class="${stockClass}">${stockText}</span></td>
                               <td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>
                           </tr>`;
             });
-            tbody.innerHTML = html || '<tr><td colspan="11">لا توجد منتجات<\/td><\/tr>';
+            tbody.innerHTML = html || '<tr><td colspan="11" class="text-center">لا توجد منتجات</td></tr>';
             let totalQty = products.reduce((s,p)=>s+p.quantity,0);
             let totalVal = products.reduce((s,p)=>s+(p.quantity*p.price),0);
             document.getElementById('totalProductsCount').innerText = products.length;
@@ -775,10 +839,10 @@
         function updateProfitAnalysis(){ let totalSales=sales.reduce((s,sl)=>s+(sl.quantity*sl.price),0); let totalPurchases=purchases.reduce((s,p)=>s+(p.quantity*p.cost),0); let totalOp=operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net=totalSales-totalPurchases-totalOp; let margin=totalSales>0?((net/totalSales)*100).toFixed(2):0; document.getElementById('totalSales').innerText=formatPrice(totalSales); document.getElementById('totalPurchases').innerText=formatPrice(totalPurchases); document.getElementById('totalProfit').innerText=formatPrice(net); document.getElementById('profitMargin').innerText=margin+'%'; }
         function loadSalesHistory(){ let div=document.getElementById('salesHistory'); if(div) div.innerHTML=sales.slice(-10).reverse().map(s=>`<div class="list-group-item"><strong>${s.productName}</strong> | ${s.rawQuantity||s.quantity} ${s.unit} = ${formatPrice(s.total)}<br><small>${s.customerName} | ${s.date}</small><br><button class="edit-btn" onclick="editSale(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSale(${s.id})">حذف</button></div>`).join(''); }
         function loadPurchasesHistory(){ let div=document.getElementById('purchasesHistory'); if(div) div.innerHTML=purchases.slice(-10).reverse().map(p=>`<div class="list-group-item"><strong>${p.productName}</strong> | ${p.rawQuantity||p.quantity} ${p.unit} = ${formatPrice(p.total)}<br><small>${p.supplierName} | ${p.date}</small><br><button class="edit-btn" onclick="editPurchase(${p.id})">تعديل</button> <button class="delete-btn" onclick="deletePurchase(${p.id})">حذف</button></div>`).join(''); }
-        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<tr><td colspan="5">لا توجد بيانات</td></tr>'; }
-        function loadSuppliers(){ let html=''; suppliers.forEach((s,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML=html||'<tr><td colspan="5">لا توجد بيانات</td></tr>'; }
-        function loadProducts(){ let html=''; products.forEach(p=>{ html+=`<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})"><i class="fas fa-tag"></i> طباعة بطاقة سعر</button><button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button> <button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML=html||'<p>لا توجد منتجات</p>'; setTimeout(()=>{ products.forEach(p=>{ let canvas=document.getElementById(`barcode-${p.id}`); if(canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format:"CODE128", width:2, height:40 }); }); },100); }
-        function loadInvoices(){ let html=''; invoices.forEach((inv,i)=>{ html+=`<tr><td>#${inv.invoiceNumber}</td><td>${inv.customerName}</td><td>${inv.date}</td><td class="text-end">${formatPrice(inv.total)}</td><td><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="delete-btn" onclick="deleteInvoice(${inv.id})">حذف</button></td></tr>`; }); document.getElementById('invoicesList').innerHTML=html||'<tr><td colspan="5">لا توجد فواتير</td></tr>'; }
+        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
+        function loadSuppliers(){ let html=''; suppliers.forEach((s,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
+        function loadProducts(){ let html=''; products.forEach(p=>{ html+=`<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})"><i class="fas fa-tag"></i> طباعة بطاقة سعر</button><button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button> <button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML=html||'<p class="text-center">لا توجد منتجات</p>'; setTimeout(()=>{ products.forEach(p=>{ let canvas=document.getElementById(`barcode-${p.id}`); if(canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format:"CODE128", width:2, height:40 }); }); },100); }
+        function loadInvoices(){ let html=''; invoices.forEach((inv,i)=>{ html+=`<tr><td class="text-center"><strong>#${inv.invoiceNumber}</strong></td><td>${inv.customerName}</td><td>${inv.date}</td><td class="text-end">${formatPrice(inv.total)}</td><td class="text-center"><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="btn btn-sm btn-danger" onclick="deleteInvoice(${inv.id})">حذف</button></td></tr>`; }); document.getElementById('invoicesList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد فواتير</td></tr>'; }
         function deleteInvoice(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ invoices=invoices.filter(i=>i.id!=id); saveToFirebase('invoices',invoices); loadInvoices(); } }); }
         function showProductModal(){ document.getElementById('productId').value=''; document.getElementById('productName').value=''; document.getElementById('productBarcode').value=''; document.getElementById('productType').value=''; document.getElementById('productPrice').value=''; document.getElementById('productCost').value=''; document.getElementById('productQuantity').value=''; new bootstrap.Modal(document.getElementById('productModal')).show(); }
         function saveProduct(){ let id=document.getElementById('productId').value; let product={ id:id?parseInt(id):Date.now(), name:document.getElementById('productName').value, barcode:document.getElementById('productBarcode').value, type:document.getElementById('productType').value, price:parseNumberValue(document.getElementById('productPrice').value), cost:parseNumberValue(document.getElementById('productCost').value), quantity:parseNumberValue(document.getElementById('productQuantity').value)||0 }; if(id) products=products.map(p=>p.id==product.id?product:p); else products.push(product); saveToFirebase('products',products); bootstrap.Modal.getInstance(document.getElementById('productModal')).hide(); Swal.fire('تم','تم حفظ المنتج','success'); loadAllData(); }
@@ -812,10 +876,10 @@
         function generateSalesReport(){ let total = sales.reduce((s,i)=>s+(i.quantity*i.price),0); let content = getReportHeader() + `تقرير المبيعات\nالإجمالي: ${formatPrice(total)}\n`; sales.forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`; }); downloadTxt(content, `تقرير_المبيعات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
         function generatePurchasesReport(){ let total = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0); let content = getReportHeader() + `تقرير المشتريات\nالإجمالي: ${formatPrice(total)}\n`; purchases.forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`; }); downloadTxt(content, `تقرير_المشتريات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
         function generateProfitReport(){ let salesTotal = sales.reduce((s,i)=>s+(i.quantity*i.price),0); let purchasesTotal = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0); let totalOp = operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net = salesTotal - purchasesTotal - totalOp; let content = getReportHeader() + `تقرير الأرباح\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nالمصاريف: ${formatPrice(totalOp)}\nصافي الربح: ${formatPrice(net)}\n`; downloadTxt(content, `تقرير_الأرباح.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function exportSectionToTxt(sectionName){ let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`; if(sectionName === 'inventoryManagement') products.forEach(p=>{ content += `${p.name} | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`; }); else if(sectionName === 'plasticPrices') currentPlasticPrices.forEach(p=>{ content += `${p.type} | ${p.description} | ${p.size} | ${formatPrice(p.price)}\n`; }); downloadTxt(content, `${sectionName}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function exportSectionToTxt(sectionName){ let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`; if(sectionName === 'inventoryManagement') products.forEach(p=>{ content += `${p.name} | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`; }); else if(sectionName === 'plasticPrices') currentPlasticPrices.forEach(p=>{ content += `${p.type} | ${p.description} | ${p.size} | ${formatPrice(p.price)}\n`; }); else if(sectionName === 'invoices') invoices.forEach(inv=>{ content += `رقم الفاتورة: ${inv.invoiceNumber} | العميل: ${inv.customerName} | التاريخ: ${inv.date} | المجموع: ${formatPrice(inv.total)}\n`; }); downloadTxt(content, `${sectionName}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
         function saveOperatingExpenses(){ operatingExpenses={ electricity:parseNumberValue(document.getElementById('operatingElectricity').value), rent:parseNumberValue(document.getElementById('operatingRent').value), salaries:parseNumberValue(document.getElementById('operatingSalaries').value), transport:parseNumberValue(document.getElementById('operatingTransport').value), misc:parseNumberValue(document.getElementById('operatingMisc').value), printing:parseNumberValue(document.getElementById('operatingPrinting').value) }; saveToFirebase('operatingExpenses',operatingExpenses); Swal.fire('تم','تم حفظ المصروفات','success'); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); }
-        function searchSales(){ let customer=document.getElementById('searchSaleCustomer').value.toLowerCase(); let product=document.getElementById('searchSaleProduct').value.toLowerCase(); let date=document.getElementById('searchSaleDate').value; let filtered=sales.filter(s=>(!customer||s.customerName.toLowerCase().includes(customer))&&(!product||s.productName.toLowerCase().includes(product))&&(!date||s.date===date)); let html=filtered.map(s=>`<div>${s.productName} - ${s.customerName} - ${formatPrice(s.total)}</div>`).join(''); document.getElementById('salesSearchResults').innerHTML=html||'<div>لا توجد نتائج</div>'; }
-        function searchPurchases(){ let supplier=document.getElementById('searchPurchaseSupplier').value.toLowerCase(); let product=document.getElementById('searchPurchaseProduct').value.toLowerCase(); let date=document.getElementById('searchPurchaseDate').value; let filtered=purchases.filter(p=>(!supplier||p.supplierName.toLowerCase().includes(supplier))&&(!product||p.productName.toLowerCase().includes(product))&&(!date||p.date===date)); let html=filtered.map(p=>`<div>${p.productName} - ${p.supplierName} - ${formatPrice(p.total)}</div>`).join(''); document.getElementById('purchasesSearchResults').innerHTML=html||'<div>لا توجد نتائج</div>'; }
+        function searchSales(){ let customer=document.getElementById('searchSaleCustomer').value.toLowerCase(); let product=document.getElementById('searchSaleProduct').value.toLowerCase(); let date=document.getElementById('searchSaleDate').value; let filtered=sales.filter(s=>(!customer||s.customerName.toLowerCase().includes(customer))&&(!product||s.productName.toLowerCase().includes(product))&&(!date||s.date===date)); let html=filtered.map(s=>`<div>${s.productName} - ${s.customerName} - ${formatPrice(s.total)}</div>`).join(''); document.getElementById('salesSearchResults').innerHTML=html||'<div class="alert alert-warning">لا توجد نتائج</div>'; }
+        function searchPurchases(){ let supplier=document.getElementById('searchPurchaseSupplier').value.toLowerCase(); let product=document.getElementById('searchPurchaseProduct').value.toLowerCase(); let date=document.getElementById('searchPurchaseDate').value; let filtered=purchases.filter(p=>(!supplier||p.supplierName.toLowerCase().includes(supplier))&&(!product||p.productName.toLowerCase().includes(product))&&(!date||p.date===date)); let html=filtered.map(p=>`<div>${p.productName} - ${p.supplierName} - ${formatPrice(p.total)}</div>`).join(''); document.getElementById('purchasesSearchResults').innerHTML=html||'<div class="alert alert-warning">لا توجد نتائج</div>'; }
         
         // تحديث دالة تبديل الثيم لتحديث منتقيات الألوان
         function toggleTheme(){ 
@@ -888,4 +952,4 @@
         init();
     </script>
 </body>
-                </html>
+                                                                                                                                                                                                                                                                                                                                                                      </html>
