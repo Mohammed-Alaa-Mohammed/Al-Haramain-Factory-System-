@@ -252,14 +252,14 @@
             <div class="inventory-section-title" style="color: var(--accent-purple);"><i class="fas fa-file-invoice-dollar"></i> فاتورة مالية شاملة</div>
             <button class="print-full-report-btn" onclick="printFullFinancialReport()"><i class="fas fa-print"></i> طباعة التقرير المالي الكامل</button>
         </div>
-<!--
+
         <div class="inventory-section">
-            <div class="inventory-section-title"><i class="fas fa-warehouse"></i> المخزون والمستودع <i class="fas fa-chart-line"></i></div>
+           <!-- <div class="inventory-section-title"><i class="fas fa-warehouse"></i> المخزون والمستودع <i class="fas fa-chart-line"></i></div>
             <div id="inventorySidebarContent"><div class="text-center text-secondary small">جاري التحميل...</div></div>
-            <div class="inventory-summary" id="inventorySummary" style="color:#FAFA00;">إجمالي الأصناف: 0</div>
+            <div class="inventory-summary" id="inventorySummary" style="color:#FAFA00;">إجمالي الأصناف: 0</div> -->
         </div>
     </div>
--->
+
     <div class="content-area" id="contentArea" onclick="closeSidebarOnClickOutside(event)">
         <!-- Dashboard -->
         <div id="dashboard" class="section">
@@ -281,7 +281,7 @@
                 <div class="stock-stats-row">
                     <div class="stat-card"><i class="fas fa-boxes"></i><h3 id="totalProductsCount">0</h3><p>إجمالي الأصناف</p></div>
                     <div class="stat-card"><i class="fas fa-cubes"></i><h3 id="totalStockQuantity">0</h3><p>إجمالي الكميات</p></div>
-                    <div class="stat-card"><i class="fas fa-dollar-sign"></i><h3 id="totalStockValue">0</h3><p>قيمة المخزون</p></div>
+                    <div class="stat-card"><i class="fas fa-dollar-sign"></i><h3 id="totalStockValue">0</h3><p>قيمة البضاعة</p></div>
                 </div>
             </div>
         </div>
@@ -293,7 +293,7 @@
                 <div id="inventorySummaryCards" class="stock-stats-row" style="margin-bottom:20px;">
                     <div class="stat-card"><i class="fas fa-boxes"></i><h3 id="summaryTotalProducts">0</h3><p>إجمالي الأصناف</p></div>
                     <div class="stat-card"><i class="fas fa-cubes"></i><h3 id="summaryTotalQuantity">0</h3><p>إجمالي الكميات</p></div>
-                    <div class="stat-card"><i class="fas fa-dollar-sign"></i><h3 id="summaryTotalValue">0</h3><p>قيمة المخزون</p></div>
+                    <div class="stat-card"><i class="fas fa-dollar-sign"></i><h3 id="summaryTotalValue">0</h3><p>قيمة البضاعة</p></div>
                 </div>
                 <div class="inventory-full-table-wrapper">
                     <table class="inventory-full-table"><thead><tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>المقاس</th><th>سعر البيع</th><th>الكمية</th><th>القيمة</th><th>حالة المخزون</th></tr></thead>
