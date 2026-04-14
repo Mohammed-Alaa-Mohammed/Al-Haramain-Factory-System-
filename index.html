@@ -216,7 +216,7 @@
         }
         .inventory-full-table {
             width: 100%;
-            min-width: 800px;
+            min-width: 900px;
             border-collapse: collapse;
         }
         .inventory-full-table th, .inventory-full-table td {
@@ -330,7 +330,7 @@
                 <div class="inventory-full-table-wrapper">
                     <table class="inventory-full-table">
                         <thead>
-                            <tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>النوع</th><th>سعر البيع</th><th>سعر الشراء</th><th>الكمية الحالية</th><th>الحركة (7 أيام)</th><th>القيمة الإجمالية</th><th>حالة المخزون</th><th>الإجراءات</th></tr>
+                            <tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>النوع</th><th>الوزن (كجم)</th><th>سعر البيع</th><th>سعر الشراء</th><th>الكمية الحالية</th><th>الحركة (7 أيام)</th><th>القيمة الإجمالية</th><th>حالة المخزون</th><th>الإجراءات</th></tr>
                         </thead>
                         <tbody id="inventoryFullTableBody"></tbody>
                     </table>
@@ -366,7 +366,7 @@
         
         <div id="partners" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-handshake"></i> توزيع الأرباح بين الشركاء</h2><button class="export-btn" onclick="exportSectionToTxt('partners')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card partner-section"><div class="card-body"><div class="partner-item"><div class="partner-name partner-primary"><i class="fas fa-crown"></i> الشريك الأول (ثلاثة أرباع الربح - 3/4)</div><div class="partner-share partner-primary" id="partner1Share">0 ج.م</div></div><div class="partner-item"><div class="partner-name partner-secondary"><i class="fas fa-star-of-life"></i> الشريك الثاني (ربع الربح - 1/4)</div><div class="partner-share partner-secondary" id="partner2Share">0 ج.م</div></div><div class="partner-item" style="border-top: 1px solid var(--accent-purple); margin-top: 8px; padding-top: 10px;"><div class="partner-name"><i class="fas fa-chart-line"></i> صافي الربح الإجمالي</div><div class="partner-share" id="netProfitTotal">0 ج.م</div></div><div class="row mt-4"><div class="col-md-6 mb-2"><button class="btn btn-primary-custom w-100" onclick="exportPartnerReport(1)"><i class="fas fa-download"></i> تقرير الشريك الأول (3/4 الربح)</button></div><div class="col-md-6 mb-2"><button class="btn btn-primary-custom w-100" onclick="exportPartnerReport(2)"><i class="fas fa-download"></i> تقرير الشريك الثاني (1/4 الربح)</button></div></div><div class="alert alert-info mt-3 small"><i class="fas fa-info-circle"></i> يتم احتساب الأرباح بناءً على صافي الربح (المبيعات - المشتريات - مصاريف التشغيل). الشريك الأول يحصل على ثلاثة أرباع (3/4) صافي الربح، والشريك الثاني يحصل على الربع (1/4).</div></div></div></div>
         
-        <!-- قسم أسعار الأكياس الجديدة مع الوصف الوظيفي لكل نوع (تم إضافة نوع زيرو بيور) -->
+        <!-- قسم أسعار الأكياس الجديدة مع أسعار تقريبية حقيقية -->
         <div id="plasticPrices" class="section" style="display:none;">
             <div class="section-header">
                 <h2><i class="fas fa-tags"></i> أسعار الأكياس البلاستيكية - تحديث فوري</h2>
@@ -377,25 +377,25 @@
                 </div>
             </div>
             <div class="alert alert-info mb-3">
-                <i class="fas fa-globe"></i> <strong>أسعار السوق اللحظية:</strong> يتم تحديث الأسعار تلقائياً كل 30 ثانية بناءً على أسعار السوق الفعلية (HDPE, LDPE, LLDPE) مع إضافة هامش الربح والمصاريف.
+                <i class="fas fa-globe"></i> <strong>أسعار السوق التقريبية:</strong> يتم عرض أسعار تقريبية حقيقية بناءً على بيانات السوق للمواد الخام (HDPE, LDPE, PP) مع إضافة هامش الربح والمصاريف. يمكنك تحديث السعر المرجعي للمادة الخام من خلال تعديل البيانات في الكود.
                 <span class="badge bg-success" id="lastPriceUpdate">آخر تحديث: --</span>
                 <a href="https://www.sabic.com/" target="_blank" class="float-start text-light"><i class="fas fa-external-link-alt"></i> موقع سابك الرسمي</a>
             </div>
             <div class="row" id="plasticPricesContainer">
-                <div class="col-12 text-center">جاري تحميل الأسعار الحية...</div>
+                <div class="col-12 text-center">جاري تحميل الأسعار...</div>
             </div>
         </div>
 
         <div id="customers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-users"></i> إدارة العملاء</h2><button class="export-btn" onclick="exportSectionToTxt('customers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showCustomerModal()">عميل جديد</button><div class="table-responsive"><table class="table table-custom"><thead>70th<th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="customersList"></tbody> </table></div></div>
         
-        <!-- Products with Price Tag Print -->
+        <!-- Products with Price Tag Print and Weight Field -->
         <div id="products" class="section" style="display:none;">
             <div class="section-header"><h2><i class="fas fa-boxes"></i> إدارة الأكياس</h2><button class="export-btn" onclick="exportSectionToTxt('products')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
             <button class="btn btn-primary-custom mb-3" onclick="showProductModal()">كيس جديد</button>
             <div class="product-grid" id="productsGrid"></div>
         </div>
         
-        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> </tr></div></div>
+        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> </table></div></div>
         
         <!-- قسم الفواتير مع زر التصدير -->
         <div id="invoices" class="section" style="display:none;">
@@ -480,7 +480,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-12">
-                            <label class="form-label"><i class="fas fa-chart-line"></i> آخر سعر مرجعي للمادة الخام (HDPE - دولار/طن)</label>
+                            <label class="form-label"><i class="fas fa-chart-line"></i> أسعار المواد الخام المرجعية (دولار/طن)</label>
                             <div class="alert alert-info" id="lastBasePriceDisplay">جاري التحميل...</div>
                         </div>
                     </div>
@@ -497,7 +497,10 @@
 
     <!-- Modals -->
     <div class="modal fade" id="customerModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات العميل</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="customerId"><input type="text" id="customerName" class="form-control mb-2" placeholder="الاسم"><input type="text" id="customerPhone" class="form-control mb-2" placeholder="الهاتف"><textarea id="customerAddress" class="form-control" placeholder="العنوان"></textarea></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveCustomer()">حفظ</button></div></div></div></div>
-    <div class="modal fade" id="productModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات الكيس</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="productId"><input type="text" id="productName" class="form-control mb-2" placeholder="اسم الكيس"><input type="text" id="productBarcode" class="form-control mb-2" placeholder="الباركود"><input type="text" id="productType" class="form-control mb-2" placeholder="النوع"><input type="text" id="productPrice" class="form-control mb-2 number-input" placeholder="سعر البيع" oninput="formatNumberInput(this)"><input type="text" id="productCost" class="form-control mb-2 number-input" placeholder="سعر الشراء" oninput="formatNumberInput(this)"><input type="text" id="productQuantity" class="form-control mb-2 number-input" placeholder="الكمية" oninput="formatNumberInput(this)"></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveProduct()">حفظ</button></div></div></div></div>
+    
+    <!-- Product Modal with Weight Field -->
+    <div class="modal fade" id="productModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات الكيس</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="productId"><input type="text" id="productName" class="form-control mb-2" placeholder="اسم الكيس"><input type="text" id="productBarcode" class="form-control mb-2" placeholder="الباركود"><input type="text" id="productType" class="form-control mb-2" placeholder="النوع"><input type="text" id="productWeight" class="form-control mb-2 number-input" placeholder="الوزن الافتراضي (كجم)" oninput="formatNumberInput(this)"><input type="text" id="productPrice" class="form-control mb-2 number-input" placeholder="سعر البيع" oninput="formatNumberInput(this)"><input type="text" id="productCost" class="form-control mb-2 number-input" placeholder="سعر الشراء" oninput="formatNumberInput(this)"><input type="text" id="productQuantity" class="form-control mb-2 number-input" placeholder="الكمية" oninput="formatNumberInput(this)"></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveProduct()">حفظ</button></div></div></div></div>
+    
     <div class="modal fade" id="supplierModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات المورد</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="supplierId"><input type="text" id="supplierName" class="form-control mb-2" placeholder="الاسم"><input type="text" id="supplierPhone" class="form-control mb-2" placeholder="الهاتف"><textarea id="supplierAddress" class="form-control" placeholder="العنوان"></textarea></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveSupplier()">حفظ</button></div></div></div></div>
     <div class="modal fade" id="invoiceModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">فاتورة جديدة</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><select id="invoiceCustomerSelect" class="form-control mb-2"></select><div id="invoiceItemsContainer"></div><button class="btn btn-secondary mb-2" onclick="addInvoiceItem()">إضافة منتج</button><h5>المجموع: <span id="invoiceTotal">0</span> ج.م</h5></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveInvoiceModal()">حفظ الفاتورة</button></div></div></div></div>
 
@@ -530,7 +533,7 @@
         let profitMarginPercent = 15;      // نسبة هامش الربح + المصاريف (قابلة للتعديل)
         let lastBasePriceUSD = 0;           // آخر سعر تم جلبه للمادة الخام بالدولار
         
-        // بيانات مرجعية حقيقية لأسعار المواد الخام (HDPE, LDPE, LLDPE) من السوق الفعلي
+        // بيانات مرجعية حقيقية لأسعار المواد الخام (HDPE, LDPE, PP) من السوق الفعلي
         // هذه الأسعار تعكس متوسط أسعار البولي إيثيلين في الأسواق العالمية (يمكن تحديثها يدوياً)
         const marketReferencePrices = {
             HDPE: 1180,   // دولار/طن - سعر HDPE في السوق (مصدر: بورصات السلع)
@@ -671,7 +674,7 @@
                     } else if (type.name === "كيس بسحاب (Ziplock)") {
                         typeSizes = ["10×15 سم", "15×20 سم", "20×28 سم"];
                     } else if (type.name === "كيس شفاف عالي الجودة") {
-                        typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم", "70×90 سم"];
+                        typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم", "70×90 см"];
                     } else {
                         typeSizes = ["30×40 سم", "40×60 سم", "50×70 سم"];
                     }
@@ -733,7 +736,7 @@
                                 <div class="price-type"><i class="fas fa-bag-shopping"></i> ${item.type}</div>
                                 <div class="price-desc"><i class="fas fa-info-circle"></i> ${item.description}</div>
                                 <div class="price-detail"><span>📏 المقاس: ${item.size}</span><span>⚖️ ${item.unit}</span></div>
-                                <div class="price-detail"><span class="price-live-badge"><i class="fas fa-chart-line"></i> السعر الحالي</span><strong style="font-size:1.2rem;">${formatPrice(item.price)}</strong></div>
+                                <div class="price-detail"><span class="price-live-badge"><i class="fas fa-chart-line"></i> السعر التقريبي</span><strong style="font-size:1.2rem;">${formatPrice(item.price)}</strong></div>
                             </div>
                         </div>`;
             });
@@ -749,7 +752,7 @@
                 if (prices && prices.length) {
                     currentPlasticPrices = prices;
                     updatePlasticPricesUI();
-                    showNotification('تم تحديث أسعار الأكياس بناءً على أسعار السوق الفعلية', 'success');
+                    showNotification('تم تحديث الأسعار بناءً على أسعار السوق المرجعية', 'success');
                 } else {
                     currentPlasticPrices = generateFallbackPrices();
                     updatePlasticPricesUI();
@@ -941,7 +944,7 @@
                         <div class="card">
                             <div class="product-name">${p.name}</div>
                             <div class="price">${formatPrice(p.price)}</div>
-                            <div class="size">📏 المقاس: ${p.type || 'قياسي'}</div>
+                            <div class="size">📏 الوزن: ${p.weight || 'غير محدد'} كجم | النوع: ${p.type || 'قياسي'}</div>
                             <hr>
                             <div class="barcode"><canvas id="barcodePrint"></canvas></div>
                             <div>${p.barcode || p.id}</div>
@@ -984,11 +987,12 @@
                 let stockText = p.quantity > 200 ? 'مخزون ممتاز' : (p.quantity > 50 ? 'مخزون متوسط' : 'مخزون منخفض ⚠️');
                 let movement = getStockMovement(p.name, p.quantity);
                 let trendClass = movement.trend === 'up' ? 'trend-up' : (movement.trend === 'down' ? 'trend-down' : 'trend-steady');
-                html += `<td>
+                html += `<tr>
                               <td class="text-center">${idx+1}</td>
                               <td>${p.name}</td>
                               <td>${p.barcode || '-'}</td>
                               <td>${p.type || '-'}</td>
+                              <td>${p.weight ? formatNumberToString(p.weight) + ' كجم' : '-'}</td>
                               <td>${formatPrice(p.price)}</td>
                               <td>${formatPrice(p.cost)}</td>
                               <td>${formatNumberToString(p.quantity)}</td>
@@ -998,7 +1002,7 @@
                               <td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>
                         </tr>`;
             });
-            tbody.innerHTML = html || '<tr><td colspan="11" class="text-center">لا توجد منتجات</td></tr>';
+            tbody.innerHTML = html || '<td><td colspan="12" class="text-center">لا توجد منتجات</td></tr>';
             let totalQty = products.reduce((s,p)=>s+p.quantity,0);
             let totalVal = products.reduce((s,p)=>s+(p.quantity*p.price),0);
             document.getElementById('totalProductsCount').innerText = products.length;
@@ -1050,14 +1054,14 @@
         function updateProfitAnalysis(){ let totalSales=sales.reduce((s,sl)=>s+(sl.quantity*sl.price),0); let totalPurchases=purchases.reduce((s,p)=>s+(p.quantity*p.cost),0); let totalOp=operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net=totalSales-totalPurchases-totalOp; let margin=totalSales>0?((net/totalSales)*100).toFixed(2):0; document.getElementById('totalSales').innerText=formatPrice(totalSales); document.getElementById('totalPurchases').innerText=formatPrice(totalPurchases); document.getElementById('totalProfit').innerText=formatPrice(net); document.getElementById('profitMargin').innerText=margin+'%'; }
         function loadSalesHistory(){ let div=document.getElementById('salesHistory'); if(div) div.innerHTML=sales.slice(-10).reverse().map(s=>`<div class="list-group-item"><strong>${s.productName}</strong> | ${s.rawQuantity||s.quantity} ${s.unit} = ${formatPrice(s.total)}<br><small>${s.customerName} | ${s.date}</small><br><button class="edit-btn" onclick="editSale(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSale(${s.id})">حذف</button></div>`).join(''); }
         function loadPurchasesHistory(){ let div=document.getElementById('purchasesHistory'); if(div) div.innerHTML=purchases.slice(-10).reverse().map(p=>`<div class="list-group-item"><strong>${p.productName}</strong> | ${p.rawQuantity||p.quantity} ${p.unit} = ${formatPrice(p.total)}<br><small>${p.supplierName} | ${p.date}</small><br><button class="edit-btn" onclick="editPurchase(${p.id})">تعديل</button> <button class="delete-btn" onclick="deletePurchase(${p.id})">حذف</button></div>`).join(''); }
-        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
+        function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<td><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
         function loadSuppliers(){ let html=''; suppliers.forEach((s,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد بيانات</td></tr>'; }
-        function loadProducts(){ let html=''; products.forEach(p=>{ html+=`<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})"><i class="fas fa-tag"></i> طباعة بطاقة سعر</button><button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button> <button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML=html||'<p class="text-center">لا توجد منتجات</p>'; setTimeout(()=>{ products.forEach(p=>{ let canvas=document.getElementById(`barcode-${p.id}`); if(canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format:"CODE128", width:2, height:40 }); }); },100); }
+        function loadProducts(){ let html=''; products.forEach(p=>{ html+=`<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><p>⚖️ الوزن: ${p.weight ? formatNumberToString(p.weight) + ' كجم' : 'غير محدد'}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})"><i class="fas fa-tag"></i> طباعة بطاقة سعر</button><button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button> <button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML=html||'<p class="text-center">لا توجد منتجات</p>'; setTimeout(()=>{ products.forEach(p=>{ let canvas=document.getElementById(`barcode-${p.id}`); if(canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format:"CODE128", width:2, height:40 }); }); },100); }
         function loadInvoices(){ let html=''; invoices.forEach((inv,i)=>{ html+=`<tr><td class="text-center"><strong>#${inv.invoiceNumber}</strong></td><td>${inv.customerName}</td><td>${inv.date}</td><td class="text-end">${formatPrice(inv.total)}</td><td class="text-center"><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="btn btn-sm btn-danger" onclick="deleteInvoice(${inv.id})">حذف</button></td></tr>`; }); document.getElementById('invoicesList').innerHTML=html||'<tr><td colspan="5" class="text-center">لا توجد فواتير</td></tr>'; }
         function deleteInvoice(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ invoices=invoices.filter(i=>i.id!=id); saveToFirebase('invoices',invoices); loadInvoices(); } }); }
-        function showProductModal(){ document.getElementById('productId').value=''; document.getElementById('productName').value=''; document.getElementById('productBarcode').value=''; document.getElementById('productType').value=''; document.getElementById('productPrice').value=''; document.getElementById('productCost').value=''; document.getElementById('productQuantity').value=''; new bootstrap.Modal(document.getElementById('productModal')).show(); }
-        function saveProduct(){ let id=document.getElementById('productId').value; let product={ id:id?parseInt(id):Date.now(), name:document.getElementById('productName').value, barcode:document.getElementById('productBarcode').value, type:document.getElementById('productType').value, price:parseNumberValue(document.getElementById('productPrice').value), cost:parseNumberValue(document.getElementById('productCost').value), quantity:parseNumberValue(document.getElementById('productQuantity').value)||0 }; if(id) products=products.map(p=>p.id==product.id?product:p); else products.push(product); saveToFirebase('products',products); bootstrap.Modal.getInstance(document.getElementById('productModal')).hide(); Swal.fire('تم','تم حفظ المنتج','success'); loadAllData(); }
-        function editProduct(id){ let p=products.find(p=>p.id==id); document.getElementById('productId').value=p.id; document.getElementById('productName').value=p.name; document.getElementById('productBarcode').value=p.barcode||''; document.getElementById('productType').value=p.type; document.getElementById('productPrice').value=formatNumberToString(p.price); document.getElementById('productCost').value=formatNumberToString(p.cost); document.getElementById('productQuantity').value=formatNumberToString(p.quantity); new bootstrap.Modal(document.getElementById('productModal')).show(); }
+        function showProductModal(){ document.getElementById('productId').value=''; document.getElementById('productName').value=''; document.getElementById('productBarcode').value=''; document.getElementById('productType').value=''; document.getElementById('productWeight').value=''; document.getElementById('productPrice').value=''; document.getElementById('productCost').value=''; document.getElementById('productQuantity').value=''; new bootstrap.Modal(document.getElementById('productModal')).show(); }
+        function saveProduct(){ let id=document.getElementById('productId').value; let product={ id:id?parseInt(id):Date.now(), name:document.getElementById('productName').value, barcode:document.getElementById('productBarcode').value, type:document.getElementById('productType').value, weight:parseNumberValue(document.getElementById('productWeight').value), price:parseNumberValue(document.getElementById('productPrice').value), cost:parseNumberValue(document.getElementById('productCost').value), quantity:parseNumberValue(document.getElementById('productQuantity').value)||0 }; if(id) products=products.map(p=>p.id==product.id?product:p); else products.push(product); saveToFirebase('products',products); bootstrap.Modal.getInstance(document.getElementById('productModal')).hide(); Swal.fire('تم','تم حفظ المنتج','success'); loadAllData(); }
+        function editProduct(id){ let p=products.find(p=>p.id==id); document.getElementById('productId').value=p.id; document.getElementById('productName').value=p.name; document.getElementById('productBarcode').value=p.barcode||''; document.getElementById('productType').value=p.type; document.getElementById('productWeight').value=formatNumberToString(p.weight||0); document.getElementById('productPrice').value=formatNumberToString(p.price); document.getElementById('productCost').value=formatNumberToString(p.cost); document.getElementById('productQuantity').value=formatNumberToString(p.quantity); new bootstrap.Modal(document.getElementById('productModal')).show(); }
         function deleteProduct(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ products=products.filter(p=>p.id!=id); saveToFirebase('products',products); loadAllData(); } }); }
         function showCustomerModal(){ document.getElementById('customerId').value=''; document.getElementById('customerName').value=''; document.getElementById('customerPhone').value=''; document.getElementById('customerAddress').value=''; new bootstrap.Modal(document.getElementById('customerModal')).show(); }
         function saveCustomer(){ let id=document.getElementById('customerId').value; let customer={ id:id?parseInt(id):Date.now(), name:document.getElementById('customerName').value, phone:document.getElementById('customerPhone').value, address:document.getElementById('customerAddress').value }; if(id) customers=customers.map(c=>c.id==customer.id?customer:c); else customers.push(customer); saveToFirebase('customers',customers); bootstrap.Modal.getInstance(document.getElementById('customerModal')).hide(); Swal.fire('تم','تم حفظ العميل','success'); loadAllData(); }
@@ -1087,7 +1091,7 @@
         function generateSalesReport(){ let total = sales.reduce((s,i)=>s+(i.quantity*i.price),0); let content = getReportHeader() + `تقرير المبيعات\nالإجمالي: ${formatPrice(total)}\n`; sales.forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`; }); downloadTxt(content, `تقرير_المبيعات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
         function generatePurchasesReport(){ let total = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0); let content = getReportHeader() + `تقرير المشتريات\nالإجمالي: ${formatPrice(total)}\n`; purchases.forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`; }); downloadTxt(content, `تقرير_المشتريات.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
         function generateProfitReport(){ let salesTotal = sales.reduce((s,i)=>s+(i.quantity*i.price),0); let purchasesTotal = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0); let totalOp = operatingExpenses.electricity+operatingExpenses.rent+operatingExpenses.salaries+operatingExpenses.transport+operatingExpenses.misc+operatingExpenses.printing; let net = salesTotal - purchasesTotal - totalOp; let content = getReportHeader() + `تقرير الأرباح\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nالمصاريف: ${formatPrice(totalOp)}\nصافي الربح: ${formatPrice(net)}\n`; downloadTxt(content, `تقرير_الأرباح.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
-        function exportSectionToTxt(sectionName){ let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`; if(sectionName === 'inventoryManagement') products.forEach(p=>{ content += `${p.name} | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`; }); else if(sectionName === 'plasticPrices') currentPlasticPrices.forEach(p=>{ content += `${p.type} | ${p.description} | ${p.size} | ${formatPrice(p.price)}\n`; }); else if(sectionName === 'invoices') invoices.forEach(inv=>{ content += `رقم الفاتورة: ${inv.invoiceNumber} | العميل: ${inv.customerName} | التاريخ: ${inv.date} | المجموع: ${formatPrice(inv.total)}\n`; }); downloadTxt(content, `${sectionName}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
+        function exportSectionToTxt(sectionName){ let content = getReportHeader() + `تقرير قسم: ${sectionName}\n`; if(sectionName === 'inventoryManagement') products.forEach(p=>{ content += `${p.name} | الوزن: ${p.weight || '-'} كجم | الكمية: ${p.quantity} | القيمة: ${formatPrice(p.quantity * p.price)}\n`; }); else if(sectionName === 'plasticPrices') currentPlasticPrices.forEach(p=>{ content += `${p.type} | ${p.description} | ${p.size} | ${formatPrice(p.price)}\n`; }); else if(sectionName === 'invoices') invoices.forEach(inv=>{ content += `رقم الفاتورة: ${inv.invoiceNumber} | العميل: ${inv.customerName} | التاريخ: ${inv.date} | المجموع: ${formatPrice(inv.total)}\n`; }); downloadTxt(content, `${sectionName}.txt`); Swal.fire('تم', 'تم التصدير', 'success'); }
         function saveOperatingExpenses(){ operatingExpenses={ electricity:parseNumberValue(document.getElementById('operatingElectricity').value), rent:parseNumberValue(document.getElementById('operatingRent').value), salaries:parseNumberValue(document.getElementById('operatingSalaries').value), transport:parseNumberValue(document.getElementById('operatingTransport').value), misc:parseNumberValue(document.getElementById('operatingMisc').value), printing:parseNumberValue(document.getElementById('operatingPrinting').value) }; saveToFirebase('operatingExpenses',operatingExpenses); Swal.fire('تم','تم حفظ المصروفات','success'); updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); }
         function searchSales(){ let customer=document.getElementById('searchSaleCustomer').value.toLowerCase(); let product=document.getElementById('searchSaleProduct').value.toLowerCase(); let date=document.getElementById('searchSaleDate').value; let filtered=sales.filter(s=>(!customer||s.customerName.toLowerCase().includes(customer))&&(!product||s.productName.toLowerCase().includes(product))&&(!date||s.date===date)); let html=filtered.map(s=>`<div>${s.productName} - ${s.customerName} - ${formatPrice(s.total)}</div>`).join(''); document.getElementById('salesSearchResults').innerHTML=html||'<div class="alert alert-warning">لا توجد نتائج</div>'; }
         function searchPurchases(){ let supplier=document.getElementById('searchPurchaseSupplier').value.toLowerCase(); let product=document.getElementById('searchPurchaseProduct').value.toLowerCase(); let date=document.getElementById('searchPurchaseDate').value; let filtered=purchases.filter(p=>(!supplier||p.supplierName.toLowerCase().includes(supplier))&&(!product||p.productName.toLowerCase().includes(product))&&(!date||p.date===date)); let html=filtered.map(p=>`<div>${p.productName} - ${p.supplierName} - ${formatPrice(p.total)}</div>`).join(''); document.getElementById('purchasesSearchResults').innerHTML=html||'<div class="alert alert-warning">لا توجد نتائج</div>'; }
@@ -1163,4 +1167,4 @@
         init();
     </script>
 </body>
-    </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </html>
