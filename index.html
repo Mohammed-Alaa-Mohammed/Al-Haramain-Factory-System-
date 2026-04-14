@@ -104,6 +104,8 @@
         .product-card:hover { transform: translateY(-8px); border-color: var(--accent-primary); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .notification-toast { position: fixed; bottom: 100px; left: 20px; z-index: 1200; background: var(--bg-card); border-right: 4px solid var(--accent-primary); padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 12px; animation: slideInRight 0.3s ease; max-width: 350px; }
         @keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .alert-toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 1300; background: var(--accent-danger); color: white; padding: 12px 24px; border-radius: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-weight: bold; animation: slideDown 0.3s ease; display: flex; align-items: center; gap: 10px; }
+        @keyframes slideDown { from { top: -50px; opacity: 0; } to { top: 80px; opacity: 1; } }
         footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; padding: 10px; background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fbbf24; border-top: 2px solid #fbbf24; z-index: 1000; font-size: 0.85rem; }
         .badge-stock-high { background: linear-gradient(135deg, var(--accent-secondary), #059669); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; }
         .badge-stock-medium { background: linear-gradient(135deg, var(--accent-warning), #d97706); color: white; }
@@ -247,6 +249,9 @@
                 min-width: 100%;
             }
         }
+        .trend-up { color: var(--accent-secondary); font-weight: bold; }
+        .trend-down { color: var(--accent-danger); font-weight: bold; }
+        .trend-steady { color: var(--accent-warning); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -303,7 +308,7 @@
                 <div class="inventory-full-table-wrapper">
                     <table class="inventory-full-table">
                         <thead>
-                            <tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>النوع</th><th>سعر البيع</th><th>سعر الشراء</th><th>الكمية الحالية</th><th>القيمة الإجمالية</th><th>حالة المخزون</th><th>الإجراءات</th></tr>
+                            <tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>النوع</th><th>سعر البيع</th><th>سعر الشراء</th><th>الكمية الحالية</th><th>الحركة (7 أيام)</th><th>القيمة الإجمالية</th><th>حالة المخزون</th><th>الإجراءات</th></tr>
                         </thead>
                         <tbody id="inventoryFullTableBody"></tbody>
                     </table>
@@ -319,7 +324,24 @@
         <!-- باقي الأقسام (تم اختصارها للحفاظ على الطول ولكنها كاملة الوظائف) -->
         <div id="sales" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-chart-line"></i> تسجيل المبيعات</h2><button class="export-btn" onclick="exportSectionToTxt('sales')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row"><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">تسجيل بيع جديد</div><div class="card-body"><label class="form-label"><i class="fas fa-calendar-alt"></i> التاريخ</label><input type="date" id="saleDate" class="form-control mb-2"><label class="form-label"><i class="fas fa-barcode"></i> مسح الباركود</label><input type="text" id="saleBarcodeInput" class="form-control mb-2" placeholder="ادخل الباركود أو اسم المنتج..." onchange="findProductByBarcode()"><label class="form-label"><i class="fas fa-tag"></i> اسم المنتج</label><input type="text" id="saleProductNameInput" class="form-control mb-2" placeholder="أدخل اسم المنتج..."><label class="form-label"><i class="fas fa-user"></i> اسم العميل</label><input type="text" id="saleCustomerNameInput" class="form-control mb-2" placeholder="أدخل اسم العميل..."><div class="row"><div class="col-6"><label class="form-label"><i class="fas fa-arrows-alt"></i> المقاس</label><input type="text" id="saleSize" class="form-control mb-2" placeholder="مثال: 50×70 سم"></div><div class="col-6"><label class="form-label"><i class="fas fa-weight-hanging"></i> الوزن (كجم)</label><input type="text" id="saleWeight" class="form-control mb-2 number-input" placeholder="الوزن" oninput="formatNumberInput(this)"></div></div><div class="row"><div class="col-8"><label class="form-label">الكمية</label><input type="text" id="saleQuantity" class="form-control mb-2 number-input" placeholder="الكمية" oninput="formatNumberInput(this)"></div><div class="col-4"><label class="form-label">الوحدة</label><select id="saleUnit" class="form-control mb-2"><option value="كيلو">كيلو</option><option value="طن">طن</option><option value="جرام">جرام</option><option value="كيس">كيس</option><option value="قطعة">قطعة</option></select></div></div><label class="form-label"><i class="fas fa-dollar-sign"></i> سعر البيع</label><input type="text" id="salePrice" class="form-control mb-2 number-input" placeholder="سعر البيع" oninput="formatNumberInput(this)"><input type="hidden" id="editSaleId" value=""><button class="btn btn-primary-custom w-100" onclick="saveSale()"><i class="fas fa-save"></i> تسجيل البيع</button></div></div></div><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">آخر المبيعات</div><div class="card-body" style="max-height: 400px; overflow-y: auto;"><div id="salesHistory"></div></div></div></div></div><div class="search-section mt-3"><h5><i class="fas fa-search"></i> بحث متقدم في المبيعات</h5><div class="row"><div class="col-md-4"><input type="text" id="searchSaleCustomer" class="form-control" placeholder="العميل"></div><div class="col-md-4"><input type="text" id="searchSaleProduct" class="form-control" placeholder="المنتج"></div><div class="col-md-4"><input type="date" id="searchSaleDate" class="form-control"></div></div><button class="btn btn-primary-custom mt-2" onclick="searchSales()"><i class="fas fa-filter"></i> بحث</button><div id="salesSearchResults" class="mt-3"></div></div></div>
         <div id="purchases" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-shopping-cart"></i> تسجيل المشتريات</h2><button class="export-btn" onclick="exportSectionToTxt('purchases')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row"><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">تسجيل شراء جديد</div><div class="card-body"><label class="form-label"><i class="fas fa-calendar-alt"></i> التاريخ</label><input type="date" id="purchaseDate" class="form-control mb-2"><label class="form-label">اسم المنتج</label><input type="text" id="purchaseProductNameInput" class="form-control mb-2"><label class="form-label">اسم المورد</label><input type="text" id="purchaseSupplierNameInput" class="form-control mb-2"><div class="row"><div class="col-6"><label class="form-label"><i class="fas fa-arrows-alt"></i> المقاس</label><input type="text" id="purchaseSize" class="form-control mb-2" placeholder="مثال: 50×70 سم"></div><div class="col-6"><label class="form-label"><i class="fas fa-weight-hanging"></i> الوزن (كجم)</label><input type="text" id="purchaseWeight" class="form-control mb-2 number-input" placeholder="الوزن" oninput="formatNumberInput(this)"></div></div><div class="row"><div class="col-8"><label class="form-label">الكمية</label><input type="text" id="purchaseQuantity" class="form-control mb-2 number-input" oninput="formatNumberInput(this)"></div><div class="col-4"><label class="form-label">الوحدة</label><select id="purchaseUnit" class="form-control mb-2"><option value="كيلو">كيلو</option><option value="طن">طن</option><option value="جرام">جرام</option><option value="كيس">كيس</option><option value="قطعة">قطعة</option></select></div></div><label class="form-label">سعر الشراء</label><input type="text" id="purchaseCost" class="form-control mb-2 number-input" oninput="formatNumberInput(this)"><input type="hidden" id="editPurchaseId" value=""><button class="btn btn-primary-custom w-100" onclick="savePurchase()"><i class="fas fa-save"></i> تسجيل الشراء</button></div></div></div><div class="col-md-6"><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-header" style="background: transparent; font-weight: bold;">آخر المشتريات</div><div class="card-body"><div id="purchasesHistory"></div></div></div></div></div><div class="search-section mt-3"><h5><i class="fas fa-search"></i> بحث متقدم في المشتريات</h5><div class="row"><div class="col-md-4"><input type="text" id="searchPurchaseSupplier" class="form-control" placeholder="المورد"></div><div class="col-md-4"><input type="text" id="searchPurchaseProduct" class="form-control" placeholder="المنتج"></div><div class="col-md-4"><input type="date" id="searchPurchaseDate" class="form-control"></div></div><button class="btn btn-primary-custom mt-2" onclick="searchPurchases()"><i class="fas fa-filter"></i> بحث</button><div id="purchasesSearchResults" class="mt-3"></div></div></div>
-        <div id="profits" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-coins"></i> تحليل المكاسب والأرباح</h2><button class="export-btn" onclick="exportSectionToTxt('profits')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row mb-4"><div class="col-md-3"><div class="stat-card"><i class="fas fa-chart-line"></i><h3 id="totalSales">0</h3><p>إجمالي المبيعات</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-shopping-cart"></i><h3 id="totalPurchases">0</h3><p>إجمالي المشتريات</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-coins"></i><h3 id="totalProfit">0</h3><p>صافي الربح</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-percent"></i><h3 id="profitMargin">0%</h3><p>هامش الربح</p></div></div></div></div>
+        
+        <!-- Profits with Profit Calculator -->
+        <div id="profits" class="section" style="display:none;">
+            <div class="section-header"><h2><i class="fas fa-coins"></i> تحليل المكاسب والأرباح</h2><button class="export-btn" onclick="exportSectionToTxt('profits')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
+            <div class="row mb-4"><div class="col-md-3"><div class="stat-card"><i class="fas fa-chart-line"></i><h3 id="totalSales">0</h3><p>إجمالي المبيعات</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-shopping-cart"></i><h3 id="totalPurchases">0</h3><p>إجمالي المشتريات</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-coins"></i><h3 id="totalProfit">0</h3><p>صافي الربح</p></div></div><div class="col-md-3"><div class="stat-card"><i class="fas fa-percent"></i><h3 id="profitMargin">0%</h3><p>هامش الربح</p></div></div></div>
+            <div class="card" style="background: var(--bg-card); border-radius: 20px; margin-top: 20px;">
+                <div class="card-header" style="background: transparent; font-weight: bold;"><i class="fas fa-calculator"></i> حاسبة الأرباح المتوقعة</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4"><label>سعر البيع المتوقع (ج.م)</label><input type="text" id="expectedPrice" class="form-control number-input" placeholder="مثال: 100" oninput="calculateExpectedProfit()"></div>
+                        <div class="col-md-4"><label>الكمية المتوقعة</label><input type="text" id="expectedQuantity" class="form-control number-input" placeholder="مثال: 50" oninput="calculateExpectedProfit()"></div>
+                        <div class="col-md-4"><label>سعر الشراء / التكلفة (ج.م)</label><input type="text" id="expectedCost" class="form-control number-input" placeholder="مثال: 70" oninput="calculateExpectedProfit()"></div>
+                    </div>
+                    <div class="alert alert-success mt-3 text-center" id="expectedProfitResult" style="background: var(--accent-secondary)20; border-color: var(--accent-secondary);">الربح المتوقع: 0 ج.م</div>
+                </div>
+            </div>
+        </div>
+        
         <div id="partners" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-handshake"></i> توزيع الأرباح بين الشركاء</h2><button class="export-btn" onclick="exportSectionToTxt('partners')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card partner-section"><div class="card-body"><div class="partner-item"><div class="partner-name partner-primary"><i class="fas fa-crown"></i> الشريك الأول (ثلاثة أرباع الربح - 3/4)</div><div class="partner-share partner-primary" id="partner1Share">0 ج.م</div></div><div class="partner-item"><div class="partner-name partner-secondary"><i class="fas fa-star-of-life"></i> الشريك الثاني (ربع الربح - 1/4)</div><div class="partner-share partner-secondary" id="partner2Share">0 ج.م</div></div><div class="partner-item" style="border-top: 1px solid var(--accent-purple); margin-top: 8px; padding-top: 10px;"><div class="partner-name"><i class="fas fa-chart-line"></i> صافي الربح الإجمالي</div><div class="partner-share" id="netProfitTotal">0 ج.م</div></div><div class="row mt-4"><div class="col-md-6 mb-2"><button class="btn btn-primary-custom w-100" onclick="exportPartnerReport(1)"><i class="fas fa-download"></i> تقرير الشريك الأول (3/4 الربح)</button></div><div class="col-md-6 mb-2"><button class="btn btn-primary-custom w-100" onclick="exportPartnerReport(2)"><i class="fas fa-download"></i> تقرير الشريك الثاني (1/4 الربح)</button></div></div><div class="alert alert-info mt-3 small"><i class="fas fa-info-circle"></i> يتم احتساب الأرباح بناءً على صافي الربح (المبيعات - المشتريات - مصاريف التشغيل). الشريك الأول يحصل على ثلاثة أرباع (3/4) صافي الربح، والشريك الثاني يحصل على الربع (1/4).</div></div></div></div>
         
         <!-- قسم أسعار الأكياس الجديدة مع الوصف الوظيفي لكل نوع -->
@@ -343,10 +365,38 @@
         </div>
 
         <div id="customers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-users"></i> إدارة العملاء</h2><button class="export-btn" onclick="exportSectionToTxt('customers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showCustomerModal()">عميل جديد</button><div class="table-responsive"><table class="table table-custom"><thead>70th<th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="customersList"></tbody> </table></div></div>
-        <div id="products" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-boxes"></i> إدارة الأكياس</h2><button class="export-btn" onclick="exportSectionToTxt('products')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showProductModal()">كيس جديد</button><div class="product-grid" id="productsGrid"></div></div>
-        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> </table></div></div>
+        
+        <!-- Products with Price Tag Print -->
+        <div id="products" class="section" style="display:none;">
+            <div class="section-header"><h2><i class="fas fa-boxes"></i> إدارة الأكياس</h2><button class="export-btn" onclick="exportSectionToTxt('products')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
+            <button class="btn btn-primary-custom mb-3" onclick="showProductModal()">كيس جديد</button>
+            <div class="product-grid" id="productsGrid"></div>
+        </div>
+        
+        <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead> <th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th> </thead><tbody id="suppliersList"></tbody> <table></div></div>
         <div id="invoices" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-file-invoice"></i> الفواتير</h2><button class="export-btn" onclick="exportSectionToTxt('invoices')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showInvoiceModal()">فاتورة جديدة</button><div class="table-responsive"><table class="table table-custom"><thead> <th>رقم الفاتورة</th><th>العميل</th><th>التاريخ</th><th>المجموع</th><th>الإجراءات</th> </thead><tbody id="invoicesList"></tbody> </table></div></div>
-        <div id="reports" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-chart-bar"></i> التقارير</h2><button class="export-btn" onclick="exportSectionToTxt('reports')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="row"><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateSalesReport()">تقرير المبيعات</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generatePurchasesReport()">تقرير المشتريات</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateProfitReport()">تقرير الأرباح</button></div></div></div>
+        
+        <!-- Reports with Date Range Filter -->
+        <div id="reports" class="section" style="display:none;">
+            <div class="section-header"><h2><i class="fas fa-chart-bar"></i> التقارير</h2><button class="export-btn" onclick="exportSectionToTxt('reports')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
+            <div class="card mb-3" style="background: var(--bg-card); border-radius: 20px;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5"><label>من تاريخ</label><input type="date" id="reportDateFrom" class="form-control"></div>
+                        <div class="col-md-5"><label>إلى تاريخ</label><input type="date" id="reportDateTo" class="form-control"></div>
+                        <div class="col-md-2"><label class="text-white">.</label><button class="btn btn-primary-custom w-100" onclick="clearDateFilter()">مسح التصفية</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateSalesReport()">تقرير المبيعات</button></div>
+                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generatePurchasesReport()">تقرير المشتريات</button></div>
+                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateProfitReport()">تقرير الأرباح</button></div>
+                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateSalesReportWithDate()">تقرير مبيعات (بالفترة)</button></div>
+                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generatePurchasesReportWithDate()">تقرير مشتريات (بالفترة)</button></div>
+                <div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="generateProfitReportWithDate()">تقرير أرباح (بالفترة)</button></div>
+            </div>
+        </div>
         <div id="operatingExpenses" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-charging-station"></i> مصاريف التشغيل</h2><button class="export-btn" onclick="exportSectionToTxt('operatingExpenses')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card" style="background: var(--bg-card); border-radius: 20px;"><div class="card-body"><div class="row"><div class="col-md-6"><label>كهرباء</label><input type="text" id="operatingElectricity" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>إيجار</label><input type="text" id="operatingRent" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>رواتب</label><input type="text" id="operatingSalaries" class="form-control number-input" value="0" oninput="formatNumberInput(this)"></div><div class="col-md-6"><label>مصروفات نقل</label><input type="text" id="operatingTransport" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>مصروفات متنوعة</label><input type="text" id="operatingMisc" class="form-control number-input" value="0" oninput="formatNumberInput(this)"><label>طباعة الغلاف</label><input type="text" id="operatingPrinting" class="form-control number-input" value="0" oninput="formatNumberInput(this)"></div></div><button class="btn btn-primary-custom mt-3" onclick="saveOperatingExpenses()">حفظ المصروفات</button></div></div></div>
         
         <!-- قسم تخصيص الموقع (تم تطويره ليعكس الألوان الحالية ويتيح التخصيص الكامل) -->
@@ -399,6 +449,7 @@
         let salesChart, pieChart;
         let priceUpdateInterval = null;
         let currentPlasticPrices = [];
+        let lowStockAlertShown = {};
 
         // توليد أسعار محاكاة حية مع تصحيح الأسماء وإضافة الوصف الوظيفي
         function generateMockPrices() {
@@ -499,6 +550,140 @@
             document.getElementById('customCardBg').value = rgbToHex(cardBg);
         }
 
+        // حساب حركة المخزون خلال 7 أيام
+        function getStockMovement(productName, currentQty) {
+            let sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            let totalIn = purchases.filter(p => p.productName === productName && new Date(p.date) >= sevenDaysAgo).reduce((s,p)=>s+p.quantity,0);
+            let totalOut = sales.filter(s => s.productName === productName && new Date(s.date) >= sevenDaysAgo).reduce((s,sale)=>s+sale.quantity,0);
+            let qtyBefore = currentQty - totalIn + totalOut;
+            if (qtyBefore === currentQty) return { diff: 0, trend: 'steady', icon: '➖', text: 'ثابت' };
+            if (currentQty > qtyBefore) return { diff: currentQty - qtyBefore, trend: 'up', icon: '🔼', text: 'زيادة' };
+            return { diff: qtyBefore - currentQty, trend: 'down', icon: '🔽', text: 'نقصان' };
+        }
+
+        // فحص المخزون المنخفض وإظهار التنبيهات
+        function checkLowStock() {
+            products.forEach(p => {
+                if (p.quantity < 50 && p.quantity > 0) {
+                    if (!lowStockAlertShown[p.id]) {
+                        lowStockAlertShown[p.id] = true;
+                        showLowStockAlert(p.name, p.quantity);
+                        setTimeout(() => { lowStockAlertShown[p.id] = false; }, 60000);
+                    }
+                } else if (p.quantity >= 50) {
+                    lowStockAlertShown[p.id] = false;
+                }
+            });
+        }
+
+        function showLowStockAlert(productName, quantity) {
+            let alertDiv = document.createElement('div');
+            alertDiv.className = 'alert-toast';
+            alertDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> تنبيه: مخزون ${productName} منخفض! الكمية الحالية: ${quantity}`;
+            document.body.appendChild(alertDiv);
+            setTimeout(() => alertDiv.remove(), 5000);
+        }
+
+        // حاسبة الأرباح المتوقعة
+        function calculateExpectedProfit() {
+            let price = parseNumberValue(document.getElementById('expectedPrice').value);
+            let qty = parseNumberValue(document.getElementById('expectedQuantity').value);
+            let cost = parseNumberValue(document.getElementById('expectedCost').value);
+            let profit = (price - cost) * qty;
+            let resultDiv = document.getElementById('expectedProfitResult');
+            if (resultDiv) resultDiv.innerHTML = `الربح المتوقع: ${formatPrice(profit)}`;
+        }
+
+        // دوال التقارير مع التاريخ
+        function getDateFilter() {
+            let from = document.getElementById('reportDateFrom').value;
+            let to = document.getElementById('reportDateTo').value;
+            return { from, to };
+        }
+        function clearDateFilter() {
+            document.getElementById('reportDateFrom').value = '';
+            document.getElementById('reportDateTo').value = '';
+            Swal.fire('تم المسح', 'تم مسح فلترة التاريخ', 'success');
+        }
+        function filterByDate(data, dateField) {
+            let { from, to } = getDateFilter();
+            if (!from && !to) return data;
+            return data.filter(item => {
+                let itemDate = item[dateField];
+                if (!itemDate) return true;
+                if (from && itemDate < from) return false;
+                if (to && itemDate > to) return false;
+                return true;
+            });
+        }
+        function generateSalesReportWithDate() {
+            let filtered = filterByDate(sales, 'date');
+            let total = filtered.reduce((s,i)=>s+(i.quantity*i.price),0);
+            let content = getReportHeader() + `تقرير المبيعات (بالفترة المحددة)\nإجمالي المبيعات: ${formatPrice(total)}\n\n`;
+            filtered.forEach(s => { content += `${s.productName} | ${s.quantity} ${s.unit} | ${formatPrice(s.total)} | ${s.date}\n`; });
+            downloadTxt(content, `تقرير_المبيعات_فترة.txt`);
+            Swal.fire('تم', 'تم تصدير تقرير المبيعات للفترة', 'success');
+        }
+        function generatePurchasesReportWithDate() {
+            let filtered = filterByDate(purchases, 'date');
+            let total = filtered.reduce((s,i)=>s+(i.quantity*i.cost),0);
+            let content = getReportHeader() + `تقرير المشتريات (بالفترة المحددة)\nإجمالي المشتريات: ${formatPrice(total)}\n\n`;
+            filtered.forEach(p => { content += `${p.productName} | ${p.quantity} ${p.unit} | ${formatPrice(p.total)} | ${p.date}\n`; });
+            downloadTxt(content, `تقرير_المشتريات_فترة.txt`);
+            Swal.fire('تم', 'تم تصدير تقرير المشتريات للفترة', 'success');
+        }
+        function generateProfitReportWithDate() {
+            let filteredSales = filterByDate(sales, 'date');
+            let filteredPurchases = filterByDate(purchases, 'date');
+            let salesTotal = filteredSales.reduce((s,i)=>s+(i.quantity*i.price),0);
+            let purchasesTotal = filteredPurchases.reduce((s,i)=>s+(i.quantity*i.cost),0);
+            let net = salesTotal - purchasesTotal;
+            let content = getReportHeader() + `تقرير الأرباح (بالفترة المحددة)\nالمبيعات: ${formatPrice(salesTotal)}\nالمشتريات: ${formatPrice(purchasesTotal)}\nصافي الربح: ${formatPrice(net)}\n`;
+            downloadTxt(content, `تقرير_الأرباح_فترة.txt`);
+            Swal.fire('تم', 'تم تصدير تقرير الأرباح للفترة', 'success');
+        }
+
+        // طباعة بطاقة سعر المنتج
+        function printPriceTag(productId) {
+            let p = products.find(pr => pr.id == productId);
+            if (p) {
+                let win = window.open();
+                win.document.write(`
+                    <html><head><title>بطاقة سعر ${p.name}</title>
+                    <style>
+                        body { font-family: 'Cairo', sans-serif; text-align: center; padding: 20px; direction: rtl; }
+                        .card { border: 2px solid #333; border-radius: 10px; padding: 20px; max-width: 300px; margin: auto; }
+                        .product-name { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; }
+                        .price { font-size: 1.8rem; color: #2e7d32; font-weight: bold; margin: 10px 0; }
+                        .size { color: #666; margin: 5px 0; }
+                        .barcode { margin: 15px 0; }
+                        hr { margin: 15px 0; }
+                    </style>
+                    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"><\/script>
+                    </head>
+                    <body>
+                        <div class="card">
+                            <div class="product-name">${p.name}</div>
+                            <div class="price">${formatPrice(p.price)}</div>
+                            <div class="size">📏 المقاس: ${p.type || 'قياسي'}</div>
+                            <hr>
+                            <div class="barcode"><canvas id="barcodePrint"></canvas></div>
+                            <div>${p.barcode || p.id}</div>
+                            <hr>
+                            <div style="font-size:0.8rem;">مصنع الحرمين للبلاستيك</div>
+                        </div>
+                        <script>
+                            JsBarcode(document.getElementById("barcodePrint"), "${p.barcode || p.id}", { format: "CODE128", width: 2, height: 50 });
+                            setTimeout(() => window.print(), 500);
+                            window.onafterprint = () => window.close();
+                        <\/script>
+                    </body>
+                    </html>
+                `);
+            }
+        }
+
         // باقي الدوال الأساسية
         function formatNumberInput(input) { let v = input.value.replace(/,/g, ''); if (!isNaN(v) && v !== '') input.value = new Intl.NumberFormat('en-US').format(parseFloat(v)); }
         function parseNumberValue(fv) { return parseFloat((fv+'').replace(/,/g, '')) || 0; }
@@ -522,6 +707,8 @@
             products.forEach((p, idx) => {
                 let stockClass = p.quantity > 200 ? 'badge-stock-high' : (p.quantity > 50 ? 'badge-stock-medium' : 'badge-stock-low');
                 let stockText = p.quantity > 200 ? 'مخزون ممتاز' : (p.quantity > 50 ? 'مخزون متوسط' : 'مخزون منخفض ⚠️');
+                let movement = getStockMovement(p.name, p.quantity);
+                let trendClass = movement.trend === 'up' ? 'trend-up' : (movement.trend === 'down' ? 'trend-down' : 'trend-steady');
                 html += `<tr>
                              <td>${idx+1}</td>
                              <td>${p.name}</td>
@@ -530,17 +717,19 @@
                              <td>${formatPrice(p.price)}</td>
                              <td>${formatPrice(p.cost)}</td>
                              <td>${formatNumberToString(p.quantity)}</td>
-                             <td>${formatPrice(p.quantity * p.price)}</td>
-                             <td><span class="${stockClass}">${stockText}</span></td>
-                             <td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>
-                         </tr>`;
+                              <td class="${trendClass}">${movement.icon} ${movement.text}</td>
+                              <td>${formatPrice(p.quantity * p.price)}</td>
+                              <td><span class="${stockClass}">${stockText}</span></td>
+                              <td><button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button> <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>
+                          </tr>`;
             });
-            tbody.innerHTML = html || '<tr><td colspan="10">لا توجد منتجات<\/td><\/tr>';
+            tbody.innerHTML = html || '<tr><td colspan="11">لا توجد منتجات<\/td><\/tr>';
             let totalQty = products.reduce((s,p)=>s+p.quantity,0);
             let totalVal = products.reduce((s,p)=>s+(p.quantity*p.price),0);
             document.getElementById('totalProductsCount').innerText = products.length;
             document.getElementById('totalStockQuantity').innerText = formatNumberToString(totalQty);
             document.getElementById('totalStockValue').innerText = formatPrice(totalVal);
+            checkLowStock();
         }
 
         function printFullFinancialReport() {
@@ -588,7 +777,7 @@
         function loadPurchasesHistory(){ let div=document.getElementById('purchasesHistory'); if(div) div.innerHTML=purchases.slice(-10).reverse().map(p=>`<div class="list-group-item"><strong>${p.productName}</strong> | ${p.rawQuantity||p.quantity} ${p.unit} = ${formatPrice(p.total)}<br><small>${p.supplierName} | ${p.date}</small><br><button class="edit-btn" onclick="editPurchase(${p.id})">تعديل</button> <button class="delete-btn" onclick="deletePurchase(${p.id})">حذف</button></div>`).join(''); }
         function loadCustomers(){ let html=''; customers.forEach((c,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address}</td><td><button class="edit-btn" onclick="editCustomer(${c.id})">تعديل</button> <button class="delete-btn" onclick="deleteCustomer(${c.id})">حذف</button></td></tr>`; }); document.getElementById('customersList').innerHTML=html||'<tr><td colspan="5">لا توجد بيانات</td></tr>'; }
         function loadSuppliers(){ let html=''; suppliers.forEach((s,i)=>{ html+=`<tr><td class="text-center">${i+1}</td><td>${s.name}</td><td>${s.phone}</td><td>${s.address}</td><td><button class="edit-btn" onclick="editSupplier(${s.id})">تعديل</button> <button class="delete-btn" onclick="deleteSupplier(${s.id})">حذف</button></td></tr>`; }); document.getElementById('suppliersList').innerHTML=html||'<tr><td colspan="5">لا توجد بيانات</td></tr>'; }
-        function loadProducts(){ let html=''; products.forEach(p=>{ html+=`<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-warning" onclick="editProduct(${p.id})">تعديل</button> <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML=html||'<p>لا توجد منتجات</p>'; setTimeout(()=>{ products.forEach(p=>{ let canvas=document.getElementById(`barcode-${p.id}`); if(canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format:"CODE128", width:2, height:40 }); }); },100); }
+        function loadProducts(){ let html=''; products.forEach(p=>{ html+=`<div class="product-card"><i class="fas fa-shopping-bag fa-2x"></i><h5>${p.name}</h5><p>💰 ${formatPrice(p.price)} | 📦 ${formatNumberToString(p.quantity)}</p><canvas id="barcode-${p.id}" style="max-width:150px;"></canvas><div><button class="btn btn-sm btn-info mt-2" onclick="printBarcode(${p.id})">طباعة باركود</button><button class="btn btn-sm btn-success mt-2" onclick="printPriceTag(${p.id})"><i class="fas fa-tag"></i> طباعة بطاقة سعر</button><button class="btn btn-sm btn-warning mt-2" onclick="editProduct(${p.id})">تعديل</button> <button class="btn btn-sm btn-danger mt-2" onclick="deleteProduct(${p.id})">حذف</button></div></div>`; }); document.getElementById('productsGrid').innerHTML=html||'<p>لا توجد منتجات</p>'; setTimeout(()=>{ products.forEach(p=>{ let canvas=document.getElementById(`barcode-${p.id}`); if(canvas) JsBarcode(canvas, p.barcode || p.id.toString(), { format:"CODE128", width:2, height:40 }); }); },100); }
         function loadInvoices(){ let html=''; invoices.forEach((inv,i)=>{ html+=`<tr><td>#${inv.invoiceNumber}</td><td>${inv.customerName}</td><td>${inv.date}</td><td class="text-end">${formatPrice(inv.total)}</td><td><button class="btn btn-sm btn-info" onclick="viewInvoice(${inv.id})">عرض</button> <button class="delete-btn" onclick="deleteInvoice(${inv.id})">حذف</button></td></tr>`; }); document.getElementById('invoicesList').innerHTML=html||'<tr><td colspan="5">لا توجد فواتير</td></tr>'; }
         function deleteInvoice(id){ Swal.fire({title:'حذف',text:'متأكد؟',icon:'warning',showCancelButton:true}).then(res=>{ if(res.isConfirmed){ invoices=invoices.filter(i=>i.id!=id); saveToFirebase('invoices',invoices); loadInvoices(); } }); }
         function showProductModal(){ document.getElementById('productId').value=''; document.getElementById('productName').value=''; document.getElementById('productBarcode').value=''; document.getElementById('productType').value=''; document.getElementById('productPrice').value=''; document.getElementById('productCost').value=''; document.getElementById('productQuantity').value=''; new bootstrap.Modal(document.getElementById('productModal')).show(); }
@@ -695,8 +884,8 @@
             document.getElementById('customBorderRadius').addEventListener('input',function(){ document.getElementById('radiusValue').innerText=this.value+'px'; });
             document.getElementById('customFontSizeRange').addEventListener('input',function(){ document.getElementById('fontSizeValue').innerText=this.value+'px'; });
         }
-        function init(){ loadAllData(); startRealtimeListeners(); loadCustomization(); startPriceAutoUpdate(); }
+        function init(){ loadAllData(); startRealtimeListeners(); loadCustomization(); startPriceAutoUpdate(); setInterval(checkLowStock, 30000); }
         init();
     </script>
 </body>
-                                                                                 </html>
+                </html>
