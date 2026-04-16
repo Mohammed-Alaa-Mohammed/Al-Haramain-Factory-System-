@@ -30,7 +30,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
+<script>
+    // إشعار صغير - نسخة آمنة تماماً
+setTimeout(function() {
+    const d = new Date();
+    const t = d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+    const toast = document.createElement('div');
+    toast.innerHTML = `🏭 Welcome To Al-Haramain | ${t}`;
+    toast.style.position = 'fixed';
+    toast.style.top = '10px';
+    toast.style.left = '10px';
+    toast.style.zIndex = '999999';
+    toast.style.background = '#101012';
+    toast.style.backdropFilter = 'blur(5px)';
+    toast.style.padding = '6px 12px';
+    toast.style.borderRadius = '10px';
+    toast.style.fontSize = '13px';
+    toast.style.fontFamily = 'system-ui, sans-serif';
+    toast.style.color = 'white';
+    toast.style.pointerEvents = 'none';
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s';
+    
+    document.body.appendChild(toast);
+    
+    setTimeout(() => toast.style.opacity = '1', 10);
+    setTimeout(() => toast.style.opacity = '0', 4500);
+    setTimeout(() => toast.remove(), 9000);
+}, 100);
+    
+</script>
     <style>
         :root {
             --bg-primary: #0a0e17;
@@ -290,7 +319,7 @@
 
         <!-- Inventory Sidebar Full Section (ملخص) -->
         <div id="inventorySidebarFull" class="section" style="display:none;">
-            <div class="section-header"><h2><i class="fa-regular fa-garage"></i> المخزون والمستودع (ملخص)</h2><button class="export-btn" onclick="exportSectionToTxt('inventorySidebarFull')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
+            <div class="section-header"><h2><i class="fas fa-warehouse"></i>المخزون والمستودع (ملخص)</h2><button class="export-btn" onclick="exportSectionToTxt('inventorySidebarFull')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div>
             <div class="inventory-full-section">
                 <div id="inventorySummaryCards" class="stock-stats-row" style="margin-bottom:20px;">
                     <div class="stat-card"><i class="fas fa-boxes"></i><h3 id="summaryTotalProducts">0</h3><p>إجمالي الأصناف</p></div>
