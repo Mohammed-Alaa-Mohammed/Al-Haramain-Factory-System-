@@ -473,6 +473,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <script>
         // Firebase config
         // Firebase config
+// Firebase config
 const firebaseConfig = {
     apiKey: "AIzaSyDzKC6F8RxS3tJ_Xk2Tzzkk_bXzXrf-Sxw",
     authDomain: "harmain-factory-system.firebaseapp.com",
@@ -483,12 +484,27 @@ const firebaseConfig = {
     appId: "1:1034787901700:web:84824fdcadfced336a638051"
 };
 let db = null, useFirebase = false;
-try { 
-    firebase.initializeApp(firebaseConfig); 
-    firebase.auth().signInAnonymously();  // 👈 هذا السطر الجديد
-    db = firebase.database(); 
-    useFirebase = true; 
-} catch(e) { useFirebase = false; }
+
+// تهيئة Firebase وتسجيل الدخول التلقائي
+firebase.initializeApp(firebaseConfig);
+firebase.auth().signInAnonymously()
+    .then(() => {
+        console.log("✅ تم تسجيل الدخول إلى Firebase بنجاح");
+        db = firebase.database();
+        useFirebase = true;
+        // تحميل جميع البيانات بعد تسجيل الدخول
+        loadAllData();
+        startRealtimeListeners();
+        loadCustomization();
+        loadPriceSettings();
+        setInterval(checkLowStock, 30000);
+    })
+    .catch((error) => {
+        console.error("❌ خطأ في تسجيل الدخول:", error);
+        useFirebase = false;
+        // محاولة تحميل البيانات من التخزين المحلي كحل بديل
+        loadAllData();
+    });
 
         let customers = [], suppliers = [], products = [], sales = [], purchases = [], invoices = [];
         let operatingExpenses = { electricity:0, rent:0, salaries:0, transport:0, misc:0, printing:0, custom: {} };
