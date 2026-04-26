@@ -25,9 +25,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
 
 <!-- iziToast -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
@@ -471,44 +469,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
     <footer><i class="fas fa-industry"></i> مصنع الحرمين للبلاستيك 🤎</footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Firebase config
-        const firebaseConfig = {
-            apiKey: "AIzaSyDzKC6F8RxS3tJ_Xk2Tzzkk_bXzXrf-Sxw",
-            authDomain: "harmain-factory-system.firebaseapp.com",
-            databaseURL: "https://harmain-factory-system-default-rtdb.firebaseio.com",
-            projectId: "harmain-factory-system",
-            storageBucket: "harmain-factory-system.firebasestorage.app",
-            messagingSenderId: "1034787901700",
-            appId: "1:1034787901700:web:84824fdcadfced336a638051"
-        };
-        
-        // تهيئة Firebase
-        firebase.initializeApp(firebaseConfig);
-        let db = firebase.database();
-        let useFirebase = true;
-        
-        // تسجيل الدخول التلقائي
-        firebase.auth().signInAnonymously()
-            .then(() => {
-                console.log("✅ تم تسجيل الدخول بنجاح");
-                // بعد تسجيل الدخول، ابدأ تحميل البيانات
-                startApp();
-            })
-            .catch(error => {
-                console.error("❌ خطأ في تسجيل الدخول:", error);
-                // حتى مع الخطأ، حاول تشغيل التطبيق
-                startApp();
-            });
-        
-        // دالة تشغيل التطبيق بعد التأكد من الاتصال
-        function startApp() {
-            loadAllData();
-            startRealtimeListeners();
-            loadCustomization();
-            loadPriceSettings();
-            setInterval(checkLowStock, 30000);
-        }
+        // Firebase config
+const firebaseConfig = {
+    apiKey: "AIzaSyDzKC6F8RxS3tJ_Xk2Tzzkk_bXzXrf-Sxw",
+    authDomain: "harmain-factory-system.firebaseapp.com",
+    databaseURL: "https://harmain-factory-system-default-rtdb.firebaseio.com",
+    projectId: "harmain-factory-system",
+    storageBucket: "harmain-factory-system.firebasestorage.app",
+    messagingSenderId: "1034787901700",
+    appId: "1:1034787901700:web:84824fdcadfced336a638051"
+};
+let db = null, useFirebase = false;
+try { 
+    firebase.initializeApp(firebaseConfig); 
+    firebase.auth().signInAnonymously();  // 👈 هذا السطر الجديد
+    db = firebase.database(); 
+    useFirebase = true; 
+} catch(e) { useFirebase = false; }
 
         let customers = [], suppliers = [], products = [], sales = [], purchases = [], invoices = [];
         let operatingExpenses = { electricity:0, rent:0, salaries:0, transport:0, misc:0, printing:0, custom: {} };
@@ -681,26 +661,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // الموردين
             printWindow.document.write(`<h2><i class="fas fa-truck"></i> الموردين (${suppliers.length})</h2>
-            <td><thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th></tr></thead><tbody>`);
+            <table><thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th></tr></thead><tbody>`);
             suppliers.forEach((s,i)=>{ printWindow.document.write(`<tr><td>${i+1}</td><td>${s.name||''}</td><td>${s.phone||''}</td><td>${s.address||''}</td></tr>`); });
             printWindow.document.write(`</tbody></table>`);
 
             // المنتجات
             printWindow.document.write(`<h2><i class="fas fa-boxes"></i> المنتجات (${products.length})</h2>
-            <td><thead><tr><th>#</th><th>الاسم</th><th>الباركود</th><th>المقاس</th><th>الوزن</th><th>سعر البيع</th><th>الكمية</th><th>القيمة</th></tr></thead><tbody>`);
+            <table><thead><tr><th>#</th><th>الاسم</th><th>الباركود</th><th>المقاس</th><th>الوزن</th><th>سعر البيع</th><th>الكمية</th><th>القيمة</th></tr></thead><tbody>`);
             products.forEach((p,i)=>{ printWindow.document.write(`<tr><td>${i+1}</td><td>${p.name||''}</td><td>${p.barcode||'-'}</td><td>${p.size||'-'}</td><td>${p.weight?p.weight+' كجم':'-'}</td><td>${formatPrice(p.price)}</td><td>${formatNumberToString(p.quantity)}</td><td>${formatPrice(p.quantity*p.price)}</td></tr>`); });
             printWindow.document.write(`</tbody></table>`);
 
             // المبيعات
             printWindow.document.write(`<h2><i class="fas fa-chart-line"></i> المبيعات (${sales.length})</h2>
-            </table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>السعر</th><th>الإجمالي</th><th>العميل</th><th>التاريخ</th></tr></thead><tbody>`);
+            <table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>السعر</th><th>الإجمالي</th><th>العميل</th><th>التاريخ</th></tr></thead><tbody>`);
             sales.slice(0,50).forEach((s,i)=>{ printWindow.document.write(`<tr><td>${i+1}</td><td>${s.productName||''}</td><td>${s.rawQuantity||s.quantity}</td><td>${s.unit||'كيلو'}</td><td>${formatPrice(s.price)}</td><td>${formatPrice(s.total)}</td><td>${s.customerName||''}</td><td>${s.date||''}</td></tr>`); });
             if(sales.length>50) printWindow.document.write(`<tr><td colspan="8">... وعرض أول 50 فقط</td></tr>`);
             printWindow.document.write(`</tbody></table>`);
 
             // المشتريات
             printWindow.document.write(`<h2><i class="fas fa-shopping-cart"></i> المشتريات (${purchases.length})</h2>
-            </table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>سعر الشراء</th><th>الإجمالي</th><th>المورد</th><th>التاريخ</th></tr></thead><tbody>`);
+            <table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>سعر الشراء</th><th>الإجمالي</th><th>المورد</th><th>التاريخ</th></tr></thead><tbody>`);
             purchases.slice(0,50).forEach((p,i)=>{ printWindow.document.write(`<tr><td>${i+1}</td><td>${p.productName||''}</td><td>${p.rawQuantity||p.quantity}</td><td>${p.unit||'كيلو'}</td><td>${formatPrice(p.cost)}</td><td>${formatPrice(p.total)}</td><td>${p.supplierName||''}</td><td>${p.date||''}</td></tr>`); });
             if(purchases.length>50) printWindow.document.write(`<tr><td colspan="8">... وعرض أول 50 فقط</td></tr>`);
             printWindow.document.write(`</tbody></table>`);
@@ -725,11 +705,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // إعدادات
             printWindow.document.write(`<h2><i class="fas fa-cog"></i> إعدادات النظام</h2>
-            <table><thead><tr><th>الإعداد</th><th>القيمة</th></tr></thead><tbody>
+            <table><tr><th>الإعداد</th><th>القيمة</th></tr>
             <tr><td>سعر صرف الدولار</td><td>${exchangeRateEGP} ج.م</td></tr>
             <tr><td>نسبة هامش الربح</td><td>${profitMarginPercent}%</td></tr>
             <tr><td>تاريخ النسخ الاحتياطي</td><td>${new Date().toLocaleString('ar-EG')}</td></tr>
-            </tbody></table>`);
+            </table>`);
 
             printWindow.document.write(`<div class="footer">تم إنشاء هذه النسخة الاحتياطية بواسطة نظام مصنع الحرمين للبلاستيك - جميع الحقوق محفوظة</div>
             </div><script>window.print(); window.onafterprint = function(){ window.close(); };<\/script></body></html>`);
@@ -809,7 +789,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let headersHtml = ''; headers.forEach(h => { headersHtml += `<th style="border:1px solid #ddd;padding:10px;text-align:center;background:#fbbf24;color:#0a0e17;font-weight:bold;">${h}</th>`; });
             let rowsHtml = ''; data.forEach(row => { rowsHtml += '<tr>'; row.forEach(cell => { rowsHtml += `<td style="border:1px solid #ddd;padding:10px;text-align:center;">${cell}</td>`; }); rowsHtml += '</tr>'; });
             let printWindow = window.open('', '_blank');
-            printWindow.document.write(`<html dir="rtl"><head><title>${title} - مصنع الحرمين</title><style>body{font-family:'Cairo','Tajawal',sans-serif;padding:25px;direction:rtl;margin:0 auto;background:#fff;}h1{color:#fbbf24;text-align:center;margin-bottom:5px;}h3{text-align:center;color:#333;margin-top:0;}table{width:100%;border-collapse:collapse;margin:20px 0;box-shadow:0 1px 3px rgba(0,0,0,0.1);}th,td{border:1px solid #ddd;padding:10px;text-align:center;}th{background:#fbbf24;color:#0a0e17;font-weight:bold;}tr:nth-child(even){background:#f9f9f9;}.footer{text-align:center;margin-top:30px;font-size:12px;color:#666;border-top:1px solid #eee;padding-top:15px;}.print-report-container{max-width:1200px;margin:0 auto;}</style></head><body><div class="print-report-container"><h1>مصنع الحرمين للبلاستيك</h1><h3>${title}</h3><p style="text-align:center;">${new Date().toLocaleString('ar-EG')}</p>${summaryHtml}<table><thead>${headersHtml}</thead><tbody>${rowsHtml}</tbody></table><div class="footer">تم إنشاء هذا التقرير بواسطة نظام مصنع الحرمين للبلاستيك - جميع الحقوق محفوظة</div></div><script>window.print(); window.onafterprint = function(){ window.close(); };<\/script></body></html>`);
+            printWindow.document.write(`<html dir="rtl"><head><title>${title} - مصنع الحرمين</title><style>body{font-family:'Cairo','Tajawal',sans-serif;padding:25px;direction:rtl;margin:0 auto;background:#fff;}h1{color:#fbbf24;text-align:center;margin-bottom:5px;}h3{text-align:center;color:#333;margin-top:0;}table{width:100%;border-collapse:collapse;margin:20px 0;box-shadow:0 1px 3px rgba(0,0,0,0.1);}th,td{border:1px solid #ddd;padding:10px;text-align:center;}th{background:#fbbf24;color:#0a0e17;font-weight:bold;}tr:nth-child(even){background:#f9f9f9;}.footer{text-align:center;margin-top:30px;font-size:12px;color:#666;border-top:1px solid #eee;padding-top:15px;}.print-report-container{max-width:1200px;margin:0 auto;}</style></head><body><div class="print-report-container"><h1>مصنع الحرمين للبلاستيك</h1><h3>${title}</h3><p style="text-align:center;">${new Date().toLocaleString('ar-EG')}</p>${summaryHtml}<td><thead>${headersHtml}</thead><tbody>${rowsHtml}</tbody></table><div class="footer">تم إنشاء هذا التقرير بواسطة نظام مصنع الحرمين للبلاستيك - جميع الحقوق محفوظة</div></div><script>window.print(); window.onafterprint = function(){ window.close(); };<\/script></body></html>`);
             printWindow.document.close();
         }
 
@@ -874,11 +854,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // مصاريف التشغيل التفصيلية
             let expensesDetails = `<tr><td>كهرباء</td><td>${formatPrice(operatingExpenses.electricity||0)}</td></tr>
-            <tr><td>إيجار</td><td>${formatPrice(operatingExpenses.rent||0)}</td></tr>
-            <tr><td>رواتب</td><td>${formatPrice(operatingExpenses.salaries||0)}</td></tr>
-            <tr><td>نقل</td><td>${formatPrice(operatingExpenses.transport||0)}</td></tr>
-            <tr><td>متنوعة</td><td>${formatPrice(operatingExpenses.misc||0)}</td></tr>
-            <tr><td>طباعة الغلاف</td><td>${formatPrice(operatingExpenses.printing||0)}</td></tr>`;
+            <tr><td>إيجار</td><td>${formatPrice(operatingExpenses.rent||0)}</tr>
+            <tr><td>رواتب</td><td>${formatPrice(operatingExpenses.salaries||0)}</tr>
+            <tr><td>نقل</td><td>${formatPrice(operatingExpenses.transport||0)}</tr>
+            <tr><td>متنوعة</td><td>${formatPrice(operatingExpenses.misc||0)}</tr>
+            <tr><td>طباعة الغلاف</td><td>${formatPrice(operatingExpenses.printing||0)}</tr>`;
             if(operatingExpenses.custom){
                 for(let key in operatingExpenses.custom){
                     expensesDetails += `<tr><td>${key}</td><td>${formatPrice(operatingExpenses.custom[key])}</td></tr>`;
@@ -1072,9 +1052,8 @@ document.addEventListener("DOMContentLoaded", function() {
             listenToFirebase('purchases',d=>{ purchases=d; loadPurchasesHistory(); updateDashboard(); updateProfitAnalysis(); updateInventorySidebar(); updatePartnersSection(); });
             listenToFirebase('operatingExpenses',d=>{ if(d) { operatingExpenses = d; if(!operatingExpenses.custom) operatingExpenses.custom = {}; loadCustomExpensesUI(); } updateDashboard(); updateProfitAnalysis(); updatePartnersSection(); });
         }
-
-        // تم إزالة دالة init() واستبدالها بـ startApp التي تستدعى بعد تسجيل الدخول
-        // init();  <-- تم إزالة هذا السطر لتجنب التكرار
+        function init() { loadAllData(); startRealtimeListeners(); loadCustomization(); loadPriceSettings(); setInterval(checkLowStock, 30000); }
+        init();
     </script>
 </body>
-</html>
+    </html>
