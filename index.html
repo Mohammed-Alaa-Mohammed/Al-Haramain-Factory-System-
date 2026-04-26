@@ -569,7 +569,60 @@ footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; padd
 <div class="modal fade" id="supplierModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">بيانات المورد</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><input type="hidden" id="supplierId"><input type="text" id="supplierName" class="form-control mb-2" placeholder="الاسم"><input type="text" id="supplierPhone" class="form-control mb-2" placeholder="الهاتف"><textarea id="supplierAddress" class="form-control" placeholder="العنوان"></textarea></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveSupplier()">حفظ</button></div></div></div></div>
 <div class="modal fade" id="invoiceModal" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content" style="background: var(--bg-card); border-radius: 20px;"><div class="modal-header"><h5 class="modal-title">فاتورة جديدة</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><select id="invoiceCustomerSelect" class="form-control mb-2"></select><div id="invoiceItemsContainer"></div><button class="btn btn-secondary mb-2" onclick="addInvoiceItem()">إضافة منتج</button><h5>المجموع: <span id="invoiceTotal">0</span> ج.م</h5></div><div class="modal-footer"><button class="btn btn-primary-custom" onclick="saveInvoiceModal()">حفظ الفاتورة</button></div></div></div></div>
 
-<footer><i class="fas fa-industry"></i> مصنع الحرمين للبلاستيك 🤎</footer>
+<footer><i class="fas fa-industry"></i> مصنع الحرمين للبلاستيك 🤎
+<style>
+  #btn_on{
+
+   /* margin:200px 20px 20px 140px; */
+    color:white;
+    background-color:#122122;
+    outlile:none;
+    border-color: transparent;
+    border-radius:4px;
+    width:130px;
+    height: 40px;
+    font-weight:bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size:17px;
+    cursor: pointer;
+  }
+  #btn_on:hover{
+    background-color:#FF3D3D;
+    color:#ffffff;
+    transition: 0.2s all;
+    transform: translateY(-100%);
+    border-radius:25px;
+  }
+  #icon {
+    width:135px; 
+    color:#FF3D3D;
+  }
+  #icon:hover{
+    color:#fff;
+  }
+</style>
+<body>
+<button onclick="btn_on()" id="btn_on" class="btn btn-outline-primary">Close Page
+<i id="icon" class="bi bi-x-circle"></i>
+</button>
+
+<script>
+  function btn_on() {
+    iziToast.warning({
+        title: "Close Page",
+        message: "سيتم إغلاق الصفحه الآن",
+        progressBarColor: "#dff",
+        messageColor: "#111",
+        timeout: 3000,
+        position: "bottomLeft"
+    }); 
+    
+    setTimeout(function() {
+      window.close();
+    }, 3000);
+  }
+</script>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
