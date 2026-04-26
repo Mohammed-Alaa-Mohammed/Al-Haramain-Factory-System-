@@ -472,17 +472,23 @@ document.addEventListener("DOMContentLoaded", function() {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Firebase config
-        const firebaseConfig = {
-            apiKey: "AIzaSyDzKC6F8RxS3tJ_Xk2Tzzkk_bXzXrf-Sxw",
-            authDomain: "harmain-factory-system.firebaseapp.com",
-            databaseURL: "https://harmain-factory-system-default-rtdb.firebaseio.com",
-            projectId: "harmain-factory-system",
-            storageBucket: "harmain-factory-system.firebasestorage.app",
-            messagingSenderId: "1034787901700",
-            appId: "1:1034787901700:web:84824fdcadfced336a638051"
-        };
-        let db = null, useFirebase = false;
-        try { firebase.initializeApp(firebaseConfig); db = firebase.database(); useFirebase = true; } catch(e) { useFirebase = false; }
+        // Firebase config
+const firebaseConfig = {
+    apiKey: "AIzaSyDzKC6F8RxS3tJ_Xk2Tzzkk_bXzXrf-Sxw",
+    authDomain: "harmain-factory-system.firebaseapp.com",
+    databaseURL: "https://harmain-factory-system-default-rtdb.firebaseio.com",
+    projectId: "harmain-factory-system",
+    storageBucket: "harmain-factory-system.firebasestorage.app",
+    messagingSenderId: "1034787901700",
+    appId: "1:1034787901700:web:84824fdcadfced336a638051"
+};
+let db = null, useFirebase = false;
+try { 
+    firebase.initializeApp(firebaseConfig); 
+    firebase.auth().signInAnonymously();  // 👈 هذا السطر الجديد
+    db = firebase.database(); 
+    useFirebase = true; 
+} catch(e) { useFirebase = false; }
 
         let customers = [], suppliers = [], products = [], sales = [], purchases = [], invoices = [];
         let operatingExpenses = { electricity:0, rent:0, salaries:0, transport:0, misc:0, printing:0, custom: {} };
