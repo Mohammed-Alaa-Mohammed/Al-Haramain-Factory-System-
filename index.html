@@ -590,7 +590,7 @@ footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; padd
     background-color:#FF3D3D;
     color:#ffffff;
     transition: 0.2s all;
-    transform: translateX(-100%);
+    /*transform: translateX(-100%);*/
     border-radius:25px;
   }
   #icon {
@@ -602,8 +602,8 @@ footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; padd
   }
 </style>
 <body>
-<button onclick="window.close()" id="btn_on" class="btn btn-outline-primary">Close Page
-<i id="icon" class="bi bi-x-circle"></i>
+<button onclick="location.reload()" id="btn_on" class="btn btn-outline-primary">Refresh Page
+<i id="icon" class="bi bi-arrow-clockwise"></i>
 </button>
 </footer>
 
