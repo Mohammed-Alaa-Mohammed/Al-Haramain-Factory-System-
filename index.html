@@ -205,6 +205,31 @@ footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; padd
 /* Animated elements */
 .fade-up { opacity: 0; transform: translateY(30px); }
 .fade-in { opacity: 0; }
+
+/* Responsive Tables */
+@media (max-width: 768px) {
+    .inventory-full-table th, .inventory-full-table td {
+        font-size: 0.7rem;
+        padding: 6px 3px;
+    }
+    .stat-card h3 {
+        font-size: 1.2rem;
+    }
+    .stat-card i {
+        font-size: 30px;
+    }
+    .btn-primary-custom, .export-btn, .print-pdf-btn {
+        padding: 6px 12px;
+        font-size: 0.7rem;
+    }
+    .sidebar-header h3 {
+        font-size: 1.1rem;
+    }
+    .nav-link-custom {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+}
 </style>
 </head>
 <body>
@@ -317,7 +342,7 @@ footer { position: fixed; bottom: 0; left: 0; right: 0; text-align: center; padd
     <div id="suppliers" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-truck"></i> إدارة الموردين</h2><button class="export-btn" onclick="exportSectionToTxt('suppliers')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><button class="btn btn-primary-custom mb-3" onclick="showSupplierModal()">مورد جديد</button><div class="table-responsive"><table class="table table-custom"><thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>الإجراءات</th></tr></thead><tbody id="suppliersList"></tbody></table></div></div>
 
     <!-- Invoices Section -->
-    <div id="invoices" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-file-invoice"></i> الفواتير</h2><div><button class="export-btn" onclick="exportSectionToTxt('invoices')"><i class="fas fa-download"></i> تصدير كملف نصي</button><button class="print-pdf-btn" onclick="printInvoicesPDF()"><i class="fas fa-file-pdf"></i> طباعة الفواتير PDF</button></div></div><button class="btn btn-primary-custom mb-3" onclick="showInvoiceModal()">فاتورة جديدة</button><div class="table-responsive"><table class="table table-custom"><thead><tr><th>رقم الفاتورة</th><th>العميل</th><th>التاريخ</th><th>المجموع</th><th>الإجراءات</th></tr></thead><tbody id="invoicesList"></tbody></table></div></div>
+    <div id="invoices" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-file-invoice"></i> الفواتير</h2><div><button class="export-btn" onclick="exportSectionToTxt('invoices')"><i class="fas fa-download"></i> تصدير كملف نصي</button><button class="print-pdf-btn" onclick="printInvoicesPDF()"><i class="fas fa-file-pdf"></i> طباعة الفواتير PDF</button></div></div><button class="btn btn-primary-custom mb-3" onclick="showInvoiceModal()">فاتورة جديدة</button><div class="table-responsive"><table class="table table-custom"><thead><tr><th>رقم الفاتورة</th><th>العميل</th><th>التاريخ</th><th>المجموع</th><th>الإجراءات</th></tr></thead><tbody id="invoicesList"></tbody></td></div></div>
 
     <!-- Reports Section -->
     <div id="reports" class="section" style="display:none;"><div class="section-header"><h2><i class="fas fa-chart-bar"></i> التقارير</h2><button class="export-btn" onclick="exportSectionToTxt('reports')"><i class="fas fa-download"></i> تصدير كملف نصي</button></div><div class="card mb-3" style="background: var(--bg-card); border-radius: 20px;"><div class="card-body"><div class="row"><div class="col-md-5"><label>من تاريخ</label><input type="date" id="reportDateFrom" class="form-control"></div><div class="col-md-5"><label>إلى تاريخ</label><input type="date" id="reportDateTo" class="form-control"></div><div class="col-md-2"><label class="text-white">.</label><button class="btn btn-primary-custom w-100" onclick="clearDateFilter()">مسح التصفية</button></div></div></div></div><div class="row"><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="printSalesReport()">طباعة تقرير المبيعات</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="printPurchasesReport()">طباعة تقرير المشتريات</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="printProfitReport()">طباعة تقرير الأرباح</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="printSalesReportWithDate()">طباعة مبيعات (بالفترة)</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="printPurchasesReportWithDate()">طباعة مشتريات (بالفترة)</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="printProfitReportWithDate()">طباعة أرباح (بالفترة)</button></div><div class="col-md-4"><button class="btn btn-primary-custom w-100 mb-2" onclick="printCustomerInvoiceFromSearch()">طباعة فاتورة عميل (بحث)</button></div></div></div>
@@ -494,8 +519,30 @@ function exportActivityLogs() {
 }
 
 // ============================================
-// Notifications (Only One Welcome Message)
+// Single Welcome Notification
 // ============================================
+let welcomeShown = false;
+
+function showWelcomeMessage() {
+    if (welcomeShown) return;
+    welcomeShown = true;
+    
+    setTimeout(() => {
+        iziToast.show({
+            title: 'مرحباً بك',
+            message: '🌙 مرحباً بك في نظام مصنع الحرمين للبلاستيك',
+            position: 'topCenter',
+            timeout: 5000,
+            backgroundColor: '#0f172a',
+            titleColor: '#fbbf24',
+            messageColor: '#ffffff',
+            progressBarColor: '#38bdf8',
+            icon: 'fa-solid fa-bell',
+            iconColor: '#38bdf8'
+        });
+    }, 500);
+}
+
 function showNotification(message, type = 'info') {
     // Play sound
     const audio = new Audio();
@@ -521,24 +568,6 @@ function showNotification(message, type = 'info') {
         icon: type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-times-circle' : 'fa-info-circle',
         iconColor: '#ffffff'
     });
-}
-
-// Single Welcome Message
-function showWelcomeMessage() {
-    setTimeout(() => {
-        iziToast.show({
-            title: 'مرحباً بك',
-            message: '🌙 مرحباً بك في نظام مصنع الحرمين للبلاستيك',
-            position: 'topCenter',
-            timeout: 5000,
-            backgroundColor: '#0f172a',
-            titleColor: '#fbbf24',
-            messageColor: '#ffffff',
-            progressBarColor: '#38bdf8',
-            icon: 'fa-solid fa-bell',
-            iconColor: '#38bdf8'
-        });
-    }, 500);
 }
 
 // ============================================
@@ -920,7 +949,7 @@ function exportFullBackupPDF() {
     printWindow.document.write(`<html dir="rtl"><head><title>النسخ الاحتياطي - مصنع الحرمين</title><style>body{font-family:'Cairo','Tajawal',sans-serif;padding:25px;direction:rtl;background:#fff;}h1{color:#fbbf24;text-align:center;}h2{background:#fbbf24;color:#0a0e17;padding:10px;border-radius:10px;margin-top:30px;}table{width:100%;border-collapse:collapse;margin:15px 0;}th,td{border:1px solid #ddd;padding:8px;text-align:center;}th{background:#fbbf24;color:#0a0e17;}.footer{text-align:center;margin-top:30px;}</style></head><body><h1>مصنع الحرمين للبلاستيك</h1><h3>النسخ الاحتياطي الشامل</h3><p>${new Date().toLocaleString('ar-EG')}</p>`);
     printWindow.document.write(`<h2>العملاء (${customers.length})</h2><tr><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th></tr>`);
     customers.forEach((c,i)=>{ printWindow.document.write(`<tr><td class="text-center">${i+1}</td><td class="text-center">${c.name||''}</td><td class="text-center">${c.phone||''}</td><td class="text-center">${c.address||''}</td></tr>`); });
-    printWindow.document.write(`</table><h2>المنتجات (${products.length})</h2></td><thead><tr><th>#</th><th>الاسم</th><th>الباركود</th><th>المقاس</th><th>الوزن</th><th>سعر البيع</th><th>الكمية</th><th>القيمة</th></tr></thead><tbody>`);
+    printWindow.document.write(`<tr><h2>المنتجات (${products.length})</h2></table><thead><tr><th>#</th><th>الاسم</th><th>الباركود</th><th>المقاس</th><th>الوزن</th><th>سعر البيع</th><th>الكمية</th><th>القيمة</th></tr></thead><tbody>`);
     products.forEach((p,i)=>{ printWindow.document.write(`<tr><td class="text-center">${i+1}</td><td class="text-center">${p.name||''}</td><td class="text-center">${p.barcode||'-'}</td><td class="text-center">${p.size||'-'}</td><td class="text-center">${p.weight?p.weight+' كجم':'-'}</td><td class="text-center">${formatPrice(p.price)}</td><td class="text-center">${formatNumberToString(p.quantity)}</td><td class="text-center">${formatPrice(p.quantity*p.price)}</td></tr>`); });
     printWindow.document.write(`</tbody></table><div class="footer">مصنع الحرمين للبلاستيك - جميع الحقوق محفوظة</div><script>window.print();window.onafterprint=function(){window.close();};<\/script></body></html>`);
     printWindow.document.close();
@@ -1085,16 +1114,35 @@ function exportPartnerReport(partnerNum) {
     let data = [['صافي الربح الإجمالي', formatPrice(net)], ['نسبة الشريك', partnerNum === 1 ? '75% (3/4)' : '25% (1/4)'], ['المستحق للشريك', formatPrice(share)]];
     generateStyledPDF(`تقرير ${partnerName}`, headers, data, { 'تاريخ التقرير': new Date().toLocaleString('ar-EG') });
 }
+
+// ============================================
+// Print Full Financial Report (Formatted)
+// ============================================
 function printFullFinancialReport() {
     let totalSales = sales.reduce((s,i)=>s+(i.quantity*i.price),0);
     let totalPurchases = purchases.reduce((s,i)=>s+(i.quantity*i.cost),0);
     let totalOp = getTotalOperatingExpenses();
     let net = totalSales - totalPurchases - totalOp;
     let printWindow = window.open('', '_blank');
+    
+    // Expenses details
     let expensesDetails = '';
-    if(operatingExpenses.custom){ for(let key in operatingExpenses.custom){ expensesDetails += `<tr><td class="text-center">${key}</td><td class="text-center">${formatPrice(operatingExpenses.custom[key])}</td></tr>`; } }
-    let stockHtml = ''; 
-    products.forEach((p,idx)=>{ 
+    expensesDetails += `<tr><td class="text-center">كهرباء</td><td class="text-center">${formatPrice(operatingExpenses.electricity||0)}</td></tr>`;
+    expensesDetails += `<tr><td class="text-center">إيجار</td><td class="text-center">${formatPrice(operatingExpenses.rent||0)}</td></tr>`;
+    expensesDetails += `<tr><td class="text-center">رواتب</td><td class="text-center">${formatPrice(operatingExpenses.salaries||0)}</td></tr>`;
+    expensesDetails += `<tr><td class="text-center">نقل</td><td class="text-center">${formatPrice(operatingExpenses.transport||0)}</td></tr>`;
+    expensesDetails += `<tr><td class="text-center">متنوعة</td><td class="text-center">${formatPrice(operatingExpenses.misc||0)}</td></tr>`;
+    expensesDetails += `<tr><td class="text-center">طباعة الغلاف</td><td class="text-center">${formatPrice(operatingExpenses.printing||0)}</td></tr>`;
+    if(operatingExpenses.custom){
+        for(let key in operatingExpenses.custom){
+            expensesDetails += `<tr><td class="text-center">${key}</td><td class="text-center">${formatPrice(operatingExpenses.custom[key])}</td></tr>`;
+        }
+    }
+    expensesDetails += `<tr style="font-weight:bold;"><td class="text-center">الإجمالي</td><td class="text-center">${formatPrice(totalOp)}</td></tr>`;
+    
+    // Stock table
+    let stockHtml = '';
+    products.forEach((p,idx)=>{
         stockHtml += `<tr>
             <td class="text-center">${idx+1}</td>
             <td class="text-center">${p.name}</td>
@@ -1107,15 +1155,67 @@ function printFullFinancialReport() {
             <td class="text-center">${p.quantity>200?'مخزون ممتاز':(p.quantity>50?'مخزون متوسط':'مخزون منخفض')}</td>
         </tr>`;
     });
-    let lastSalesHtml = ''; 
-    sales.slice(-10).reverse().forEach((s,idx)=>{ 
-        lastSalesHtml += `<tr><td class="text-center">${idx+1}</td><td class="text-center">${s.productName}</td><td class="text-center">${s.rawQuantity||s.quantity}</td><td class="text-center">${s.unit}</td><td class="text-center">${formatPrice(s.total)}</td><td class="text-center">${s.customerName}</td><td class="text-center">${s.date}</td></tr>`; 
+    
+    // Last 10 Sales
+    let lastSalesHtml = '';
+    sales.slice(-10).reverse().forEach((s,idx)=>{
+        lastSalesHtml += `<tr>
+            <td class="text-center">${idx+1}</td>
+            <td class="text-center">${s.productName}</td>
+            <td class="text-center">${s.rawQuantity||s.quantity}</td>
+            <td class="text-center">${s.unit}</td>
+            <td class="text-center">${formatPrice(s.total)}</td>
+            <td class="text-center">${s.customerName}</td>
+            <td class="text-center">${s.date}</td>
+        </tr>`;
     });
-    let lastPurchasesHtml = ''; 
-    purchases.slice(-10).reverse().forEach((p,idx)=>{ 
-        lastPurchasesHtml += `<tr><td class="text-center">${idx+1}</td><td class="text-center">${p.productName}</td><td class="text-center">${p.rawQuantity||p.quantity}</td><td class="text-center">${p.unit}</td><td class="text-center">${formatPrice(p.total)}</td><td class="text-center">${p.supplierName}</td><td class="text-center">${p.date}</td></tr>`; 
+    
+    // Last 10 Purchases (Formatted)
+    let lastPurchasesHtml = '';
+    purchases.slice(-10).reverse().forEach((p,idx)=>{
+        lastPurchasesHtml += `<tr>
+            <td class="text-center">${idx+1}</td>
+            <td class="text-center">${p.productName}</td>
+            <td class="text-center">${p.rawQuantity||p.quantity}</td>
+            <td class="text-center">${p.unit}</td>
+            <td class="text-center">${formatPrice(p.total)}</td>
+            <td class="text-center">${p.supplierName}</td>
+            <td class="text-center">${p.date}</td>
+        </tr>`;
     });
-    printWindow.document.write(`<html dir="rtl"><head><title>التقرير المالي الشامل</title><style>body{font-family:'Cairo',sans-serif;padding:25px;direction:rtl;}h1{color:#fbbf24;text-align:center;}h2{background:#fbbf24;color:#0a0e17;padding:10px;border-radius:10px;margin-top:25px;}table{width:100%;border-collapse:collapse;margin:15px 0;}th,td{border:1px solid #ddd;padding:8px;text-align:center;}th{background:#fbbf24;color:#0a0e17;}</style></head><body><h1>مصنع الحرمين للبلاستيك</h1><h3>التقرير المالي الشامل</h3><p>${new Date().toLocaleString('ar-EG')}</p>
+    
+    // Partners Distribution (Formatted)
+    let partnersHtml = `
+        <tr>
+            <td class="text-center">الشريك الأول</td>
+            <td class="text-center">75% (3/4)</td>
+            <td class="text-center">${formatPrice(net * 3 / 4)}</td>
+        </tr>
+        <tr>
+            <td class="text-center">الشريك الثاني</td>
+            <td class="text-center">25% (1/4)</td>
+            <td class="text-center">${formatPrice(net * 1 / 4)}</td>
+        </tr>
+    `;
+    
+    printWindow.document.write(`<html dir="rtl"><head><title>التقرير المالي الشامل</title>
+    <style>
+        body{font-family:'Cairo',sans-serif;padding:25px;direction:rtl;}
+        h1{color:#fbbf24;text-align:center;}
+        h2{background:#fbbf24;color:#0a0e17;padding:10px;border-radius:10px;margin-top:25px;}
+        table{width:100%;border-collapse:collapse;margin:15px 0;}
+        th,td{border:1px solid #ddd;padding:8px;text-align:center;}
+        th{background:#fbbf24;color:#0a0e17;}
+        @media print {
+            body{ margin:0; padding:15px; }
+            h2{ margin-top:15px; }
+        }
+    </style>
+    </head><body>
+    <h1>مصنع الحرمين للبلاستيك</h1>
+    <h3>التقرير المالي الشامل</h3>
+    <p>${new Date().toLocaleString('ar-EG')}</p>
+    
     <h2>📊 ملخص الأرباح والخسائر</h2>
     <table><thead><tr><th>البيان</th><th>القيمة</th></tr></thead><tbody>
     <tr><td class="text-center">إجمالي المبيعات</td><td class="text-center">${formatPrice(totalSales)}</td></tr>
@@ -1123,29 +1223,23 @@ function printFullFinancialReport() {
     <tr><td class="text-center">إجمالي مصاريف التشغيل</td><td class="text-center">${formatPrice(totalOp)}</td></tr>
     <tr style="font-weight:bold;"><td class="text-center">صافي الربح</td><td class="text-center">${formatPrice(net)}</td></tr>
     <tr><td class="text-center">هامش الربح</td><td class="text-center">${totalSales>0?((net/totalSales)*100).toFixed(2):0}%</td></tr>
-    </tbody><table>
-    <h2>⚙️ تفاصيل مصاريف التشغيل</h2>
-    <table><thead><tr><th>نوع المصروف</th><th>القيمة</th></tr></thead><tbody>
-    <tr><td class="text-center">كهرباء</td><td class="text-center">${formatPrice(operatingExpenses.electricity||0)}</td></tr>
-    <tr><td class="text-center">إيجار</td><td class="text-center">${formatPrice(operatingExpenses.rent||0)}</td></tr>
-    <tr><td class="text-center">رواتب</td><td class="text-center">${formatPrice(operatingExpenses.salaries||0)}</td></tr>
-    <tr><td class="text-center">نقل</td><td class="text-center">${formatPrice(operatingExpenses.transport||0)}</td></tr>
-    <tr><td class="text-center">متنوعة</td><td class="text-center">${formatPrice(operatingExpenses.misc||0)}</td></tr>
-    <tr><td class="text-center">طباعة الغلاف</td><td class="text-center">${formatPrice(operatingExpenses.printing||0)}</td></tr>
-    ${expensesDetails}
-    <tr style="font-weight:bold;"><td class="text-center">الإجمالي</td><td class="text-center">${formatPrice(totalOp)}</td></tr>
     </tbody></table>
+    
+    <h2>⚙️ تفاصيل مصاريف التشغيل</h2>
+    <table><thead><tr><th>نوع المصروف</th><th>القيمة</th></tr></thead><tbody>${expensesDetails}</tbody></table>
+    
     <h2>🏭 المخزون الحالي</h2>
     <table><thead><tr><th>#</th><th>اسم الكيس</th><th>الباركود</th><th>المقاس</th><th>الوزن</th><th>سعر البيع</th><th>الكمية</th><th>القيمة</th><th>الحالة</th></tr></thead><tbody>${stockHtml}</tbody></table>
+    
     <h2>📝 آخر 10 مبيعات</h2>
     <table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>الإجمالي</th><th>العميل</th><th>التاريخ</th></tr></thead><tbody>${lastSalesHtml}</tbody></table>
+    
     <h2>📥 آخر 10 مشتريات</h2>
-    </table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>الإجمالي</th><th>المورد</th><th>التاريخ</th></tr></thead><tbody>${lastPurchasesHtml}</tbody></table>
-    <h2>🤝 توزيع الأرباح</h2>
-    <td><thead><tr><th>الشريك</th><th>النسبة</th><th>المستحق</th></tr></thead><tbody>
-    <tr><td class="text-center">الشريك الأول</td><td class="text-center">75%</td><td class="text-center">${formatPrice(net * 3 / 4)}</td></tr>
-    <tr><td class="text-center">الشريك الثاني</td><td class="text-center">25%</td><td class="text-center">${formatPrice(net * 1 / 4)}</td></tr>
-    </tbody></table>
+    <table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>الإجمالي</th><th>المورد</th><th>التاريخ</th></tr></thead><tbody>${lastPurchasesHtml}</tbody></table>
+    
+    <h2>🤝 توزيع الأرباح بين الشركاء</h2>
+    <table><thead><tr><th>الشريك</th><th>النسبة</th><th>المستحق</th></tr></thead><tbody>${partnersHtml}</tbody></table>
+    
     <div style="text-align:center;margin-top:30px;">مصنع الحرمين للبلاستيك - جميع الحقوق محفوظة</div>
     <script>window.print();window.onafterprint=function(){window.close();};<\/script>
     </body></html>`);
@@ -1182,7 +1276,7 @@ function updateInventoryFullSection() {
                 <button class="edit-btn" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button>
                 <button class="delete-btn" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button>
             </td>
-        </tr>`;
+        </table>`;
     });
     tbody.innerHTML = html || '<tr><td colspan="13" class="text-center">لا توجد منتجات</td></tr>';
     let totalQty = products.reduce((s,p)=>s+p.quantity,0);
@@ -1354,7 +1448,6 @@ function saveProduct() {
         quantity: parseNumberValue(document.getElementById('productQuantity').value) || 0 
     }; 
     if (id) {
-        // Update existing product
         const index = products.findIndex(p => p.id == product.id);
         if (index !== -1) products[index] = product;
     } else { 
@@ -1383,9 +1476,7 @@ function deleteProduct(id) {
     Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => { 
         if (res.isConfirmed) { 
             let product = products.find(p => p.id == id);
-            // Remove from array
             products = products.filter(p => p.id != id); 
-            // Save to Firebase (This will sync to all devices)
             saveToFirebase('products', products); 
             loadAllData(); 
             addActivityLog('حذف منتج', `تم حذف المنتج: ${product?.name}`);
@@ -1489,7 +1580,7 @@ function deleteSupplier(id) {
 }
 
 // ============================================
-// Sales & Purchases Operations
+// Sales & Purchases Operations with Stock Check
 // ============================================
 function saveSale() { 
     let id = document.getElementById('editSaleId').value; 
@@ -1526,6 +1617,7 @@ function saveSale() {
             addActivityLog('تعديل بيع', `تم تعديل عملية بيع للمنتج: ${pName}`);
         } 
     } else { 
+        // Stock Check
         if (product && product.quantity < finalQty) { 
             Swal.fire('خطأ', `الكمية غير متوفرة! المتوفر: ${product.quantity} ${unit}`, 'error'); 
             return; 
@@ -1787,7 +1879,7 @@ function searchSales() {
     let product = document.getElementById('searchSaleProduct')?.value?.toLowerCase(); 
     let date = document.getElementById('searchSaleDate')?.value; 
     let filtered = sales.filter(s => (!customer || s.customerName.toLowerCase().includes(customer)) && (!product || s.productName.toLowerCase().includes(product)) && (!date || s.date === date)); 
-    let html = filtered.map(s => `<div class="alert alert-secondary mb-2" style="background: var(--bg-card); border: 1px solid var(--border-color);">${s.productName} - ${s.customerName} - ${formatPrice(s.total)}<button class="btn btn-sm btn-info customer-invoice-btn ms-2" onclick="printSingleCustomerInvoice('${s.customerName}')">فاتورة العميل</button></div>`).join(''); 
+    let html = filtered.map(s => `<div class="alert alert-secondary mb-2" style="background: var(--bg-card); border: 1px solid var(--border-color);">${s.productName} - ${formatPrice(s.total)}<br><small>العميل: ${s.customerName} | التاريخ: ${s.date}</small><button class="btn btn-sm btn-info customer-invoice-btn ms-2" onclick="printSingleCustomerInvoice('${s.customerName}')">فاتورة العميل</button></div>`).join(''); 
     if(document.getElementById('salesSearchResults')) document.getElementById('salesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>'; 
 }
 function searchPurchases() { 
@@ -1795,7 +1887,7 @@ function searchPurchases() {
     let product = document.getElementById('searchPurchaseProduct')?.value?.toLowerCase(); 
     let date = document.getElementById('searchPurchaseDate')?.value; 
     let filtered = purchases.filter(p => (!supplier || p.supplierName.toLowerCase().includes(supplier)) && (!product || p.productName.toLowerCase().includes(product)) && (!date || p.date === date)); 
-    let html = filtered.map(p => `<div class="alert alert-secondary mb-2" style="background: var(--bg-card); border: 1px solid var(--border-color);">${p.productName} - ${p.supplierName} - ${formatPrice(p.total)}</div>`).join(''); 
+    let html = filtered.map(p => `<div class="alert alert-secondary mb-2" style="background: var(--bg-card); border: 1px solid var(--border-color);">${p.productName} - ${formatPrice(p.total)}<br><small>المورد: ${p.supplierName} | التاريخ: ${p.date}</small></div>`).join(''); 
     if(document.getElementById('purchasesSearchResults')) document.getElementById('purchasesSearchResults').innerHTML = html || '<div class="alert alert-warning">لا توجد نتائج</div>'; 
 }
 
