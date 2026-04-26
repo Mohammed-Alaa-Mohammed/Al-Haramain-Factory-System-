@@ -20,21 +20,6 @@
     <meta name="twitter:image" content="https://harmain-factory-system.firebaseapp.com/logo.png">
     <link rel="apple-touch-icon" href="https://harmain-factory-system.firebaseapp.com/logo.png">
     <link rel="icon" type="image/png" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fbbf24'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='%230a0e17' font-weight='bold'%3Eح%3C/text%3E%3C/svg%3E">
-    
-    <!-- PWA manifest -->
-    <link rel="manifest" href="data:application/manifest+json,{
-        %22name%22:%22%D9%85%D8%B5%D9%86%D8%B9%20%D8%A7%D9%84%D8%AD%D8%B1%D9%85%D9%8A%D9%86%20%D9%84%D9%84%D8%A8%D9%84%D8%A7%D8%B3%D8%AA%D9%8A%D9%83%22,
-        %22short_name%22:%22%D8%A7%D9%84%D8%AD%D8%B1%D9%85%D9%8A%D9%86%22,
-        %22start_url%22:%22.%22,
-        %22display%22:%22standalone%22,
-        %22background_color%22:%22%23001A33%22,
-        %22theme_color%22:%22%23fbbf24%22,
-        %22icons%22:[
-            {%22src%22:%22https://harmain-factory-system.firebaseapp.com/logo.png%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22},
-            {%22src%22:%22https://harmain-factory-system.firebaseapp.com/logo.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22}
-        ]
-    }">
-    
     <title>مصنع الحرمين للبلاستيك - نظام متكامل</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -509,7 +494,7 @@ function exportActivityLogs() {
 }
 
 // ============================================
-// Advanced Notifications with Sound
+// Notifications (Only One Welcome Message)
 // ============================================
 function showNotification(message, type = 'info') {
     // Play sound
@@ -538,7 +523,7 @@ function showNotification(message, type = 'info') {
     });
 }
 
-// Welcome Message
+// Single Welcome Message
 function showWelcomeMessage() {
     setTimeout(() => {
         iziToast.show({
@@ -554,21 +539,6 @@ function showWelcomeMessage() {
             iconColor: '#38bdf8'
         });
     }, 500);
-    
-    setTimeout(() => {
-        iziToast.show({
-            title: 'نظام متكامل',
-            message: '📊 يمكنك إدارة المبيعات والمشتريات والمخزون والأرباح بسهولة',
-            position: 'topCenter',
-            timeout: 5000,
-            backgroundColor: '#1a1f2e',
-            titleColor: '#10b981',
-            messageColor: '#ffffff',
-            progressBarColor: '#10b981',
-            icon: 'fa-solid fa-chart-line',
-            iconColor: '#10b981'
-        });
-    }, 3000);
 }
 
 // ============================================
@@ -948,9 +918,9 @@ function saveOperatingExpenses() {
 function exportFullBackupPDF() {
     let printWindow = window.open('', '_blank');
     printWindow.document.write(`<html dir="rtl"><head><title>النسخ الاحتياطي - مصنع الحرمين</title><style>body{font-family:'Cairo','Tajawal',sans-serif;padding:25px;direction:rtl;background:#fff;}h1{color:#fbbf24;text-align:center;}h2{background:#fbbf24;color:#0a0e17;padding:10px;border-radius:10px;margin-top:30px;}table{width:100%;border-collapse:collapse;margin:15px 0;}th,td{border:1px solid #ddd;padding:8px;text-align:center;}th{background:#fbbf24;color:#0a0e17;}.footer{text-align:center;margin-top:30px;}</style></head><body><h1>مصنع الحرمين للبلاستيك</h1><h3>النسخ الاحتياطي الشامل</h3><p>${new Date().toLocaleString('ar-EG')}</p>`);
-    printWindow.document.write(`<h2>العملاء (${customers.length})</h2><table><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th></tr>`);
+    printWindow.document.write(`<h2>العملاء (${customers.length})</h2><tr><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th></tr>`);
     customers.forEach((c,i)=>{ printWindow.document.write(`<tr><td class="text-center">${i+1}</td><td class="text-center">${c.name||''}</td><td class="text-center">${c.phone||''}</td><td class="text-center">${c.address||''}</td></tr>`); });
-    printWindow.document.write(`</table><h2>المنتجات (${products.length})</h2><table><thead><tr><th>#</th><th>الاسم</th><th>الباركود</th><th>المقاس</th><th>الوزن</th><th>سعر البيع</th><th>الكمية</th><th>القيمة</th></tr></thead><tbody>`);
+    printWindow.document.write(`</table><h2>المنتجات (${products.length})</h2></td><thead><tr><th>#</th><th>الاسم</th><th>الباركود</th><th>المقاس</th><th>الوزن</th><th>سعر البيع</th><th>الكمية</th><th>القيمة</th></tr></thead><tbody>`);
     products.forEach((p,i)=>{ printWindow.document.write(`<tr><td class="text-center">${i+1}</td><td class="text-center">${p.name||''}</td><td class="text-center">${p.barcode||'-'}</td><td class="text-center">${p.size||'-'}</td><td class="text-center">${p.weight?p.weight+' كجم':'-'}</td><td class="text-center">${formatPrice(p.price)}</td><td class="text-center">${formatNumberToString(p.quantity)}</td><td class="text-center">${formatPrice(p.quantity*p.price)}</td></tr>`); });
     printWindow.document.write(`</tbody></table><div class="footer">مصنع الحرمين للبلاستيك - جميع الحقوق محفوظة</div><script>window.print();window.onafterprint=function(){window.close();};<\/script></body></html>`);
     printWindow.document.close();
@@ -1153,7 +1123,7 @@ function printFullFinancialReport() {
     <tr><td class="text-center">إجمالي مصاريف التشغيل</td><td class="text-center">${formatPrice(totalOp)}</td></tr>
     <tr style="font-weight:bold;"><td class="text-center">صافي الربح</td><td class="text-center">${formatPrice(net)}</td></tr>
     <tr><td class="text-center">هامش الربح</td><td class="text-center">${totalSales>0?((net/totalSales)*100).toFixed(2):0}%</td></tr>
-    </tbody></table>
+    </tbody><table>
     <h2>⚙️ تفاصيل مصاريف التشغيل</h2>
     <table><thead><tr><th>نوع المصروف</th><th>القيمة</th></tr></thead><tbody>
     <tr><td class="text-center">كهرباء</td><td class="text-center">${formatPrice(operatingExpenses.electricity||0)}</td></tr>
@@ -1170,9 +1140,9 @@ function printFullFinancialReport() {
     <h2>📝 آخر 10 مبيعات</h2>
     <table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>الإجمالي</th><th>العميل</th><th>التاريخ</th></tr></thead><tbody>${lastSalesHtml}</tbody></table>
     <h2>📥 آخر 10 مشتريات</h2>
-    <table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>الإجمالي</th><th>المورد</th><th>التاريخ</th></tr></thead><tbody>${lastPurchasesHtml}</tbody></table>
+    </table><thead><tr><th>#</th><th>المنتج</th><th>الكمية</th><th>الوحدة</th><th>الإجمالي</th><th>المورد</th><th>التاريخ</th></tr></thead><tbody>${lastPurchasesHtml}</tbody></table>
     <h2>🤝 توزيع الأرباح</h2>
-    <table><thead><tr><th>الشريك</th><th>النسبة</th><th>المستحق</th></tr></thead><tbody>
+    <td><thead><tr><th>الشريك</th><th>النسبة</th><th>المستحق</th></tr></thead><tbody>
     <tr><td class="text-center">الشريك الأول</td><td class="text-center">75%</td><td class="text-center">${formatPrice(net * 3 / 4)}</td></tr>
     <tr><td class="text-center">الشريك الثاني</td><td class="text-center">25%</td><td class="text-center">${formatPrice(net * 1 / 4)}</td></tr>
     </tbody></table>
@@ -1348,7 +1318,7 @@ function deleteInvoice(id) {
 }
 
 // ============================================
-// CRUD: Products, Customers, Suppliers
+// CRUD with Real-time Sync (Delete from Firebase)
 // ============================================
 function showProductModal() { 
     document.getElementById('productId').value = ''; 
@@ -1383,8 +1353,13 @@ function saveProduct() {
         cost: parseNumberValue(document.getElementById('productCost').value), 
         quantity: parseNumberValue(document.getElementById('productQuantity').value) || 0 
     }; 
-    if (id) products = products.map(p => p.id == product.id ? product : p); 
-    else products.push(product); 
+    if (id) {
+        // Update existing product
+        const index = products.findIndex(p => p.id == product.id);
+        if (index !== -1) products[index] = product;
+    } else { 
+        products.push(product); 
+    }
     saveToFirebase('products', products); 
     bootstrap.Modal.getInstance(document.getElementById('productModal')).hide(); 
     Swal.fire('تم', 'تم حفظ المنتج', 'success'); 
@@ -1408,7 +1383,9 @@ function deleteProduct(id) {
     Swal.fire({ title: 'حذف', text: 'متأكد؟', icon: 'warning', showCancelButton: true }).then(res => { 
         if (res.isConfirmed) { 
             let product = products.find(p => p.id == id);
+            // Remove from array
             products = products.filter(p => p.id != id); 
+            // Save to Firebase (This will sync to all devices)
             saveToFirebase('products', products); 
             loadAllData(); 
             addActivityLog('حذف منتج', `تم حذف المنتج: ${product?.name}`);
@@ -1431,8 +1408,12 @@ function saveCustomer() {
         phone: document.getElementById('customerPhone').value, 
         address: document.getElementById('customerAddress').value 
     }; 
-    if (id) customers = customers.map(c => c.id == customer.id ? customer : c); 
-    else customers.push(customer); 
+    if (id) {
+        const index = customers.findIndex(c => c.id == customer.id);
+        if (index !== -1) customers[index] = customer;
+    } else { 
+        customers.push(customer); 
+    }
     saveToFirebase('customers', customers); 
     bootstrap.Modal.getInstance(document.getElementById('customerModal')).hide(); 
     Swal.fire('تم', 'تم حفظ العميل', 'success'); 
@@ -1474,8 +1455,12 @@ function saveSupplier() {
         phone: document.getElementById('supplierPhone').value, 
         address: document.getElementById('supplierAddress').value 
     }; 
-    if (id) suppliers = suppliers.map(s => s.id == supplier.id ? supplier : s); 
-    else suppliers.push(supplier); 
+    if (id) {
+        const index = suppliers.findIndex(s => s.id == supplier.id);
+        if (index !== -1) suppliers[index] = supplier;
+    } else { 
+        suppliers.push(supplier); 
+    }
     saveToFirebase('suppliers', suppliers); 
     bootstrap.Modal.getInstance(document.getElementById('supplierModal')).hide(); 
     Swal.fire('تم', 'تم حفظ المورد', 'success'); 
@@ -2000,6 +1985,7 @@ async function init() {
     setInterval(() => { if (isOnline) syncAllDataToFirebase(); }, 30000);
     setInterval(checkLowStock, 30000);
     animatePageElements();
+    // Only one welcome message
     showWelcomeMessage();
     addActivityLog('بدء التشغيل', 'تم تشغيل نظام مصنع الحرمين للبلاستيك بنجاح');
 }
